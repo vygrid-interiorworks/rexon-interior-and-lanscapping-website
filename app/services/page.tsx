@@ -25,7 +25,7 @@ const services = [
       "End-to-end project management",
       "Post-handover support",
     ],
-    img: "https://placehold.co/800x550/4A5A1E/FFFFFF?text=Interior+Design",
+    img: "https://images.unsplash.com/photo-1558904541-efa843a96f09?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "modular-kitchen",
@@ -42,7 +42,7 @@ const services = [
       "Tall units, islands & breakfast counters",
       "10-year structure warranty",
     ],
-    img: "https://placehold.co/800x550/7A9E2E/FFFFFF?text=Modular+Kitchen",
+    img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "landscaping",
@@ -59,7 +59,7 @@ const services = [
       "Outdoor lighting design",
       "Seasonal maintenance plans",
     ],
-    img: "https://placehold.co/800x550/4A5A1E/FFFFFF?text=Landscaping",
+    img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "false-ceiling",
@@ -76,7 +76,7 @@ const services = [
       "Drop ceiling for commercial spaces",
       "Quick 5–7 day installation",
     ],
-    img: "https://placehold.co/800x550/3A3A3A/FFFFFF?text=False+Ceiling",
+    img: "https://images.unsplash.com/photo-1583847268964-b28ce8f52859?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "wallpaper-decor",
@@ -93,7 +93,7 @@ const services = [
       "Eco-friendly water-based paints",
       "Professional installation",
     ],
-    img: "https://placehold.co/800x550/7A9E2E/FFFFFF?text=Wall+Decor",
+    img: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "garden-maintenance",
@@ -110,7 +110,7 @@ const services = [
       "Seasonal flower planting",
       "Irrigation system upkeep",
     ],
-    img: "https://placehold.co/800x550/4A5A1E/FFFFFF?text=Garden+Maintenance",
+    img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "lighting-design",
@@ -127,7 +127,7 @@ const services = [
       "Landscape & garden lighting",
       "Energy audit & optimisation",
     ],
-    img: "https://placehold.co/800x550/3A3A3A/FFFFFF?text=Lighting+Design",
+    img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "carpentry",
@@ -144,7 +144,7 @@ const services = [
       "Italian laminate & veneer finishes",
       "Anti-termite treatment included",
     ],
-    img: "https://placehold.co/800x550/7A9E2E/FFFFFF?text=Carpentry",
+    img: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "stone-tile",
@@ -161,7 +161,7 @@ const services = [
       "Mosaic & encaustic tile features",
       "Epoxy & sanded grouting",
     ],
-    img: "https://placehold.co/800x550/3A3A3A/FFFFFF?text=Stone+%26+Tile",
+    img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "water-features",
@@ -178,7 +178,7 @@ const services = [
       "Pump, filter & UV systems",
       "Ongoing maintenance plans",
     ],
-    img: "https://placehold.co/800x550/4A5A1E/FFFFFF?text=Water+Features",
+    img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
@@ -255,7 +255,7 @@ export default function ServicesPage() {
                   </span>
                   <h2 className="text-4xl font-playfair font-bold text-[#3A3A3A] mb-3">{current.title}</h2>
                   <p className="text-lg font-semibold text-[#7A9E2E] italic mb-5">{current.tagline}</p>
-                  <p className="text-[#6B6B6B] leading-relaxed text-base mb-10">{current.desc}</p>
+                  <p className="text-[#4A4A4A] leading-relaxed text-base mb-10">{current.desc}</p>
 
                   {/* Features */}
                   <div className="bg-[#F9F8F5] rounded-2xl border border-[#E8E8E8] p-8 mb-10">

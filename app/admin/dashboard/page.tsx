@@ -460,13 +460,13 @@ export default function AdminDashboardPage() {
                             </p>
                           </div>
 
-                          <div className="text-xs text-slate-500">
+                          <div className="text-xs text-slate-400">
                             {new Date(enq.createdAt || Date.now()).toLocaleDateString()}
                           </div>
                         </div>
                       ))}
                       {enquiries.length === 0 && (
-                        <p className="text-xs text-slate-500 text-center py-6">No enquiries registered yet.</p>
+                        <p className="text-xs text-slate-400 text-center py-6">No enquiries registered yet.</p>
                       )}
                     </div>
                   </div>
@@ -497,8 +497,8 @@ export default function AdminDashboardPage() {
                           <tr key={enq._id} className="hover:bg-slate-800/30 transition-colors">
                             <td className="p-4">
                               <div className="font-semibold text-white">{enq.name}</div>
-                              <div className="text-xs text-slate-500 mt-0.5">{enq.phone}</div>
-                              {enq.email && <div className="text-[10px] text-slate-600">{enq.email}</div>}
+                              <div className="text-xs text-slate-400 mt-0.5">{enq.phone}</div>
+                              {enq.email && <div className="text-[10px] text-slate-400">{enq.email}</div>}
                             </td>
                             <td className="p-4">
                               <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#7A9E2E]/10 text-[#7A9E2E] border border-[#7A9E2E]/20">
@@ -537,7 +537,7 @@ export default function AdminDashboardPage() {
                         ))}
                         {enquiries.length === 0 && (
                           <tr>
-                            <td colSpan={5} className="p-8 text-center text-xs text-slate-500">
+                            <td colSpan={5} className="p-8 text-center text-xs text-slate-400">
                               No inquiries found in database.
                             </td>
                           </tr>
@@ -646,7 +646,7 @@ export default function AdminDashboardPage() {
                             </div>
                             <div>
                               <h4 className="font-semibold text-sm line-clamp-1">{proj.title}</h4>
-                              <p className="text-xs text-slate-500 mt-0.5">{proj.category}</p>
+                              <p className="text-xs text-slate-400 mt-0.5">{proj.category}</p>
                             </div>
                           </div>
 
@@ -780,7 +780,7 @@ export default function AdminDashboardPage() {
                         <div className="flex justify-between items-center pt-3 border-t border-slate-900">
                           <div>
                             <h4 className="font-bold text-xs text-white">{item.name}</h4>
-                            <p className="text-[10px] text-slate-500">{item.designation}</p>
+                            <p className="text-[10px] text-slate-400">{item.designation}</p>
                           </div>
 
                           <button
@@ -807,7 +807,7 @@ export default function AdminDashboardPage() {
                           Direct Contact Number
                         </label>
                         <div className="relative">
-                          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
                             <Phone className="w-4 h-4" />
                           </span>
                           <input
@@ -825,7 +825,7 @@ export default function AdminDashboardPage() {
                           Support Email
                         </label>
                         <div className="relative">
-                          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
                             <Mail className="w-4 h-4" />
                           </span>
                           <input
@@ -844,7 +844,7 @@ export default function AdminDashboardPage() {
                         Office & Showroom Address
                       </label>
                       <div className="relative">
-                        <span className="absolute inset-y-0 left-0 pl-3 pt-3 flex items-start text-slate-500">
+                        <span className="absolute inset-y-0 left-0 pl-3 pt-3 flex items-start text-slate-400">
                           <MapPin className="w-4 h-4" />
                         </span>
                         <textarea
@@ -863,7 +863,7 @@ export default function AdminDashboardPage() {
                           Office Timing Text
                         </label>
                         <div className="relative">
-                          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
                             <Clock className="w-4 h-4" />
                           </span>
                           <input

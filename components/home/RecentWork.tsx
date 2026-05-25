@@ -7,12 +7,12 @@ import { motion, AnimatePresence } from "framer-motion";
 const categories = ["All", "Interior", "Landscaping", "Kitchen", "Garden"];
 
 const projects = [
-  { id: 1, title: "Luxury Villa Interior", category: "Interior", location: "Kochi, Kerala", img: "https://placehold.co/800x600/4A5A1E/FFFFFF?text=Villa+Interior" },
-  { id: 2, title: "Tropical Garden Retreat", category: "Landscaping", location: "Thrissur, Kerala", img: "https://placehold.co/800x600/7A9E2E/FFFFFF?text=Garden+Retreat" },
-  { id: 3, title: "Modular Kitchen Redesign", category: "Kitchen", location: "Calicut, Kerala", img: "https://placehold.co/800x600/3A3A3A/FFFFFF?text=Modular+Kitchen" },
-  { id: 4, title: "Corporate Office Revamp", category: "Interior", location: "Trivandrum, Kerala", img: "https://placehold.co/800x600/4A5A1E/FFFFFF?text=Office+Interiors" },
-  { id: 5, title: "Zen Courtyard Design", category: "Garden", location: "Kannur, Kerala", img: "https://placehold.co/800x600/7A9E2E/FFFFFF?text=Zen+Courtyard" },
-  { id: 6, title: "Contemporary Living Room", category: "Interior", location: "Kochi, Kerala", img: "https://placehold.co/800x600/3A3A3A/FFFFFF?text=Living+Room" },
+  { id: 1, title: "Luxury Villa Interior", category: "Interior", location: "Kochi, Kerala", img: "https://images.unsplash.com/photo-1558904541-efa843a96f09?auto=format&fit=crop&w=800&q=80" },
+  { id: 2, title: "Tropical Garden Retreat", category: "Landscaping", location: "Thrissur, Kerala", img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80" },
+  { id: 3, title: "Modular Kitchen Redesign", category: "Kitchen", location: "Calicut, Kerala", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" },
+  { id: 4, title: "Corporate Office Revamp", category: "Interior", location: "Trivandrum, Kerala", img: "https://images.unsplash.com/photo-1583847268964-b28ce8f52859?auto=format&fit=crop&w=800&q=80" },
+  { id: 5, title: "Zen Courtyard Design", category: "Garden", location: "Kannur, Kerala", img: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80" },
+  { id: 6, title: "Contemporary Living Room", category: "Interior", location: "Kochi, Kerala", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80" },
 ];
 
 export default function RecentWork() {
@@ -39,7 +39,7 @@ export default function RecentWork() {
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
             Our Recent Work
           </h2>
-          <p className="text-[#6B6B6B] text-base leading-relaxed">
+          <p className="text-[#4A4A4A] text-base leading-relaxed">
             A curated showcase of our finest interior and landscaping transformations across Kerala.
           </p>
         </motion.div>
@@ -53,7 +53,7 @@ export default function RecentWork() {
               className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
                 activeCategory === cat
                   ? "bg-[#7A9E2E] text-white shadow-lg"
-                  : "bg-white text-[#6B6B6B] border border-[#E8E8E8] hover:border-[#7A9E2E] hover:text-[#7A9E2E]"
+                  : "bg-white text-[#4A4A4A] border border-[#E8E8E8] hover:border-[#7A9E2E] hover:text-[#7A9E2E]"
               }`}
             >
               {cat}

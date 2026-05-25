@@ -15,21 +15,40 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
-// Helper: Convert File to Base64 URL string for storing in Firestore
-const fileToBase64 = (file: File): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (err) => reject(err);
+// Helper: Upload File to Cloudinary
+const uploadToCloudinary = async (file: File): Promise<string> => {
+  const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+
+  if (!CLOUD_NAME || !UPLOAD_PRESET) {
+    console.warn("Cloudinary credentials missing, falling back to empty string.");
+    return "";
+  }
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", UPLOAD_PRESET);
+
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+    method: "POST",
+    body: formData,
   });
 
-// Helper: Extract base64 images from FormData
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.error?.message || "Failed to upload image to Cloudinary");
+  }
+
+  const data = await response.json();
+  return data.secure_url; // Returns the public Cloudinary URL
+};
+
+// Helper: Extract images from FormData and upload to Cloudinary
 const extractFormData = async (formData: FormData) => {
   const obj: Record<string, any> = {};
   for (const [key, value] of formData.entries()) {
     if (value instanceof File && value.size > 0) {
-      obj[key] = await fileToBase64(value);
+      obj[key] = await uploadToCloudinary(value);
     } else if (!(value instanceof File)) {
       obj[key] = value;
     }

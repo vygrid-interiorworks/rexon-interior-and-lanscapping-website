@@ -11,7 +11,7 @@ const testimonials = [
     rating: 5,
     text: "Rexon completely transformed our 3BHK into a luxury haven. The attention to detail, quality of materials, and the team's professionalism exceeded every expectation. Our home now looks like something out of a magazine!",
     category: "Interior Design",
-    avatar: "https://placehold.co/100x100/7A9E2E/FFFFFF?text=PM",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
   },
   {
     name: "Arun Krishnan",
@@ -19,7 +19,7 @@ const testimonials = [
     rating: 5,
     text: "Our garden went from barren land to an absolute tropical paradise. The landscaping team understood our vision perfectly. The water feature they built is the highlight of our entire property. Highly recommend!",
     category: "Landscaping",
-    avatar: "https://placehold.co/100x100/4A5A1E/FFFFFF?text=AK",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
   },
   {
     name: "Sujatha Nair",
@@ -27,7 +27,7 @@ const testimonials = [
     rating: 5,
     text: "We commissioned Rexon for our restaurant's complete interior redesign. The result? Footfall doubled in the first month. Guests constantly compliment the ambience. Worth every penny invested.",
     category: "Commercial Interior",
-    avatar: "https://placehold.co/100x100/3A3A3A/FFFFFF?text=SN",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
   },
   {
     name: "Rajesh Kumar",
@@ -35,7 +35,7 @@ const testimonials = [
     rating: 5,
     text: "The modular kitchen they designed for us is absolutely stunning. Smart storage solutions, premium finishes, and delivered on time — exactly as promised. The after-sales service is excellent too.",
     category: "Modular Kitchen",
-    avatar: "https://placehold.co/100x100/7A9E2E/FFFFFF?text=RK",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80",
   },
   {
     name: "Divya Thomas",
@@ -43,7 +43,7 @@ const testimonials = [
     rating: 5,
     text: "From the very first consultation to the final handover, Rexon was an absolute pleasure to work with. Zero compromises on quality. Our courtyard garden is now our family's favourite spot.",
     category: "Garden Design",
-    avatar: "https://placehold.co/100x100/4A5A1E/FFFFFF?text=DT",
+    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
   },
 ];
 
@@ -73,7 +73,7 @@ export default function TestimonialsSlider() {
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
             What Our Clients Say
           </h2>
-          <p className="text-[#6B6B6B] text-base leading-relaxed">
+          <p className="text-[#4A4A4A] text-base leading-relaxed">
             Don&apos;t just take our word for it — hear from the families and businesses we&apos;ve transformed.
           </p>
         </motion.div>
@@ -113,7 +113,7 @@ export default function TestimonialsSlider() {
                   />
                   <div>
                     <div className="font-bold text-[#3A3A3A] text-base">{testimonials[current].name}</div>
-                    <div className="text-xs text-[#6B6B6B]">{testimonials[current].role}</div>
+                    <div className="text-xs text-[#4A4A4A]">{testimonials[current].role}</div>
                     <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-widest text-[#7A9E2E]">
                       {testimonials[current].category}
                     </span>
@@ -174,7 +174,7 @@ export default function TestimonialsSlider() {
                   />
                   <div>
                     <div className="text-xs font-bold text-[#3A3A3A] leading-tight">{testimonials[idx].name}</div>
-                    <div className="text-[10px] text-[#6B6B6B]">{testimonials[idx].category}</div>
+                    <div className="text-[10px] text-[#4A4A4A]">{testimonials[idx].category}</div>
                   </div>
                 </motion.div>
               );

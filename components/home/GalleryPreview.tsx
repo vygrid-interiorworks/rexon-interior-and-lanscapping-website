@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn } from "lucide-react";
 
 const galleryItems = [
-  { id: 1, src: "https://placehold.co/600x800/4A5A1E/FFFFFF?text=Interior+01", alt: "Living Room Design", cat: "Interior", tall: true },
-  { id: 2, src: "https://placehold.co/600x400/7A9E2E/FFFFFF?text=Garden+01", alt: "Tropical Garden", cat: "Landscaping", tall: false },
-  { id: 3, src: "https://placehold.co/600x400/3A3A3A/FFFFFF?text=Kitchen+01", alt: "Modular Kitchen", cat: "Kitchen", tall: false },
-  { id: 4, src: "https://placehold.co/600x800/7A9E2E/FFFFFF?text=Outdoor+01", alt: "Garden Pathway", cat: "Landscaping", tall: true },
-  { id: 5, src: "https://placehold.co/600x400/4A5A1E/FFFFFF?text=Bedroom+01", alt: "Master Bedroom", cat: "Interior", tall: false },
-  { id: 6, src: "https://placehold.co/600x400/3A3A3A/FFFFFF?text=Ceiling+01", alt: "False Ceiling Design", cat: "Interior", tall: false },
+  { id: 1, src: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80", alt: "Living Room Design", cat: "Interior", tall: true },
+  { id: 2, src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80", alt: "Tropical Garden", cat: "Landscaping", tall: false },
+  { id: 3, src: "https://images.unsplash.com/photo-1583847268964-b28ce8f52859?auto=format&fit=crop&w=800&q=80", alt: "Modular Kitchen", cat: "Kitchen", tall: false },
+  { id: 4, src: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80", alt: "Garden Pathway", cat: "Landscaping", tall: true },
+  { id: 5, src: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80", alt: "Master Bedroom", cat: "Interior", tall: false },
+  { id: 6, src: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80", alt: "False Ceiling Design", cat: "Interior", tall: false },
 ];
 
 export default function GalleryPreview() {
@@ -34,7 +34,7 @@ export default function GalleryPreview() {
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
             Moments of Transformation
           </h2>
-          <p className="text-[#6B6B6B] text-base leading-relaxed">
+          <p className="text-[#4A4A4A] text-base leading-relaxed">
             A glimpse into the worlds we&apos;ve created — spaces that tell stories of craft and care.
           </p>
         </motion.div>

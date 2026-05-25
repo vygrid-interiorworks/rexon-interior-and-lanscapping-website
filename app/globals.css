@@ -28,7 +28,6 @@ body {
 h1, h2, h3, h4, h5, h6, .font-playfair {
   font-family: var(--font-playfair), serif;
   font-weight: 700;
-  color: #3A3A3A;
 }
 
 .text-rexon-green-gradient {

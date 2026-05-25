@@ -37,7 +37,7 @@ function LeadModal({ onClose }: { onClose: () => void }) {
         exit={{ scale: 0.9, y: 30 }}
         transition={{ type: "spring", damping: 25 }}
       >
-        <button onClick={onClose} className="absolute top-4 right-4 text-[#6B6B6B] hover:text-[#3A3A3A] transition-colors">
+        <button onClick={onClose} className="absolute top-4 right-4 text-[#4A4A4A] hover:text-[#3A3A3A] transition-colors">
           <X className="w-6 h-6" />
         </button>
 
@@ -47,7 +47,7 @@ function LeadModal({ onClose }: { onClose: () => void }) {
               <CheckCircle2 className="w-9 h-9 text-[#7A9E2E]" />
             </div>
             <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mb-2">Thank You!</h3>
-            <p className="text-[#6B6B6B] text-sm leading-relaxed">
+            <p className="text-[#4A4A4A] text-sm leading-relaxed">
               We&apos;ve received your request. Our team will contact you within 24 hours.
             </p>
           </div>
@@ -56,7 +56,7 @@ function LeadModal({ onClose }: { onClose: () => void }) {
             <div className="mb-6">
               <span className="text-xs font-bold uppercase tracking-widest text-[#7A9E2E]">Free Consultation</span>
               <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mt-1">Get Expert Advice</h3>
-              <p className="text-sm text-[#6B6B6B] mt-1">Fill in your details and we&apos;ll call you back for free.</p>
+              <p className="text-sm text-[#4A4A4A] mt-1">Fill in your details and we&apos;ll call you back for free.</p>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
@@ -117,7 +117,7 @@ export default function CompanyIntro() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
               <img
-                src="https://placehold.co/800x600/4A5A1E/FFFFFF?text=Premium+Interior"
+                src="https://images.unsplash.com/photo-1558904541-efa843a96f09?auto=format&fit=crop&w=800&q=80"
                 alt="Rexon Premium Interior Design"
                 className="w-full h-full object-cover"
               />
@@ -125,7 +125,7 @@ export default function CompanyIntro() {
             {/* Floating accent image */}
             <div className="absolute -bottom-8 -right-8 w-48 h-48 lg:w-64 lg:h-64 rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
               <img
-                src="https://placehold.co/400x400/7A9E2E/FFFFFF?text=Landscaping"
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80"
                 alt="Rexon Landscaping"
                 className="w-full h-full object-cover"
               />
@@ -150,7 +150,7 @@ export default function CompanyIntro() {
               Design That Speaks,{" "}
               <span className="text-rexon-green-gradient">Spaces That Inspire</span>
             </h2>
-            <p className="text-[#6B6B6B] text-base leading-relaxed mb-6">
+            <p className="text-[#4A4A4A] text-base leading-relaxed mb-6">
               Rexon Interiors and Landscaping is Kerala&apos;s premier design studio specializing in
               transforming residential and commercial spaces with unmatched craftsmanship.
               From elegant home interiors to lush garden landscapes, we bring your vision to life

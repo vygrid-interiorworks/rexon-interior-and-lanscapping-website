@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 };
 
 const team = [
-  { name: "Rexon P. Joseph", role: "Founder & Principal Designer", img: "https://placehold.co/400x400/4A5A1E/FFFFFF?text=RJ", bio: "12+ years shaping premium residential and commercial spaces across Kerala." },
-  { name: "Ananya Krishnan", role: "Senior Interior Architect", img: "https://placehold.co/400x400/7A9E2E/FFFFFF?text=AK", bio: "Specialist in contemporary tropical design and biophilic interior concepts." },
-  { name: "Sujith Menon", role: "Head of Landscaping", img: "https://placehold.co/400x400/3A3A3A/FFFFFF?text=SM", bio: "Certified horticulturalist with a passion for native Kerala flora and zen gardens." },
-  { name: "Divya Nair", role: "Project Manager", img: "https://placehold.co/400x400/4A5A1E/FFFFFF?text=DN", bio: "Ensures every project is delivered on schedule, within budget, and beyond expectations." },
+  { name: "Rexon P. Joseph", role: "Founder & Principal Designer", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80", bio: "12+ years shaping premium residential and commercial spaces across Kerala." },
+  { name: "Ananya Krishnan", role: "Senior Interior Architect", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80", bio: "Specialist in contemporary tropical design and biophilic interior concepts." },
+  { name: "Sujith Menon", role: "Head of Landscaping", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80", bio: "Certified horticulturalist with a passion for native Kerala flora and zen gardens." },
+  { name: "Divya Nair", role: "Project Manager", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80", bio: "Ensures every project is delivered on schedule, within budget, and beyond expectations." },
 ];
 
 const values = [
@@ -49,24 +49,24 @@ export default function AboutPage() {
               <h2 className="text-4xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-6 leading-tight">
                 Built on a Belief That Design Can Change Lives
               </h2>
-              <p className="text-[#6B6B6B] leading-relaxed mb-5">
+              <p className="text-[#4A4A4A] leading-relaxed mb-5">
                 Rexon was born from a simple idea — that every person deserves a space they love coming home to.
                 Founded by Rexon P. Joseph in Kochi, we started as a small interior consultancy and grew into
                 one of Kerala&apos;s most trusted full-service design firms.
               </p>
-              <p className="text-[#6B6B6B] leading-relaxed mb-5">
+              <p className="text-[#4A4A4A] leading-relaxed mb-5">
                 Today, our 30-member team handles everything from residential interiors and modular kitchens
                 to large-scale commercial fit-outs and luxury landscape gardens — all with the same care and
                 commitment that defined us from day one.
               </p>
-              <p className="text-[#6B6B6B] leading-relaxed">
+              <p className="text-[#4A4A4A] leading-relaxed">
                 Our work spans over 1,200 completed projects across Kochi, Thrissur, Calicut, Trivandrum,
                 and Kannur. Every space we design carries a piece of our collective passion.
               </p>
             </div>
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
-                <img src="https://placehold.co/800x600/4A5A1E/FFFFFF?text=Rexon+Studio" alt="Rexon Studio" className="w-full h-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80" alt="Rexon Studio" className="w-full h-full object-cover" />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-[#7A9E2E] text-white rounded-2xl p-6 shadow-xl">
                 <div className="text-4xl font-extrabold font-playfair">12+</div>
@@ -86,7 +86,7 @@ export default function AboutPage() {
                 <Eye className="w-7 h-7 text-[#7A9E2E]" />
               </div>
               <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mb-4">Our Vision</h3>
-              <p className="text-[#6B6B6B] leading-relaxed">
+              <p className="text-[#4A4A4A] leading-relaxed">
                 To be the most trusted and celebrated interior and landscaping brand in South India —
                 recognised not just for beautiful spaces, but for the genuine relationships we build
                 with every client we serve.
@@ -123,7 +123,7 @@ export default function AboutPage() {
                     <Icon className="w-6 h-6 text-[#7A9E2E]" />
                   </div>
                   <h3 className="text-base font-bold text-[#3A3A3A] mb-2">{v.title}</h3>
-                  <p className="text-xs text-[#6B6B6B] leading-relaxed">{v.desc}</p>
+                  <p className="text-xs text-[#4A4A4A] leading-relaxed">{v.desc}</p>
                 </div>
               );
             })}
@@ -146,7 +146,7 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-base font-bold text-[#3A3A3A]">{member.name}</h3>
                 <div className="text-xs font-bold text-[#7A9E2E] uppercase tracking-widest mt-1 mb-3">{member.role}</div>
-                <p className="text-xs text-[#6B6B6B] leading-relaxed max-w-[200px] mx-auto">{member.bio}</p>
+                <p className="text-xs text-[#4A4A4A] leading-relaxed max-w-[200px] mx-auto">{member.bio}</p>
               </div>
             ))}
           </div>

@@ -54,7 +54,7 @@ export default function ProcessTimeline() {
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
             Our Design Process
           </h2>
-          <p className="text-[#6B6B6B] text-base leading-relaxed">
+          <p className="text-[#4A4A4A] text-base leading-relaxed">
             A streamlined, transparent journey from first call to final handover —
             built around your comfort and confidence.
           </p>
@@ -92,7 +92,7 @@ export default function ProcessTimeline() {
                   </motion.div>
 
                   <h3 className="text-base font-bold text-[#3A3A3A] mb-2">{step.title}</h3>
-                  <p className="text-xs text-[#6B6B6B] leading-relaxed max-w-[160px]">{step.desc}</p>
+                  <p className="text-xs text-[#4A4A4A] leading-relaxed max-w-[160px]">{step.desc}</p>
                 </motion.div>
               );
             })}

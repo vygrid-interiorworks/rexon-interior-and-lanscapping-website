@@ -10,19 +10,19 @@ export default function HeroBanner() {
 
   const slides = [
     {
-      image: "https://placehold.co/1920x1080/4A5A1E/FFFFFF?text=Premium+Interior+Design",
+      image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
       title: "Transforming Spaces,",
       highlight: "Inside & Out",
       subtext: "Elegantly stylized luxury home interiors curated for standard modern living across Kerala.",
     },
     {
-      image: "https://placehold.co/1920x1080/7A9E2E/FFFFFF?text=Stunning+Lawn+Landscaping",
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
       title: "Breathtaking Gardens,",
       highlight: "Tailored Landscapes",
       subtext: "State-of-the-art outdoor architecture, pathways, and green retreats designed to wow.",
     },
     {
-      image: "https://placehold.co/1920x1080/3A3A3A/FFFFFF?text=Modern+Modular+Kitchen",
+      image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80",
       title: "Functional Aesthetics,",
       highlight: "Smart Living",
       subtext: "Custom modular kitchens, living zones, and workspaces crafted with premium long-lasting wood.",

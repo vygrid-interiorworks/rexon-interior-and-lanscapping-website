@@ -84,7 +84,7 @@ export default function AdminLoginPage() {
               Admin Password
             </label>
             <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
                 <Lock className="w-4 h-4" />
               </span>
               <input

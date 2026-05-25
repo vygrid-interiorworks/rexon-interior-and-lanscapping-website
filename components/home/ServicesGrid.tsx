@@ -120,7 +120,7 @@ export default function ServicesGrid() {
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
             Our Premium Services
           </h2>
-          <p className="text-[#6B6B6B] text-base leading-relaxed">
+          <p className="text-[#4A4A4A] text-base leading-relaxed">
             A complete spectrum of interior and exterior solutions — all under one roof,
             delivered with craftsmanship that exceeds expectations.
           </p>
@@ -156,7 +156,7 @@ export default function ServicesGrid() {
                 <h3 className="text-base font-bold text-[#3A3A3A] mb-2 leading-snug group-hover:text-[#7A9E2E] transition-colors duration-300">
                   {service.title}
                 </h3>
-                <p className="text-xs text-[#6B6B6B] leading-relaxed flex-grow">{service.desc}</p>
+                <p className="text-xs text-[#4A4A4A] leading-relaxed flex-grow">{service.desc}</p>
 
                 <Link
                   href={`/services#${service.slug}`}

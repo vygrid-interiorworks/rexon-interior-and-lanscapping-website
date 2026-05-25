@@ -134,7 +134,7 @@ Looking forward to consulting soon.`;
           <h1 className="text-3xl sm:text-4xl font-serif text-[#3A3A3A] font-bold">
             Get an Interactive Quote
           </h1>
-          <p className="text-sm text-[#6B6B6B] mt-2">
+          <p className="text-sm text-[#4A4A4A] mt-2">
             Answer a few quick questions to estimate budgets and get connected with our experts.
           </p>
         </div>
@@ -166,7 +166,7 @@ Looking forward to consulting soon.`;
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-[#3A3A3A]">Tell Us About Yourself</h2>
-                    <p className="text-xs text-[#6B6B6B]">Please provide basic details to schedule a consultant call.</p>
+                    <p className="text-xs text-[#4A4A4A]">Please provide basic details to schedule a consultant call.</p>
                   </div>
                 </div>
 
@@ -242,7 +242,7 @@ Looking forward to consulting soon.`;
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-[#3A3A3A]">Project Details</h2>
-                    <p className="text-xs text-[#6B6B6B]">Help us understand what type of service you are looking for.</p>
+                    <p className="text-xs text-[#4A4A4A]">Help us understand what type of service you are looking for.</p>
                   </div>
                 </div>
 
@@ -320,14 +320,14 @@ Looking forward to consulting soon.`;
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-[#3A3A3A]">Target Budget</h2>
-                    <p className="text-xs text-[#6B6B6B]">Adjust the slider to match your estimated target investment.</p>
+                    <p className="text-xs text-[#4A4A4A]">Adjust the slider to match your estimated target investment.</p>
                   </div>
                 </div>
 
                 {/* Budget Slider */}
                 <div className="space-y-6 py-4">
                   <div className="flex justify-between items-center bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                    <span className="text-sm font-semibold text-[#6B6B6B]">Target Investment:</span>
+                    <span className="text-sm font-semibold text-[#4A4A4A]">Target Investment:</span>
                     <span className="text-2xl font-bold text-[#7A9E2E] font-serif">
                       INR {budget.toLocaleString()}
                     </span>
@@ -343,7 +343,7 @@ Looking forward to consulting soon.`;
                     className="w-full h-2 bg-gray-100 rounded-full appearance-none cursor-pointer accent-[#7A9E2E]"
                   />
 
-                  <div className="flex justify-between text-xs text-[#6B6B6B] font-semibold">
+                  <div className="flex justify-between text-xs text-[#4A4A4A] font-semibold">
                     <span>1 Lakh</span>
                     <span>10 Lakhs</span>
                     <span>25 Lakhs</span>
@@ -351,7 +351,7 @@ Looking forward to consulting soon.`;
                   </div>
                 </div>
 
-                <div className="bg-[#7A9E2E]/5 rounded-2xl p-4 border border-[#7A9E2E]/20 text-xs text-[#6B6B6B] leading-relaxed">
+                <div className="bg-[#7A9E2E]/5 rounded-2xl p-4 border border-[#7A9E2E]/20 text-xs text-[#4A4A4A] leading-relaxed">
                   💡 <strong>Tip:</strong> The budget size impacts product finishes (e.g. premium laminates vs. acrylics, or exotic plants vs. native creepers). Our consultants will tailor recommendations accordingly.
                 </div>
               </motion.div>
@@ -371,7 +371,7 @@ Looking forward to consulting soon.`;
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-[#3A3A3A]">Style Preferences</h2>
-                    <p className="text-xs text-[#6B6B6B]">Select the aesthetic vibe that matches your preference.</p>
+                    <p className="text-xs text-[#4A4A4A]">Select the aesthetic vibe that matches your preference.</p>
                   </div>
                 </div>
 
@@ -447,7 +447,7 @@ Looking forward to consulting soon.`;
                 <h2 className="text-3xl font-serif font-bold text-[#3A3A3A] mb-2">
                   Quote Estimate Completed!
                 </h2>
-                <p className="text-sm text-[#6B6B6B] max-w-md mb-8 leading-relaxed">
+                <p className="text-sm text-[#4A4A4A] max-w-md mb-8 leading-relaxed">
                   Thank you, <strong>{name}</strong>! Your customized estimate details have been saved in our system. A senior architect will prepare formal 3D layout briefs for you.
                 </p>
 
@@ -489,7 +489,7 @@ Looking forward to consulting soon.`;
               {currentStep !== "details" ? (
                 <button
                   onClick={handleBack}
-                  className="inline-flex items-center text-sm font-semibold text-[#6B6B6B] hover:text-[#7A9E2E] transition-colors"
+                  className="inline-flex items-center text-sm font-semibold text-[#4A4A4A] hover:text-[#7A9E2E] transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back

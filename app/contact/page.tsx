@@ -109,7 +109,7 @@ export default function ContactPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mx-auto text-[#6B6B6B] text-base sm:text-lg leading-relaxed"
+          className="max-w-2xl mx-auto text-[#4A4A4A] text-base sm:text-lg leading-relaxed"
         >
           Have questions about our modular interiors, turnkey execution, or landscaping services? Our award-winning design consultants are here to help.
         </motion.p>
@@ -134,7 +134,7 @@ export default function ContactPage() {
               </div>
               <h3 className="text-lg font-bold text-[#3A3A3A] mb-2">{info.title}</h3>
               <p className="text-base font-semibold text-[#7A9E2E] mb-1">{info.details}</p>
-              <p className="text-xs text-[#6B6B6B]">{info.subtext}</p>
+              <p className="text-xs text-[#4A4A4A]">{info.subtext}</p>
             </motion.a>
           ))}
         </div>
@@ -153,7 +153,7 @@ export default function ContactPage() {
             <h2 className="text-2xl font-serif font-bold text-[#3A3A3A] mb-2">
               Send Us a Message
             </h2>
-            <p className="text-sm text-[#6B6B6B] mb-8">
+            <p className="text-sm text-[#4A4A4A] mb-8">
               Fill out this form and a professional designer will get back to you with custom layout ideas within one business day.
             </p>
 
@@ -282,12 +282,12 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="text-lg font-bold text-[#3A3A3A] mb-1">Showroom & Office Hours</h3>
-                <p className="text-sm text-[#6B6B6B] mb-2">Feel free to drop by to explore physical catalogs, material samples, and discuss in person.</p>
+                <p className="text-sm text-[#4A4A4A] mb-2">Feel free to drop by to explore physical catalogs, material samples, and discuss in person.</p>
                 <div className="grid grid-cols-2 gap-x-6 text-xs font-semibold text-[#3A3A3A]">
                   <div>Monday - Saturday:</div>
                   <div className="text-right text-[#7A9E2E]">9:30 AM - 7:00 PM</div>
                   <div>Sunday:</div>
-                  <div className="text-right text-[#6B6B6B]">Prior Appointment Only</div>
+                  <div className="text-right text-[#4A4A4A]">Prior Appointment Only</div>
                 </div>
               </div>
             </div>

@@ -201,7 +201,7 @@ export default function TestimonialsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mx-auto text-[#6B6B6B] text-base sm:text-lg mb-8 leading-relaxed"
+          className="max-w-2xl mx-auto text-[#4A4A4A] text-base sm:text-lg mb-8 leading-relaxed"
         >
           Discover how Rexon has turned dreams into spaces and gardens. Read the real-life experiences of our clients in interior design and landscaping.
         </motion.p>
@@ -224,17 +224,17 @@ export default function TestimonialsPage() {
                 <Star key={i} className="w-5 h-5 fill-current" />
               ))}
             </div>
-            <p className="text-sm text-[#6B6B6B]">Average Customer Rating</p>
+            <p className="text-sm text-[#4A4A4A]">Average Customer Rating</p>
           </div>
 
           <div className="flex flex-col items-center md:items-start border-y md:border-y-0 md:border-x border-gray-100 py-6 md:py-0 md:px-8">
             <h3 className="text-5xl font-serif font-bold text-[#3A3A3A] mb-2">120+</h3>
-            <p className="text-sm text-[#6B6B6B]">Completed Residential & Commercial Projects</p>
+            <p className="text-sm text-[#4A4A4A]">Completed Residential & Commercial Projects</p>
           </div>
 
           <div className="flex flex-col items-center md:items-start md:pl-8">
             <h3 className="text-5xl font-serif font-bold text-[#4A5A1E] mb-2">98%</h3>
-            <p className="text-sm text-[#6B6B6B]">Client Satisfaction & Referral Rate</p>
+            <p className="text-sm text-[#4A4A4A]">Client Satisfaction & Referral Rate</p>
           </div>
         </motion.div>
       </section>
@@ -271,7 +271,7 @@ export default function TestimonialsPage() {
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="w-12 h-12 border-4 border-[#7A9E2E] border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p className="text-[#6B6B6B]">Loading client stories...</p>
+            <p className="text-[#4A4A4A]">Loading client stories...</p>
           </div>
         ) : (
           <motion.div
@@ -331,7 +331,7 @@ export default function TestimonialsPage() {
                           Verified
                         </span>
                       </div>
-                      <p className="text-xs text-[#6B6B6B]">
+                      <p className="text-xs text-[#4A4A4A]">
                         {item.designation} {item.location ? `• ${item.location}` : ""}
                       </p>
                     </div>
@@ -374,7 +374,7 @@ export default function TestimonialsPage() {
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#3A3A3A] mb-2 text-center">
                 Share Your Experience
               </h2>
-              <p className="text-xs sm:text-sm text-[#6B6B6B] mb-6 text-center">
+              <p className="text-xs sm:text-sm text-[#4A4A4A] mb-6 text-center">
                 Your feedback helps us grow and assists others in designing beautiful spaces.
               </p>
 
@@ -388,7 +388,7 @@ export default function TestimonialsPage() {
                     <CheckCircle2 className="w-10 h-10" />
                   </div>
                   <h3 className="text-xl font-bold text-[#3A3A3A] mb-2">Thank you!</h3>
-                  <p className="text-[#6B6B6B]">
+                  <p className="text-[#4A4A4A]">
                     Your review has been successfully submitted and will be live shortly.
                   </p>
                 </motion.div>

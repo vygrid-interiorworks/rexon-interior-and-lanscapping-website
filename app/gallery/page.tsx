@@ -1,49 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ZoomIn } from "lucide-react";
+import { X, ZoomIn, Loader2 } from "lucide-react";
+import { apiService } from "@/lib/api";
 
 const categories = ["All", "Interior", "Landscaping", "Kitchen", "Outdoor", "Commercial"];
-
-const gallery = [
-  { id: 1, src: "https://placehold.co/800x1000/4A5A1E/FFFFFF?text=Interior+01", alt: "Luxury Living Room", cat: "Interior", tall: true },
-  { id: 2, src: "https://placehold.co/800x600/7A9E2E/FFFFFF?text=Garden+01", alt: "Tropical Garden", cat: "Landscaping", tall: false },
-  { id: 3, src: "https://placehold.co/800x600/3A3A3A/FFFFFF?text=Kitchen+01", alt: "Modular Kitchen", cat: "Kitchen", tall: false },
-  { id: 4, src: "https://placehold.co/800x900/7A9E2E/FFFFFF?text=Outdoor+01", alt: "Stone Pathway", cat: "Outdoor", tall: true },
-  { id: 5, src: "https://placehold.co/800x600/4A5A1E/FFFFFF?text=Bedroom+01", alt: "Master Bedroom", cat: "Interior", tall: false },
-  { id: 6, src: "https://placehold.co/800x600/3A3A3A/FFFFFF?text=Office+01", alt: "Corporate Office", cat: "Commercial", tall: false },
-  { id: 7, src: "https://placehold.co/800x950/4A5A1E/FFFFFF?text=Interior+02", alt: "Dining Room", cat: "Interior", tall: true },
-  { id: 8, src: "https://placehold.co/800x600/7A9E2E/FFFFFF?text=Garden+02", alt: "Zen Courtyard", cat: "Landscaping", tall: false },
-  { id: 9, src: "https://placehold.co/800x600/3A3A3A/FFFFFF?text=Kitchen+02", alt: "Italian Kitchen", cat: "Kitchen", tall: false },
-  { id: 10, src: "https://placehold.co/800x850/7A9E2E/FFFFFF?text=Outdoor+02", alt: "Koi Pond", cat: "Outdoor", tall: true },
-  { id: 11, src: "https://placehold.co/800x600/4A5A1E/FFFFFF?text=Interior+03", alt: "Kids Room", cat: "Interior", tall: false },
-  { id: 12, src: "https://placehold.co/800x600/3A3A3A/FFFFFF?text=Commercial+01", alt: "Restaurant Interior", cat: "Commercial", tall: false },
-  { id: 13, src: "https://placehold.co/800x1000/4A5A1E/FFFFFF?text=Interior+04", alt: "Study Room", cat: "Interior", tall: true },
-  { id: 14, src: "https://placehold.co/800x600/7A9E2E/FFFFFF?text=Garden+03", alt: "Terrace Garden", cat: "Landscaping", tall: false },
-  { id: 15, src: "https://placehold.co/800x600/3A3A3A/FFFFFF?text=Outdoor+03", alt: "Garden Lighting", cat: "Outdoor", tall: false },
-];
 
 export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  
+  // Firebase Data State
+  const [galleryItems, setGalleryItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filtered = activeCategory === "All" ? gallery : gallery.filter(g => g.cat === activeCategory);
+  useEffect(() => {
+    async function loadGallery() {
+      try {
+        const data = await apiService.getGallery();
+        setGalleryItems(data);
+      } catch (error) {
+        console.error("Failed to fetch gallery:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadGallery();
+  }, []);
+
+  const filtered = activeCategory === "All" ? galleryItems : galleryItems.filter(g => g.category === activeCategory);
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
-    setLightbox({ src: filtered[index].src, alt: filtered[index].alt });
+    setLightbox({ src: filtered[index].image, alt: filtered[index].title });
   };
   const prev = () => {
     const newIdx = (lightboxIndex - 1 + filtered.length) % filtered.length;
     setLightboxIndex(newIdx);
-    setLightbox({ src: filtered[newIdx].src, alt: filtered[newIdx].alt });
+    setLightbox({ src: filtered[newIdx].image, alt: filtered[newIdx].title });
   };
   const next = () => {
     const newIdx = (lightboxIndex + 1) % filtered.length;
     setLightboxIndex(newIdx);
-    setLightbox({ src: filtered[newIdx].src, alt: filtered[newIdx].alt });
+    setLightbox({ src: filtered[newIdx].image, alt: filtered[newIdx].title });
   };
 
   return (
@@ -66,46 +67,58 @@ export default function GalleryPage() {
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {categories.map(c => (
               <button key={c} onClick={() => setActiveCategory(c)}
-                className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${activeCategory === c ? "bg-[#7A9E2E] text-white shadow-lg" : "bg-white text-[#6B6B6B] border border-[#E8E8E8] hover:border-[#7A9E2E] hover:text-[#7A9E2E]"}`}>
+                className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${activeCategory === c ? "bg-[#7A9E2E] text-white shadow-lg" : "bg-white text-[#4A4A4A] border border-[#E8E8E8] hover:border-[#7A9E2E] hover:text-[#7A9E2E]"}`}>
                 {c}
               </button>
             ))}
           </div>
 
-          {/* Masonry */}
-          <motion.div layout className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-            <AnimatePresence>
-              {filtered.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.35 }}
-                  className="break-inside-avoid group relative rounded-xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-300"
-                  onClick={() => openLightbox(index)}
-                >
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className={`w-full object-cover group-hover:scale-105 transition-transform duration-600 ${item.tall ? "h-72 lg:h-96" : "h-48 lg:h-60"}`}
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/45 transition-all duration-300 flex flex-col items-center justify-center gap-2">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="w-10 h-10 rounded-full bg-white/25 border border-white flex items-center justify-center mb-2 mx-auto">
-                        <ZoomIn className="w-5 h-5 text-white" />
+          {/* Loading State */}
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20 text-[#6B6B6B]">
+              <Loader2 className="w-8 h-8 animate-spin mb-4 text-[#7A9E2E]" />
+              <p>Loading gallery items...</p>
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 text-[#6B6B6B]">
+              <p>No gallery images found in this category.</p>
+            </div>
+          ) : (
+            /* Masonry */
+            <motion.div layout className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+              <AnimatePresence>
+                {filtered.map((item, index) => (
+                  <motion.div
+                    key={item._id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.35 }}
+                    className="break-inside-avoid group relative rounded-xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-300"
+                    onClick={() => openLightbox(index)}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className={`w-full object-cover group-hover:scale-105 transition-transform duration-600 ${index % 3 === 0 ? "h-72 lg:h-96" : "h-48 lg:h-60"}`}
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/45 transition-all duration-300 flex flex-col items-center justify-center gap-2">
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="w-10 h-10 rounded-full bg-white/25 border border-white flex items-center justify-center mb-2 mx-auto">
+                          <ZoomIn className="w-5 h-5 text-white" />
+                        </div>
+                        <p className="text-white text-xs font-bold text-center px-3 leading-tight">{item.title}</p>
                       </div>
-                      <p className="text-white text-xs font-bold text-center px-3 leading-tight">{item.alt}</p>
                     </div>
-                  </div>
-                  <span className="absolute bottom-2 left-2 bg-[#7A9E2E]/90 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                    {item.cat}
-                  </span>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+                    <span className="absolute bottom-2 left-2 bg-[#7A9E2E]/90 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      {item.category}
+                    </span>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -115,12 +128,12 @@ export default function GalleryPage() {
           <motion.div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setLightbox(null)}>
-            <motion.div className="relative max-w-4xl w-full" initial={{ scale: 0.85 }} animate={{ scale: 1 }} exit={{ scale: 0.85 }} onClick={e => e.stopPropagation()}>
-              <button onClick={() => setLightbox(null)} className="absolute -top-4 -right-4 z-10 w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white">
+            <motion.div className="relative max-w-4xl w-full flex flex-col items-center" initial={{ scale: 0.85 }} animate={{ scale: 1 }} exit={{ scale: 0.85 }} onClick={e => e.stopPropagation()}>
+              <button onClick={() => setLightbox(null)} className="absolute -top-12 right-0 z-10 w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white">
                 <X className="w-5 h-5" />
               </button>
               <img src={lightbox.src} alt={lightbox.alt} className="w-full rounded-2xl shadow-2xl max-h-[80vh] object-contain" />
-              <div className="flex items-center justify-between mt-4 px-2">
+              <div className="flex items-center justify-between w-full mt-4 px-2">
                 <button onClick={prev} className="text-white/60 hover:text-white text-sm font-bold uppercase tracking-wider transition-colors">← Prev</button>
                 <p className="text-white/60 text-sm">{lightbox.alt}</p>
                 <button onClick={next} className="text-white/60 hover:text-white text-sm font-bold uppercase tracking-wider transition-colors">Next →</button>

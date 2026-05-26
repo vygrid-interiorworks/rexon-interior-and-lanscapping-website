@@ -16,6 +16,7 @@ import {
   MessageSquare,
   Sparkles,
 } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { apiService } from "@/lib/api";
 
 type Step = "details" | "type" | "budget" | "style" | "success";
@@ -128,7 +129,7 @@ Looking forward to consulting soon.`;
       {/* Progress Header */}
       <section className="max-w-3xl mx-auto px-4 py-8">
         <div className="text-center mb-8">
-          <span className="text-xs sm:text-sm font-semibold tracking-widest text-[#7A9E2E] uppercase block mb-2">
+          <span className="text-xs sm:text-sm font-semibold tracking-widest text-[#89B036] uppercase block mb-2">
             Rexon Cost Estimator
           </span>
           <h1 className="text-3xl sm:text-4xl font-serif text-[#3A3A3A] font-bold">
@@ -145,7 +146,7 @@ Looking forward to consulting soon.`;
             initial={{ width: "0%" }}
             animate={{ width: `${getProgressPercentage()}%` }}
             transition={{ duration: 0.5 }}
-            className="bg-gradient-to-r from-[#7A9E2E] to-[#4A5A1E] h-full rounded-full"
+            className="bg-gradient-to-r from-[#89B036] to-[#546622] h-full rounded-full"
           />
         </div>
 
@@ -161,7 +162,7 @@ Looking forward to consulting soon.`;
                 className="space-y-6 flex-1"
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#7A9E2E]/10 flex items-center justify-center text-[#7A9E2E]">
+                  <div className="w-10 h-10 rounded-full bg-[#89B036]/10 flex items-center justify-center text-[#89B036]">
                     <User className="w-5 h-5" />
                   </div>
                   <div>
@@ -181,7 +182,7 @@ Looking forward to consulting soon.`;
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Priya Nair"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
                   <div>
@@ -194,7 +195,7 @@ Looking forward to consulting soon.`;
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="e.g. +91 98765 43210"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
                 </div>
@@ -209,7 +210,7 @@ Looking forward to consulting soon.`;
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="e.g. priya@nair.com"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
                   <div>
@@ -221,7 +222,7 @@ Looking forward to consulting soon.`;
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                       placeholder="e.g. Jayanagar, Bangalore"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
                 </div>
@@ -237,7 +238,7 @@ Looking forward to consulting soon.`;
                 className="space-y-6 flex-1"
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#7A9E2E]/10 flex items-center justify-center text-[#7A9E2E]">
+                  <div className="w-10 h-10 rounded-full bg-[#89B036]/10 flex items-center justify-center text-[#89B036]">
                     <Sliders className="w-5 h-5" />
                   </div>
                   <div>
@@ -259,7 +260,7 @@ Looking forward to consulting soon.`;
                         onClick={() => setProjectType(type)}
                         className={`py-4 rounded-xl border text-sm font-semibold tracking-wide transition-all ${
                           projectType === type
-                            ? "bg-[#7A9E2E] text-white border-[#7A9E2E] shadow-md"
+                            ? "bg-[#89B036] text-white border-[#89B036] shadow-md"
                             : "bg-gray-50 border-gray-200 text-[#3A3A3A] hover:bg-gray-100"
                         }`}
                       >
@@ -279,7 +280,7 @@ Looking forward to consulting soon.`;
                       type="number"
                       value={sizeSqft}
                       onChange={(e) => setSizeSqft(Number(e.target.value))}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
 
@@ -291,7 +292,7 @@ Looking forward to consulting soon.`;
                       <select
                         value={bhkSize}
                         onChange={(e) => setBhkSize(e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                       >
                         <option value="1 BHK">1 BHK</option>
                         <option value="2 BHK">2 BHK</option>
@@ -315,7 +316,7 @@ Looking forward to consulting soon.`;
                 className="space-y-6 flex-1"
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#7A9E2E]/10 flex items-center justify-center text-[#7A9E2E]">
+                  <div className="w-10 h-10 rounded-full bg-[#89B036]/10 flex items-center justify-center text-[#89B036]">
                     <DollarSign className="w-5 h-5" />
                   </div>
                   <div>
@@ -328,7 +329,7 @@ Looking forward to consulting soon.`;
                 <div className="space-y-6 py-4">
                   <div className="flex justify-between items-center bg-gray-50 rounded-2xl p-6 border border-gray-100">
                     <span className="text-sm font-semibold text-[#4A4A4A]">Target Investment:</span>
-                    <span className="text-2xl font-bold text-[#7A9E2E] font-serif">
+                    <span className="text-2xl font-bold text-[#89B036] font-serif">
                       INR {budget.toLocaleString()}
                     </span>
                   </div>
@@ -340,7 +341,7 @@ Looking forward to consulting soon.`;
                     step="50000"
                     value={budget}
                     onChange={(e) => setBudget(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-100 rounded-full appearance-none cursor-pointer accent-[#7A9E2E]"
+                    className="w-full h-2 bg-gray-100 rounded-full appearance-none cursor-pointer accent-[#89B036]"
                   />
 
                   <div className="flex justify-between text-xs text-[#4A4A4A] font-semibold">
@@ -351,7 +352,7 @@ Looking forward to consulting soon.`;
                   </div>
                 </div>
 
-                <div className="bg-[#7A9E2E]/5 rounded-2xl p-4 border border-[#7A9E2E]/20 text-xs text-[#4A4A4A] leading-relaxed">
+                <div className="bg-[#89B036]/5 rounded-2xl p-4 border border-[#89B036]/20 text-xs text-[#4A4A4A] leading-relaxed">
                   💡 <strong>Tip:</strong> The budget size impacts product finishes (e.g. premium laminates vs. acrylics, or exotic plants vs. native creepers). Our consultants will tailor recommendations accordingly.
                 </div>
               </motion.div>
@@ -366,7 +367,7 @@ Looking forward to consulting soon.`;
                 className="space-y-6 flex-1"
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#7A9E2E]/10 flex items-center justify-center text-[#7A9E2E]">
+                  <div className="w-10 h-10 rounded-full bg-[#89B036]/10 flex items-center justify-center text-[#89B036]">
                     <Compass className="w-5 h-5" />
                   </div>
                   <div>
@@ -385,7 +386,7 @@ Looking forward to consulting soon.`;
                       <select
                         value={interiorStyle}
                         onChange={(e) => setInteriorStyle(e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                       >
                         <option value="Modern Minimalist">Modern Minimalist</option>
                         <option value="Luxurious Editorial">Luxurious Editorial</option>
@@ -405,7 +406,7 @@ Looking forward to consulting soon.`;
                       <select
                         value={landscapeStyle}
                         onChange={(e) => setLandscapeStyle(e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                       >
                         <option value="Zen Garden">Zen Japanese Garden</option>
                         <option value="Lush Tropical">Lush Tropical Oasis</option>
@@ -427,7 +428,7 @@ Looking forward to consulting soon.`;
                     value={specialRequirements}
                     onChange={(e) => setSpecialRequirements(e.target.value)}
                     placeholder="e.g. Pet-friendly plants, double-height ceiling requirements, space-saving kitchen attachments..."
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                   />
                 </div>
               </motion.div>
@@ -456,7 +457,7 @@ Looking forward to consulting soon.`;
                     onClick={triggerWhatsAppRedirect}
                     className="inline-flex items-center justify-center px-8 py-3.5 font-semibold text-sm text-white bg-[#25D366] hover:bg-[#1EBE57] rounded-xl transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none"
                   >
-                    <MessageSquare className="w-5 h-5 mr-2 fill-current" />
+                    <WhatsAppIcon className="w-5 h-5 mr-2 fill-current" />
                     Share on WhatsApp for Fast Estimate
                   </button>
 
@@ -489,7 +490,7 @@ Looking forward to consulting soon.`;
               {currentStep !== "details" ? (
                 <button
                   onClick={handleBack}
-                  className="inline-flex items-center text-sm font-semibold text-[#4A4A4A] hover:text-[#7A9E2E] transition-colors"
+                  className="inline-flex items-center text-sm font-semibold text-[#4A4A4A] hover:text-[#89B036] transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back
@@ -501,7 +502,7 @@ Looking forward to consulting soon.`;
               {currentStep !== "style" ? (
                 <button
                   onClick={handleNext}
-                  className="inline-flex items-center justify-center px-6 py-3 font-semibold text-sm text-white bg-[#7A9E2E] rounded-xl hover:bg-[#4A5A1E] transition-all duration-300 shadow-md hover:shadow-lg"
+                  className="inline-flex items-center justify-center px-6 py-3 font-semibold text-sm text-white bg-[#89B036] rounded-xl hover:bg-[#546622] transition-all duration-300 shadow-md hover:shadow-lg"
                 >
                   Next Step
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -510,7 +511,7 @@ Looking forward to consulting soon.`;
                 <button
                   onClick={handleSubmit}
                   disabled={submitting}
-                  className="inline-flex items-center justify-center px-8 py-3.5 font-semibold text-sm text-white bg-[#7A9E2E] rounded-xl hover:bg-[#4A5A1E] transition-all duration-300 shadow-md"
+                  className="inline-flex items-center justify-center px-8 py-3.5 font-semibold text-sm text-white bg-[#89B036] rounded-xl hover:bg-[#546622] transition-all duration-300 shadow-md"
                 >
                   {submitting ? (
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>

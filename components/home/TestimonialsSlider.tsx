@@ -67,7 +67,7 @@ export default function TestimonialsSlider() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#7A9E2E]">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
             Client Stories
           </span>
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
@@ -92,7 +92,7 @@ export default function TestimonialsSlider() {
                 className="w-full max-w-2xl bg-[#F9F8F5] rounded-3xl p-8 lg:p-12 relative border border-[#E8E8E8] shadow-xl"
               >
                 {/* Quote icon */}
-                <Quote className="absolute top-8 right-8 w-10 h-10 text-[#7A9E2E]/15" />
+                <Quote className="absolute top-8 right-8 w-10 h-10 text-[#89B036]/15" />
 
                 {/* Stars */}
                 <div className="flex gap-1 mb-5">
@@ -109,12 +109,12 @@ export default function TestimonialsSlider() {
                   <img
                     src={testimonials[current].avatar}
                     alt={testimonials[current].name}
-                    className="w-14 h-14 rounded-full object-cover ring-2 ring-[#7A9E2E]/30"
+                    className="w-14 h-14 rounded-full object-cover ring-2 ring-[#89B036]/30"
                   />
                   <div>
                     <div className="font-bold text-[#3A3A3A] text-base">{testimonials[current].name}</div>
                     <div className="text-xs text-[#4A4A4A]">{testimonials[current].role}</div>
-                    <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-widest text-[#7A9E2E]">
+                    <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-widest text-[#89B036]">
                       {testimonials[current].category}
                     </span>
                   </div>
@@ -127,7 +127,7 @@ export default function TestimonialsSlider() {
           <div className="flex items-center justify-center gap-6 mt-10">
             <button
               onClick={prev}
-              className="w-11 h-11 rounded-full border-2 border-[#7A9E2E] text-[#7A9E2E] hover:bg-[#7A9E2E] hover:text-white flex items-center justify-center transition-all duration-300"
+              className="w-11 h-11 rounded-full border-2 border-[#89B036] text-[#89B036] hover:bg-[#89B036] hover:text-white flex items-center justify-center transition-all duration-300"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -140,7 +140,7 @@ export default function TestimonialsSlider() {
                   key={i}
                   onClick={() => setCurrent(i)}
                   className={`rounded-full transition-all duration-300 ${
-                    i === current ? "w-6 h-2.5 bg-[#7A9E2E]" : "w-2.5 h-2.5 bg-[#7A9E2E]/25 hover:bg-[#7A9E2E]/50"
+                    i === current ? "w-6 h-2.5 bg-[#89B036]" : "w-2.5 h-2.5 bg-[#89B036]/25 hover:bg-[#89B036]/50"
                   }`}
                   aria-label={`Go to testimonial ${i + 1}`}
                 />
@@ -149,7 +149,7 @@ export default function TestimonialsSlider() {
 
             <button
               onClick={next}
-              className="w-11 h-11 rounded-full border-2 border-[#7A9E2E] text-[#7A9E2E] hover:bg-[#7A9E2E] hover:text-white flex items-center justify-center transition-all duration-300"
+              className="w-11 h-11 rounded-full border-2 border-[#89B036] text-[#89B036] hover:bg-[#89B036] hover:text-white flex items-center justify-center transition-all duration-300"
               aria-label="Next testimonial"
             >
               <ChevronRight className="w-5 h-5" />

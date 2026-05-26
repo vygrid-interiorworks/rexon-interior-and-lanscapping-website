@@ -30,7 +30,6 @@ export default function Navbar() {
     { name: "Services", path: "/services" },
     { name: "Projects", path: "/projects" },
     { name: "Gallery", path: "/gallery" },
-    { name: "Testimonials", path: "/testimonials" },
     { name: "Contact Us", path: "/contact" },
   ];
 
@@ -40,7 +39,7 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-[#FFFFFF] shadow-md py-3"
-            : "bg-[#FFFFFF]/90 backdrop-blur-md py-4 border-b border-[#3A3A3A]/10"
+            : "bg-[#FFFFFF] py-4 border-b border-[#3A3A3A]/10"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,9 +49,9 @@ export default function Navbar() {
               <Image
                 src="/rexon_2d_logo.png"
                 alt="Rexon Logo"
-                width={150}
-                height={50}
-                className="h-10 w-auto object-contain"
+                width={200}
+                height={66}
+                className="h-16 w-auto object-contain"
                 priority
               />
             </Link>
@@ -67,13 +66,13 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     href={link.path}
-                    className={`relative text-sm font-semibold tracking-wide transition-colors hover:text-[#7A9E2E] focus:outline-none ${
-                      isActive ? "text-[#7A9E2E]" : "text-[#3A3A3A]"
+                    className={`relative text-sm font-semibold tracking-wide transition-colors hover:text-[#89B036] focus:outline-none ${
+                      isActive ? "text-[#89B036]" : "text-[#3A3A3A]"
                     }`}
                   >
                     {link.name}
                     {isActive && (
-                      <span className="absolute left-0 bottom-[-6px] w-full h-[2px] bg-[#7A9E2E] rounded" />
+                      <span className="absolute left-0 bottom-[-6px] w-full h-[2px] bg-[#89B036] rounded" />
                     )}
                   </Link>
                 );
@@ -84,7 +83,7 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center space-x-4">
               <Link
                 href="/get-quote"
-                className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold tracking-wider text-[#FFFFFF] bg-[#7A9E2E] rounded-full hover:bg-[#4A5A1E] transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#7A9E2E]"
+                className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold tracking-wider text-[#FFFFFF] bg-[#89B036] rounded-full hover:bg-[#546622] transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#89B036]"
               >
                 Get Free Quote
                 <ArrowRight className="ml-2 w-4 h-4" />
@@ -95,7 +94,7 @@ export default function Navbar() {
             <div className="flex lg:hidden items-center">
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="p-2 text-[#3A3A3A] hover:text-[#7A9E2E] focus:outline-none"
+                className="p-2 text-[#3A3A3A] hover:text-[#89B036] focus:outline-none"
                 aria-label="Open Menu"
               >
                 <Menu className="w-6 h-6" />

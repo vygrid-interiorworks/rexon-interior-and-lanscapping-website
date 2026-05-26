@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-rexon-green: #7A9E2E;
-  --color-rexon-dark-green: #4A5A1E;
+  --color-rexon-green: #89B036;
+  --color-rexon-dark-green: #546622;
   --color-rexon-footer-green: #2E3A1E;
   --color-rexon-grey: #6B6B6B;
   --color-rexon-dark-grey: #3A3A3A;
@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6, .font-playfair {
 }
 
 .text-rexon-green-gradient {
-  background: linear-gradient(135deg, #7A9E2E 0%, #4A5A1E 100%);
+  background: linear-gradient(135deg, #89B036 0%, #546622 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -47,12 +47,12 @@ h1, h2, h3, h4, h5, h6, .font-playfair {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #7A9E2E;
+  background: #89B036;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #4A5A1E;
+  background: #546622;
 }
 
 /* Custom animation delay classes */

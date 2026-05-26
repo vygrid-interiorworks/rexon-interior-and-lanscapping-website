@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { X, ArrowRight, Phone, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -52,7 +53,7 @@ export default function MobileMenu({
               </Link>
               <button
                 onClick={onClose}
-                className="p-2 rounded-full hover:bg-[#F2F2F2] text-[#3A3A3A] hover:text-[#7A9E2E] focus:outline-none"
+                className="p-2 rounded-full hover:bg-[#F2F2F2] text-[#3A3A3A] hover:text-[#89B036] focus:outline-none"
                 aria-label="Close Menu"
               >
                 <X className="w-6 h-6" />
@@ -72,8 +73,8 @@ export default function MobileMenu({
                     onClick={onClose}
                     className={`px-4 py-3 text-base font-semibold rounded-lg transition-all ${
                       isActive
-                        ? "bg-[#7A9E2E]/10 text-[#7A9E2E]"
-                        : "text-[#3A3A3A] hover:bg-[#F2F2F2] hover:text-[#7A9E2E]"
+                        ? "bg-[#89B036]/10 text-[#89B036]"
+                        : "text-[#3A3A3A] hover:bg-[#F2F2F2] hover:text-[#89B036]"
                     }`}
                   >
                     {link.name}
@@ -87,7 +88,7 @@ export default function MobileMenu({
               <Link
                 href="/get-quote"
                 onClick={onClose}
-                className="flex items-center justify-center w-full py-3 px-6 text-base font-bold tracking-wider text-white bg-[#7A9E2E] rounded-full hover:bg-[#4A5A1E] transition-all shadow-md focus:outline-none"
+                className="flex items-center justify-center w-full py-3 px-6 text-base font-bold tracking-wider text-white bg-[#89B036] rounded-full hover:bg-[#546622] transition-all shadow-md focus:outline-none"
               >
                 Get Free Quote
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -98,7 +99,7 @@ export default function MobileMenu({
                   href="tel:+919876543210"
                   className="flex items-center justify-center py-2.5 px-4 text-sm font-semibold border border-[#3A3A3A]/20 rounded-full text-[#3A3A3A] hover:bg-[#F2F2F2] transition-all"
                 >
-                  <Phone className="mr-2 w-4 h-4 text-[#7A9E2E]" />
+                  <Phone className="mr-2 w-4 h-4 text-[#89B036]" />
                   Call Us
                 </a>
                 <a
@@ -107,7 +108,7 @@ export default function MobileMenu({
                   rel="noopener noreferrer"
                   className="flex items-center justify-center py-2.5 px-4 text-sm font-semibold rounded-full text-white bg-[#25D366] hover:bg-[#20ba59] transition-all"
                 >
-                  <MessageSquare className="mr-2 w-4 h-4" />
+                  <WhatsAppIcon className="mr-2 w-4 h-4" />
                   WhatsApp
                 </a>
               </div>

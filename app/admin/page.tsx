@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
   return (
     <main className="min-h-screen bg-slate-950 flex flex-col justify-center items-center px-4 relative overflow-hidden">
       {/* Background radial highlight */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#7A9E2E]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#89B036]/10 rounded-full blur-[100px] pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -59,7 +59,7 @@ export default function AdminLoginPage() {
       >
         {/* Shield Icon header */}
         <div className="flex flex-col items-center mb-8">
-          <div className="w-16 h-16 bg-[#7A9E2E]/20 text-[#7A9E2E] rounded-2xl flex items-center justify-center mb-4 border border-[#7A9E2E]/30">
+          <div className="w-16 h-16 bg-[#89B036]/20 text-[#89B036] rounded-2xl flex items-center justify-center mb-4 border border-[#89B036]/30">
             <ShieldCheck className="w-8 h-8" />
           </div>
           <h1 className="text-2xl font-bold text-white tracking-wide">Rexon Admin Panel</h1>
@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter admin password"
-                className="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-white placeholder-slate-600 transition-all"
+                className="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-white placeholder-slate-600 transition-all"
               />
             </div>
           </div>
@@ -103,7 +103,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full inline-flex items-center justify-center px-6 py-3.5 font-semibold text-sm text-white bg-[#7A9E2E] rounded-xl hover:bg-[#4A5A1E] transition-all duration-300 shadow-md focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+            className="w-full inline-flex items-center justify-center px-6 py-3.5 font-semibold text-sm text-white bg-[#89B036] rounded-xl hover:bg-[#546622] transition-all duration-300 shadow-md focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed mt-2"
           >
             {loading ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>

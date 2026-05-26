@@ -12,7 +12,7 @@ const services = [
     icon: Sofa,
     title: "Interior Design",
     desc: "Elegant and functional living spaces — from concept boards to final installation.",
-    color: "#7A9E2E",
+    color: "#89B036",
     slug: "interior-design",
     tag: "Interiors",
   },
@@ -20,7 +20,7 @@ const services = [
     icon: ChefHat,
     title: "Modular Kitchen",
     desc: "Smart, stylish kitchens with premium hardware and custom cabinet finishes.",
-    color: "#4A5A1E",
+    color: "#546622",
     slug: "modular-kitchen",
     tag: "Interiors",
   },
@@ -28,7 +28,7 @@ const services = [
     icon: TreePine,
     title: "Landscaping & Gardens",
     desc: "Transforming outdoor spaces into breathtaking natural retreats.",
-    color: "#7A9E2E",
+    color: "#89B036",
     slug: "landscaping",
     tag: "Outdoors",
   },
@@ -36,7 +36,7 @@ const services = [
     icon: Layers,
     title: "False Ceiling",
     desc: "Designer gypsum and POP false ceilings with integrated lighting.",
-    color: "#4A5A1E",
+    color: "#546622",
     slug: "false-ceiling",
     tag: "Interiors",
   },
@@ -44,7 +44,7 @@ const services = [
     icon: Paintbrush,
     title: "Wallpaper & Wall Décor",
     desc: "Premium wallpapers, textures, and accent wall treatments.",
-    color: "#7A9E2E",
+    color: "#89B036",
     slug: "wallpaper-decor",
     tag: "Interiors",
   },
@@ -52,7 +52,7 @@ const services = [
     icon: Flower2,
     title: "Garden Maintenance",
     desc: "Scheduled upkeep, pruning, fertilization, and seasonal replanting.",
-    color: "#4A5A1E",
+    color: "#546622",
     slug: "garden-maintenance",
     tag: "Outdoors",
   },
@@ -60,7 +60,7 @@ const services = [
     icon: Lightbulb,
     title: "Lighting Design",
     desc: "Ambient, task, and accent lighting systems for mood-perfect spaces.",
-    color: "#7A9E2E",
+    color: "#89B036",
     slug: "lighting-design",
     tag: "Interiors",
   },
@@ -68,7 +68,7 @@ const services = [
     icon: Hammer,
     title: "Carpentry & Woodwork",
     desc: "Bespoke wardrobes, TV units, and custom wooden furniture crafted locally.",
-    color: "#4A5A1E",
+    color: "#546622",
     slug: "carpentry",
     tag: "Interiors",
   },
@@ -76,7 +76,7 @@ const services = [
     icon: BrickWall,
     title: "Stone & Tile Work",
     desc: "Natural stone cladding, floor tiling, and mosaic feature walls.",
-    color: "#7A9E2E",
+    color: "#89B036",
     slug: "stone-tile",
     tag: "Both",
   },
@@ -84,7 +84,7 @@ const services = [
     icon: Droplets,
     title: "Water Features",
     desc: "Custom ponds, waterfalls, and fountain installations for outdoor luxury.",
-    color: "#4A5A1E",
+    color: "#546622",
     slug: "water-features",
     tag: "Outdoors",
   },
@@ -114,7 +114,7 @@ export default function ServicesGrid() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#7A9E2E]">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
             What We Offer
           </span>
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
@@ -153,14 +153,14 @@ export default function ServicesGrid() {
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[#A0A0A0] mb-2">
                   {service.tag}
                 </span>
-                <h3 className="text-base font-bold text-[#3A3A3A] mb-2 leading-snug group-hover:text-[#7A9E2E] transition-colors duration-300">
+                <h3 className="text-base font-bold text-[#3A3A3A] mb-2 leading-snug group-hover:text-[#89B036] transition-colors duration-300">
                   {service.title}
                 </h3>
                 <p className="text-xs text-[#4A4A4A] leading-relaxed flex-grow">{service.desc}</p>
 
                 <Link
                   href={`/services#${service.slug}`}
-                  className="mt-4 text-xs font-bold text-[#7A9E2E] uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="mt-4 text-xs font-bold text-[#89B036] uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 >
                   Learn More →
                 </Link>
@@ -178,7 +178,7 @@ export default function ServicesGrid() {
         >
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#7A9E2E] hover:bg-[#4A5A1E] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             View All Services
           </Link>

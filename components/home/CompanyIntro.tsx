@@ -43,8 +43,8 @@ function LeadModal({ onClose }: { onClose: () => void }) {
 
         {submitted ? (
           <div className="text-center py-8">
-            <div className="w-16 h-16 rounded-full bg-[#7A9E2E]/15 flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 className="w-9 h-9 text-[#7A9E2E]" />
+            <div className="w-16 h-16 rounded-full bg-[#89B036]/15 flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="w-9 h-9 text-[#89B036]" />
             </div>
             <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mb-2">Thank You!</h3>
             <p className="text-[#4A4A4A] text-sm leading-relaxed">
@@ -54,7 +54,7 @@ function LeadModal({ onClose }: { onClose: () => void }) {
         ) : (
           <>
             <div className="mb-6">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#7A9E2E]">Free Consultation</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">Free Consultation</span>
               <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mt-1">Get Expert Advice</h3>
               <p className="text-sm text-[#4A4A4A] mt-1">Fill in your details and we&apos;ll call you back for free.</p>
             </div>
@@ -62,21 +62,21 @@ function LeadModal({ onClose }: { onClose: () => void }) {
               <input
                 required type="text" placeholder="Your Full Name"
                 value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#7A9E2E] transition-colors placeholder:text-[#AAAAAA]"
+                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors placeholder:text-[#AAAAAA]"
               />
               <input
                 required type="tel" placeholder="Phone Number"
                 value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
-                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#7A9E2E] transition-colors placeholder:text-[#AAAAAA]"
+                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors placeholder:text-[#AAAAAA]"
               />
               <input
                 type="email" placeholder="Email Address (optional)"
                 value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
-                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#7A9E2E] transition-colors placeholder:text-[#AAAAAA]"
+                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors placeholder:text-[#AAAAAA]"
               />
               <select
                 value={form.service} onChange={e => setForm({ ...form, service: e.target.value })}
-                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#7A9E2E] transition-colors text-[#3A3A3A]"
+                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors text-[#3A3A3A]"
               >
                 <option>Interior Design</option>
                 <option>Modular Kitchen</option>
@@ -87,7 +87,7 @@ function LeadModal({ onClose }: { onClose: () => void }) {
               </select>
               <button
                 type="submit"
-                className="w-full bg-[#7A9E2E] hover:bg-[#4A5A1E] text-white font-bold py-3.5 rounded-lg transition-colors duration-300 text-sm uppercase tracking-wider"
+                className="w-full bg-[#89B036] hover:bg-[#546622] text-white font-bold py-3.5 rounded-lg transition-colors duration-300 text-sm uppercase tracking-wider"
               >
                 Request Free Consultation
               </button>
@@ -131,7 +131,7 @@ export default function CompanyIntro() {
               />
             </div>
             {/* Badge */}
-            <div className="absolute top-6 left-6 bg-[#7A9E2E] text-white rounded-xl px-5 py-3 shadow-lg">
+            <div className="absolute top-6 left-6 bg-[#89B036] text-white rounded-xl px-5 py-3 shadow-lg">
               <div className="text-3xl font-extrabold font-playfair leading-none">12+</div>
               <div className="text-xs font-semibold tracking-widest uppercase mt-1">Years Expert</div>
             </div>
@@ -145,7 +145,7 @@ export default function CompanyIntro() {
             transition={{ duration: 0.8 }}
             className="lg:pl-8"
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-[#7A9E2E]">Who We Are</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">Who We Are</span>
             <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-6 leading-tight">
               Design That Speaks,{" "}
               <span className="text-rexon-green-gradient">Spaces That Inspire</span>
@@ -169,7 +169,7 @@ export default function CompanyIntro() {
                     transition={{ delay: i * 0.1, duration: 0.5 }}
                     className="flex items-start gap-3"
                   >
-                    <Icon className="w-5 h-5 text-[#7A9E2E] mt-0.5 flex-shrink-0" />
+                    <Icon className="w-5 h-5 text-[#89B036] mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-[#3A3A3A] leading-snug">{usp.text}</span>
                   </motion.li>
                 );
@@ -179,13 +179,13 @@ export default function CompanyIntro() {
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center justify-center px-7 py-3.5 bg-[#7A9E2E] hover:bg-[#4A5A1E] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center px-7 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Book Free Consultation
               </button>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center px-7 py-3.5 border-2 border-[#7A9E2E] text-[#7A9E2E] hover:bg-[#7A9E2E] hover:text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300"
+                className="inline-flex items-center justify-center px-7 py-3.5 border-2 border-[#89B036] text-[#89B036] hover:bg-[#89B036] hover:text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300"
               >
                 Our Story <ArrowRight className="ml-2 w-4 h-4" />
               </Link>

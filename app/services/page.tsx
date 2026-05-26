@@ -191,7 +191,7 @@ export default function ServicesPage() {
     <div className="bg-white">
       {/* Hero */}
       <section className="bg-[#2E3A1E] py-28 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_left,_#7A9E2E_0%,_transparent_60%)]" />
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_left,_#89B036_0%,_transparent_60%)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-[#A8D65A]">What We Offer</span>
           <h1 className="text-5xl lg:text-6xl font-playfair font-bold text-white mt-4 mb-6">Our Services</h1>
@@ -210,7 +210,7 @@ export default function ServicesPage() {
             {/* Sidebar */}
             <aside className="w-full lg:w-72 flex-shrink-0">
               <div className="bg-[#F9F8F5] rounded-2xl border border-[#E8E8E8] p-4 sticky top-24">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-[#7A9E2E] px-3 mb-3">All Services</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-[#89B036] px-3 mb-3">All Services</p>
                 <nav className="space-y-1">
                   {services.map((s) => {
                     const SIcon = s.icon;
@@ -221,8 +221,8 @@ export default function ServicesPage() {
                         onClick={() => setActive(s.id)}
                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 text-sm font-semibold ${
                           isActive
-                            ? "bg-[#7A9E2E] text-white shadow-md"
-                            : "text-[#3A3A3A] hover:bg-[#7A9E2E]/10 hover:text-[#7A9E2E]"
+                            ? "bg-[#89B036] text-white shadow-md"
+                            : "text-[#3A3A3A] hover:bg-[#89B036]/10 hover:text-[#89B036]"
                         }`}
                       >
                         <SIcon className="w-4 h-4 flex-shrink-0" />
@@ -250,11 +250,11 @@ export default function ServicesPage() {
                   </div>
 
                   {/* Badge + heading */}
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-[#7A9E2E] bg-[#7A9E2E]/10 px-3 py-1 rounded-full mb-4">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-[#89B036] bg-[#89B036]/10 px-3 py-1 rounded-full mb-4">
                     {current.tag}
                   </span>
                   <h2 className="text-4xl font-playfair font-bold text-[#3A3A3A] mb-3">{current.title}</h2>
-                  <p className="text-lg font-semibold text-[#7A9E2E] italic mb-5">{current.tagline}</p>
+                  <p className="text-lg font-semibold text-[#89B036] italic mb-5">{current.tagline}</p>
                   <p className="text-[#4A4A4A] leading-relaxed text-base mb-10">{current.desc}</p>
 
                   {/* Features */}
@@ -263,7 +263,7 @@ export default function ServicesPage() {
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {current.features.map((f) => (
                         <li key={f} className="flex items-start gap-3 text-sm text-[#3A3A3A]">
-                          <CheckCircle2 className="w-5 h-5 text-[#7A9E2E] flex-shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-5 h-5 text-[#89B036] flex-shrink-0 mt-0.5" />
                           {f}
                         </li>
                       ))}
@@ -273,13 +273,13 @@ export default function ServicesPage() {
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link
                       href="/get-quote"
-                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#7A9E2E] hover:bg-[#4A5A1E] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg"
                     >
                       Get a Free Quote <ArrowRight className="w-4 h-4" />
                     </Link>
                     <Link
                       href="/contact"
-                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border-2 border-[#7A9E2E] text-[#7A9E2E] hover:bg-[#7A9E2E] hover:text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border-2 border-[#89B036] text-[#89B036] hover:bg-[#89B036] hover:text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300"
                     >
                       Speak to a Designer
                     </Link>

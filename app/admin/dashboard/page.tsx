@@ -318,11 +318,11 @@ export default function AdminDashboardPage() {
           {/* Sidebar Brand Logo */}
           <div className="p-6 border-b border-slate-800 flex items-center justify-between">
             {sidebarOpen ? (
-              <span className="font-serif font-bold text-[#7A9E2E] text-xl tracking-wider">
+              <span className="font-serif font-bold text-[#89B036] text-xl tracking-wider">
                 Rexon Admin
               </span>
             ) : (
-              <ShieldCheck className="w-6 h-6 text-[#7A9E2E] mx-auto" />
+              <ShieldCheck className="w-6 h-6 text-[#89B036] mx-auto" />
             )}
           </div>
 
@@ -341,7 +341,7 @@ export default function AdminDashboardPage() {
                 onClick={() => setActiveTab(tab.id as Tab)}
                 className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold tracking-wide transition-all ${
                   activeTab === tab.id
-                    ? "bg-[#7A9E2E] text-white shadow-md"
+                    ? "bg-[#89B036] text-white shadow-md"
                     : "text-slate-400 hover:text-white hover:bg-slate-800/50"
                 }`}
               >
@@ -384,7 +384,7 @@ export default function AdminDashboardPage() {
             <span className="text-xs font-semibold bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20">
               ● Online
             </span>
-            <div className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-[#7A9E2E] font-bold border border-slate-700">
+            <div className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-[#89B036] font-bold border border-slate-700">
               A
             </div>
           </div>
@@ -394,7 +394,7 @@ export default function AdminDashboardPage() {
         <div className="p-6 sm:p-8 flex-1">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-40">
-              <div className="w-10 h-10 border-4 border-[#7A9E2E] border-t-transparent rounded-full animate-spin mb-4"></div>
+              <div className="w-10 h-10 border-4 border-[#89B036] border-t-transparent rounded-full animate-spin mb-4"></div>
               <p className="text-slate-400 text-sm">Synchronizing live cloud data...</p>
             </div>
           ) : (
@@ -409,7 +409,7 @@ export default function AdminDashboardPage() {
                   {/* Dashboard stats cards */}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
-                      { title: "Active Inquiries", count: stats.enquiries, icon: <Users className="w-6 h-6 text-[#7A9E2E]" />, color: "border-l-4 border-l-[#7A9E2E]" },
+                      { title: "Active Inquiries", count: stats.enquiries, icon: <Users className="w-6 h-6 text-[#89B036]" />, color: "border-l-4 border-l-[#89B036]" },
                       { title: "Portfolio Projects", count: stats.projects, icon: <FolderOpen className="w-6 h-6 text-amber-500" />, color: "border-l-4 border-l-amber-500" },
                       { title: "Gallery Images", count: stats.galleryItems, icon: <Grid className="w-6 h-6 text-teal-500" />, color: "border-l-4 border-l-teal-500" },
                       { title: "Client Testimonials", count: stats.testimonials, icon: <MessageSquare className="w-6 h-6 text-violet-500" />, color: "border-l-4 border-l-violet-500" },
@@ -432,7 +432,7 @@ export default function AdminDashboardPage() {
                       <h3 className="text-lg font-bold">Recent Leads</h3>
                       <button
                         onClick={() => setActiveTab("enquiries")}
-                        className="text-xs font-semibold text-[#7A9E2E] hover:underline"
+                        className="text-xs font-semibold text-[#89B036] hover:underline"
                       >
                         View All
                       </button>
@@ -501,7 +501,7 @@ export default function AdminDashboardPage() {
                               {enq.email && <div className="text-[10px] text-slate-400">{enq.email}</div>}
                             </td>
                             <td className="p-4">
-                              <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#7A9E2E]/10 text-[#7A9E2E] border border-[#7A9E2E]/20">
+                              <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#89B036]/10 text-[#89B036] border border-[#89B036]/20">
                                 {enq.service}
                               </span>
                             </td>
@@ -554,7 +554,7 @@ export default function AdminDashboardPage() {
                   {/* Create Project Form */}
                   <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 lg:col-span-1 h-fit">
                     <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                      <Plus className="w-5 h-5 text-[#7A9E2E]" />
+                      <Plus className="w-5 h-5 text-[#89B036]" />
                       Add Portfolio Project
                     </h3>
                     <form onSubmit={handleCreateProject} className="space-y-4">
@@ -568,7 +568,7 @@ export default function AdminDashboardPage() {
                           value={newProject.title}
                           onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
                           placeholder="e.g. Modern Villa Living"
-                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white"
+                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white"
                         />
                       </div>
 
@@ -579,7 +579,7 @@ export default function AdminDashboardPage() {
                         <select
                           value={newProject.category}
                           onChange={(e) => setNewProject({ ...newProject, category: e.target.value })}
-                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white animate-none"
+                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white animate-none"
                         >
                           <option value="Interior">Interior Design</option>
                           <option value="Landscaping">Landscaping</option>
@@ -596,7 +596,7 @@ export default function AdminDashboardPage() {
                           value={newProject.description}
                           onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
                           placeholder="Enter details of layout, spaces, lighting..."
-                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white"
+                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white"
                         />
                       </div>
 
@@ -608,7 +608,7 @@ export default function AdminDashboardPage() {
                           type="file"
                           accept="image/*"
                           onChange={(e) => setNewProject({ ...newProject, image: e.target.files?.[0] || null })}
-                          className="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-950 file:text-[#7A9E2E] file:cursor-pointer"
+                          className="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-950 file:text-[#89B036] file:cursor-pointer"
                         />
                       </div>
 
@@ -618,7 +618,7 @@ export default function AdminDashboardPage() {
                           id="feat"
                           checked={newProject.featured}
                           onChange={(e) => setNewProject({ ...newProject, featured: e.target.checked })}
-                          className="rounded text-[#7A9E2E] focus:ring-0 bg-slate-950 border-slate-850"
+                          className="rounded text-[#89B036] focus:ring-0 bg-slate-950 border-slate-850"
                         />
                         <label htmlFor="feat" className="text-xs font-semibold text-slate-300 cursor-pointer">
                           Featured Project (Home Slider)
@@ -627,7 +627,7 @@ export default function AdminDashboardPage() {
 
                       <button
                         type="submit"
-                        className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-[#7A9E2E] hover:bg-[#4A5A1E] text-white text-xs font-bold rounded-xl shadow-md transition-all"
+                        className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-[#89B036] hover:bg-[#546622] text-white text-xs font-bold rounded-xl shadow-md transition-all"
                       >
                         Submit Project
                       </button>
@@ -641,7 +641,7 @@ export default function AdminDashboardPage() {
                       {projects.map((proj) => (
                         <div key={proj._id} className="bg-slate-950 p-4 border border-slate-800 rounded-2xl flex items-center justify-between gap-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 bg-slate-800 rounded-xl overflow-hidden relative border border-slate-700 flex items-center justify-center text-xs font-bold text-[#7A9E2E]">
+                            <div className="w-12 h-12 bg-slate-800 rounded-xl overflow-hidden relative border border-slate-700 flex items-center justify-center text-xs font-bold text-[#89B036]">
                               IMG
                             </div>
                             <div>
@@ -669,7 +669,7 @@ export default function AdminDashboardPage() {
                   {/* Add Gallery item */}
                   <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 lg:col-span-1 h-fit">
                     <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                      <Plus className="w-5 h-5 text-[#7A9E2E]" />
+                      <Plus className="w-5 h-5 text-[#89B036]" />
                       Add Gallery Image
                     </h3>
                     <form onSubmit={handleCreateGallery} className="space-y-4">
@@ -683,7 +683,7 @@ export default function AdminDashboardPage() {
                           value={newGallery.title}
                           onChange={(e) => setNewGallery({ ...newGallery, title: e.target.value })}
                           placeholder="e.g. Modular Kitchen Finish"
-                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white"
+                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white"
                         />
                       </div>
 
@@ -694,7 +694,7 @@ export default function AdminDashboardPage() {
                         <select
                           value={newGallery.category}
                           onChange={(e) => setNewGallery({ ...newGallery, category: e.target.value })}
-                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white animate-none"
+                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white animate-none"
                         >
                           <option value="Interior">Interior</option>
                           <option value="Landscaping">Landscaping</option>
@@ -711,13 +711,13 @@ export default function AdminDashboardPage() {
                           type="file"
                           accept="image/*"
                           onChange={(e) => setNewGallery({ ...newGallery, image: e.target.files?.[0] || null })}
-                          className="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-950 file:text-[#7A9E2E] file:cursor-pointer"
+                          className="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-950 file:text-[#89B036] file:cursor-pointer"
                         />
                       </div>
 
                       <button
                         type="submit"
-                        className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-[#7A9E2E] hover:bg-[#4A5A1E] text-white text-xs font-bold rounded-xl shadow-md transition-all"
+                        className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-[#89B036] hover:bg-[#546622] text-white text-xs font-bold rounded-xl shadow-md transition-all"
                       >
                         Add to Gallery
                       </button>
@@ -731,7 +731,7 @@ export default function AdminDashboardPage() {
                       {gallery.map((g) => (
                         <div key={g._id} className="bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 hover:border-slate-700 transition-all p-3 flex flex-col justify-between h-40">
                           <div>
-                            <span className="text-[10px] bg-[#7A9E2E]/10 text-[#7A9E2E] px-2 py-0.5 rounded font-medium">
+                            <span className="text-[10px] bg-[#89B036]/10 text-[#89B036] px-2 py-0.5 rounded font-medium">
                               {g.category}
                             </span>
                             <h4 className="font-semibold text-xs text-white mt-2 line-clamp-2">{g.title}</h4>
@@ -815,7 +815,7 @@ export default function AdminDashboardPage() {
                             required
                             value={settings.phone}
                             onChange={(e) => setSettings({ ...settings, phone: e.target.value })}
-                            className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white"
+                            className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white"
                           />
                         </div>
                       </div>
@@ -833,7 +833,7 @@ export default function AdminDashboardPage() {
                             required
                             value={settings.email}
                             onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                            className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white"
+                            className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white"
                           />
                         </div>
                       </div>
@@ -852,7 +852,7 @@ export default function AdminDashboardPage() {
                           required
                           value={settings.address}
                           onChange={(e) => setSettings({ ...settings, address: e.target.value })}
-                          className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white"
+                          className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white"
                         />
                       </div>
                     </div>
@@ -871,13 +871,13 @@ export default function AdminDashboardPage() {
                             required
                             value={settings.timings}
                             onChange={(e) => setSettings({ ...settings, timings: e.target.value })}
-                            className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white"
+                            className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-[#7A9E2E] uppercase tracking-widest mb-1.5">
+                        <label className="block text-xs font-semibold text-[#89B036] uppercase tracking-widest mb-1.5">
                           Meta Title Tag (SEO)
                         </label>
                         <input
@@ -885,13 +885,13 @@ export default function AdminDashboardPage() {
                           required
                           value={settings.metaTitle}
                           onChange={(e) => setSettings({ ...settings, metaTitle: e.target.value })}
-                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white"
+                          className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-[#7A9E2E] uppercase tracking-widest mb-1.5">
+                      <label className="block text-xs font-semibold text-[#89B036] uppercase tracking-widest mb-1.5">
                         Meta Description (SEO)
                       </label>
                       <textarea
@@ -899,13 +899,13 @@ export default function AdminDashboardPage() {
                         required
                         value={settings.metaDescription}
                         onChange={(e) => setSettings({ ...settings, metaDescription: e.target.value })}
-                        className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-xs text-white"
+                        className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-xs text-white"
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center px-6 py-3 bg-[#7A9E2E] hover:bg-[#4A5A1E] text-white text-xs font-bold rounded-xl shadow-md transition-all"
+                      className="inline-flex items-center justify-center px-6 py-3 bg-[#89B036] hover:bg-[#546622] text-white text-xs font-bold rounded-xl shadow-md transition-all"
                     >
                       Save Configuration
                     </button>

@@ -54,8 +54,8 @@ export default function WhyChooseUs() {
     <section className="py-24 bg-[#2E3A1E] relative overflow-hidden">
       {/* Background decorative */}
       <div className="absolute inset-0 opacity-[0.07]">
-        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-[#7A9E2E] filter blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-[#7A9E2E] filter blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-[#89B036] filter blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-[#89B036] filter blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -67,7 +67,7 @@ export default function WhyChooseUs() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#7A9E2E]">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
             Why Rexon
           </span>
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-white mt-3 mb-5">
@@ -91,10 +91,10 @@ export default function WhyChooseUs() {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.55, delay: i * 0.08 }}
                 whileHover={{ y: -6 }}
-                className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#7A9E2E]/40 transition-all duration-300 cursor-default"
+                className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#89B036]/40 transition-all duration-300 cursor-default"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#7A9E2E]/20 border border-[#7A9E2E]/30 flex items-center justify-center mb-5 group-hover:bg-[#7A9E2E]/35 transition-colors duration-300">
-                  <Icon className="w-6 h-6 text-[#7A9E2E]" />
+                <div className="w-12 h-12 rounded-xl bg-[#89B036]/20 border border-[#89B036]/30 flex items-center justify-center mb-5 group-hover:bg-[#89B036]/35 transition-colors duration-300">
+                  <Icon className="w-6 h-6 text-[#89B036]" />
                 </div>
                 <h3 className="text-base font-bold text-white mb-2">{reason.title}</h3>
                 <p className="text-xs text-[#A8B89A] leading-relaxed">{reason.desc}</p>

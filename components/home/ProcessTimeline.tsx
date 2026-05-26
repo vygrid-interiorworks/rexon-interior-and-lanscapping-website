@@ -48,7 +48,7 @@ export default function ProcessTimeline() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-20"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#7A9E2E]">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
             How We Work
           </span>
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
@@ -63,7 +63,7 @@ export default function ProcessTimeline() {
         {/* Timeline */}
         <div className="relative">
           {/* Dashed connector — desktop */}
-          <div className="hidden lg:block absolute top-10 left-0 right-0 h-px border-t-2 border-dashed border-[#7A9E2E]/35 mx-[10%]" />
+          <div className="hidden lg:block absolute top-10 left-0 right-0 h-px border-t-2 border-dashed border-[#89B036]/35 mx-[10%]" />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-6">
             {steps.map((step, i) => {
@@ -78,7 +78,7 @@ export default function ProcessTimeline() {
                   className="flex flex-col items-center text-center relative"
                 >
                   {/* Step number badge */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-extrabold text-[#7A9E2E] tracking-widest bg-white px-2 z-10">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-extrabold text-[#89B036] tracking-widest bg-white px-2 z-10">
                     {step.step}
                   </div>
 
@@ -86,9 +86,9 @@ export default function ProcessTimeline() {
                   <motion.div
                     whileHover={{ scale: 1.12, boxShadow: "0 8px 30px rgba(122,158,46,0.25)" }}
                     transition={{ type: "spring", stiffness: 300 }}
-                    className="w-20 h-20 rounded-full bg-[#F9F8F5] border-2 border-[#7A9E2E]/30 flex items-center justify-center mb-5 relative z-10 cursor-pointer"
+                    className="w-20 h-20 rounded-full bg-[#F9F8F5] border-2 border-[#89B036]/30 flex items-center justify-center mb-5 relative z-10 cursor-pointer"
                   >
-                    <Icon className="w-9 h-9 text-[#7A9E2E]" />
+                    <Icon className="w-9 h-9 text-[#89B036]" />
                   </motion.div>
 
                   <h3 className="text-base font-bold text-[#3A3A3A] mb-2">{step.title}</h3>

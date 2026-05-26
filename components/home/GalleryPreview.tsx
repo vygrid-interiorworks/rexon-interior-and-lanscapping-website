@@ -28,7 +28,7 @@ export default function GalleryPreview() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#7A9E2E]">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
             Photo Gallery
           </span>
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
@@ -80,7 +80,7 @@ export default function GalleryPreview() {
         >
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#7A9E2E] hover:bg-[#4A5A1E] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             View Full Gallery →
           </Link>
@@ -107,7 +107,7 @@ export default function GalleryPreview() {
             >
               <button
                 onClick={() => setLightbox(null)}
-                className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-white text-[#3A3A3A] hover:bg-[#7A9E2E] hover:text-white flex items-center justify-center transition-colors z-10 shadow-lg"
+                className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-white text-[#3A3A3A] hover:bg-[#89B036] hover:text-white flex items-center justify-center transition-colors z-10 shadow-lg"
               >
                 <X className="w-5 h-5" />
               </button>

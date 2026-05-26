@@ -33,7 +33,7 @@ export default function RecentWork() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-12"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#7A9E2E]">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
             Portfolio
           </span>
           <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
@@ -52,8 +52,8 @@ export default function RecentWork() {
               onClick={() => setActiveCategory(cat)}
               className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
                 activeCategory === cat
-                  ? "bg-[#7A9E2E] text-white shadow-lg"
-                  : "bg-white text-[#4A4A4A] border border-[#E8E8E8] hover:border-[#7A9E2E] hover:text-[#7A9E2E]"
+                  ? "bg-[#89B036] text-white shadow-lg"
+                  : "bg-white text-[#4A4A4A] border border-[#E8E8E8] hover:border-[#89B036] hover:text-[#89B036]"
               }`}
             >
               {cat}
@@ -83,7 +83,7 @@ export default function RecentWork() {
                 </div>
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-end p-6">
-                  <span className="text-[10px] font-bold text-[#7A9E2E] uppercase tracking-widest mb-1">
+                  <span className="text-[10px] font-bold text-[#89B036] uppercase tracking-widest mb-1">
                     {project.category}
                   </span>
                   <h3 className="text-lg font-bold text-white leading-tight">{project.title}</h3>
@@ -91,7 +91,7 @@ export default function RecentWork() {
                 </div>
                 {/* Default bottom tag */}
                 <div className="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm px-5 py-3 translate-y-0 group-hover:translate-y-full transition-transform duration-400">
-                  <span className="text-[10px] font-bold text-[#7A9E2E] uppercase tracking-widest">{project.category}</span>
+                  <span className="text-[10px] font-bold text-[#89B036] uppercase tracking-widest">{project.category}</span>
                   <h3 className="text-sm font-bold text-[#3A3A3A] leading-tight mt-0.5">{project.title}</h3>
                 </div>
               </motion.div>
@@ -108,7 +108,7 @@ export default function RecentWork() {
         >
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 px-8 py-3.5 border-2 border-[#7A9E2E] text-[#7A9E2E] hover:bg-[#7A9E2E] hover:text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-3.5 border-2 border-[#89B036] text-[#89B036] hover:bg-[#89B036] hover:text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300"
           >
             View All Projects →
           </Link>

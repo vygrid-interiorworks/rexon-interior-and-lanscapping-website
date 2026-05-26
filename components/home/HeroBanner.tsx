@@ -59,16 +59,6 @@ export default function HeroBanner() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl text-[#FFFFFF] space-y-6">
             
-            {/* Tagline Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#7A9E2E]/25 border border-[#7A9E2E] text-xs font-bold uppercase tracking-widest text-[#7A9E2E]"
-            >
-              <Sparkles className="w-4 h-4 mr-1 text-[#7A9E2E]" />
-              <span>Premium Design & Landscaping Expert</span>
-            </motion.div>
 
             {/* Main Animated Title */}
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-playfair font-extrabold leading-tight tracking-tight text-[#FFFFFF]">
@@ -84,7 +74,7 @@ export default function HeroBanner() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="block text-[#7A9E2E] mt-1 drop-shadow-md"
+                className="block text-[#89B036] mt-1 drop-shadow-md"
               >
                 {slides[currentSlide].highlight}
               </motion.span>
@@ -109,7 +99,7 @@ export default function HeroBanner() {
             >
               <Link
                 href="/get-quote"
-                className="inline-flex items-center justify-center px-8 py-3.5 text-base font-bold uppercase tracking-wider text-white bg-[#7A9E2E] rounded-full hover:bg-[#4A5A1E] transition-all duration-300 shadow-xl hover:shadow-2xl focus:outline-none"
+                className="inline-flex items-center justify-center px-8 py-3.5 text-base font-bold uppercase tracking-wider text-white bg-[#89B036] rounded-full hover:bg-[#546622] transition-all duration-300 shadow-xl hover:shadow-2xl focus:outline-none"
               >
                 Get a Free Quote
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -132,7 +122,7 @@ export default function HeroBanner() {
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none ${
-              currentSlide === index ? "w-8 bg-[#7A9E2E]" : "w-2.5 bg-[#FFFFFF]/45 hover:bg-[#FFFFFF]/75"
+              currentSlide === index ? "w-8 bg-[#89B036]" : "w-2.5 bg-[#FFFFFF]/45 hover:bg-[#FFFFFF]/75"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

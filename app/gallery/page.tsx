@@ -51,7 +51,7 @@ export default function GalleryPage() {
     <div className="bg-[#F9F8F5]">
       {/* Hero */}
       <section className="bg-[#2E3A1E] py-28 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_bottom_left,_#7A9E2E_0%,_transparent_60%)]" />
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_bottom_left,_#89B036_0%,_transparent_60%)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-[#A8D65A]">Visual Stories</span>
           <h1 className="text-5xl lg:text-6xl font-playfair font-bold text-white mt-4 mb-6">Our Gallery</h1>
@@ -67,7 +67,7 @@ export default function GalleryPage() {
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {categories.map(c => (
               <button key={c} onClick={() => setActiveCategory(c)}
-                className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${activeCategory === c ? "bg-[#7A9E2E] text-white shadow-lg" : "bg-white text-[#4A4A4A] border border-[#E8E8E8] hover:border-[#7A9E2E] hover:text-[#7A9E2E]"}`}>
+                className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${activeCategory === c ? "bg-[#89B036] text-white shadow-lg" : "bg-white text-[#4A4A4A] border border-[#E8E8E8] hover:border-[#89B036] hover:text-[#89B036]"}`}>
                 {c}
               </button>
             ))}
@@ -76,7 +76,7 @@ export default function GalleryPage() {
           {/* Loading State */}
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 text-[#6B6B6B]">
-              <Loader2 className="w-8 h-8 animate-spin mb-4 text-[#7A9E2E]" />
+              <Loader2 className="w-8 h-8 animate-spin mb-4 text-[#89B036]" />
               <p>Loading gallery items...</p>
             </div>
           ) : filtered.length === 0 ? (
@@ -111,7 +111,7 @@ export default function GalleryPage() {
                         <p className="text-white text-xs font-bold text-center px-3 leading-tight">{item.title}</p>
                       </div>
                     </div>
-                    <span className="absolute bottom-2 left-2 bg-[#7A9E2E]/90 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    <span className="absolute bottom-2 left-2 bg-[#89B036]/90 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
                       {item.category}
                     </span>
                   </motion.div>

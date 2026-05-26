@@ -58,7 +58,7 @@ export default function ProjectsPage() {
     <div className="bg-[#F9F8F5]">
       {/* Hero */}
       <section className="bg-[#2E3A1E] py-28 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_right,_#7A9E2E_0%,_transparent_60%)]" />
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_right,_#89B036_0%,_transparent_60%)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-[#A8D65A]">Our Portfolio</span>
           <h1 className="text-5xl lg:text-6xl font-playfair font-bold text-white mt-4 mb-6">Our Projects</h1>
@@ -74,7 +74,7 @@ export default function ProjectsPage() {
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {categories.map(c => (
               <button key={c} onClick={() => setActiveCategory(c)}
-                className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${activeCategory === c ? "bg-[#7A9E2E] text-white shadow-lg" : "bg-white text-[#4A4A4A] border border-[#E8E8E8] hover:border-[#7A9E2E] hover:text-[#7A9E2E]"}`}>
+                className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${activeCategory === c ? "bg-[#89B036] text-white shadow-lg" : "bg-white text-[#4A4A4A] border border-[#E8E8E8] hover:border-[#89B036] hover:text-[#89B036]"}`}>
                 {c}
               </button>
             ))}
@@ -83,7 +83,7 @@ export default function ProjectsPage() {
           {/* Loading State */}
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 text-[#6B6B6B]">
-              <Loader2 className="w-8 h-8 animate-spin mb-4 text-[#7A9E2E]" />
+              <Loader2 className="w-8 h-8 animate-spin mb-4 text-[#89B036]" />
               <p>Loading projects...</p>
             </div>
           ) : filtered.length === 0 ? (
@@ -105,7 +105,7 @@ export default function ProjectsPage() {
                           <ZoomIn className="w-6 h-6 text-white" />
                         </div>
                       </div>
-                      <span className="absolute top-4 left-4 bg-[#7A9E2E] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                      <span className="absolute top-4 left-4 bg-[#89B036] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                         {project.category}
                       </span>
                     </div>

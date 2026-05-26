@@ -17,7 +17,7 @@ export default function LeadCapture() {
   return (
     <>
       {/* ── Lead Capture Strip ── */}
-      <section className="py-20 bg-gradient-to-br from-[#4A5A1E] via-[#2E3A1E] to-[#7A9E2E] relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-[#546622] via-[#2E3A1E] to-[#89B036] relative overflow-hidden">
         {/* Decorative circles */}
         <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/5" />
         <div className="absolute -bottom-16 -left-16 w-60 h-60 rounded-full bg-white/5" />
@@ -96,7 +96,7 @@ export default function LeadCapture() {
                   </select>
                   <button
                     type="submit"
-                    className="w-full bg-white text-[#4A5A1E] hover:bg-[#A8D65A] font-bold py-3.5 rounded-xl text-sm uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2"
+                    className="w-full bg-white text-[#546622] hover:bg-[#A8D65A] font-bold py-3.5 rounded-xl text-sm uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2"
                   >
                     Request Free Callback <ArrowRight className="w-4 h-4" />
                   </button>
@@ -117,7 +117,7 @@ export default function LeadCapture() {
         </Link>
         <Link
           href="/get-quote"
-          className="flex-1 flex items-center justify-center gap-2 bg-[#7A9E2E] text-white py-4 text-sm font-bold uppercase tracking-wider"
+          className="flex-1 flex items-center justify-center gap-2 bg-[#89B036] text-white py-4 text-sm font-bold uppercase tracking-wider"
         >
           Get Quote <ArrowRight className="w-4 h-4" />
         </Link>

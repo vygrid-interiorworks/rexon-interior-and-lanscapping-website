@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, MessageSquare } from "lucide-react";
 import { apiService } from "@/lib/api";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 
 export default function ContactPage() {
   // Form State
@@ -14,7 +15,29 @@ export default function ContactPage() {
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [settings, setSettings] = useState({
+    phone: "+91 98765 43210",
+    email: "info@rexon.com",
+    address: "Rexon Studio, 100 Feet Road, Indiranagar, Bangalore - 560038",
+  });
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const data = await apiService.getSettings();
+        if (data) {
+          setSettings((prev) => ({
+            phone: data.phone || prev.phone,
+            email: data.email || prev.email,
+            address: data.address || prev.address,
+          }));
+        }
+      } catch (err) {
+        console.error("Failed to load settings:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone) {
@@ -63,25 +86,25 @@ export default function ContactPage() {
 
   const contactInfos = [
     {
-      icon: <Phone className="w-6 h-6 text-[#7A9E2E]" />,
+      icon: <Phone className="w-6 h-6 text-[#89B036]" />,
       title: "Call Us",
-      details: "+91 98765 43210",
+      details: settings.phone,
       subtext: "Mon-Sat from 9am to 6pm",
-      link: "tel:+919876543210",
+      link: `tel:${settings.phone.replace(/[^0-9+]/g, '')}`,
     },
     {
-      icon: <Mail className="w-6 h-6 text-[#7A9E2E]" />,
+      icon: <Mail className="w-6 h-6 text-[#89B036]" />,
       title: "Email Us",
-      details: "info@rexon.com",
+      details: settings.email,
       subtext: "We respond within 24 hours",
-      link: "mailto:info@rexon.com",
+      link: `mailto:${settings.email}`,
     },
     {
-      icon: <MapPin className="w-6 h-6 text-[#7A9E2E]" />,
+      icon: <MapPin className="w-6 h-6 text-[#89B036]" />,
       title: "Visit Showroom",
-      details: "Rexon Studio, 100 Feet Road",
+      details: settings.address,
       subtext: "Indiranagar, Bangalore - 560038",
-      link: "https://maps.google.com",
+      link: `https://maps.google.com/maps?q=${encodeURIComponent(settings.address)}`,
     },
   ];
 
@@ -93,7 +116,7 @@ export default function ContactPage() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-xs sm:text-sm font-semibold tracking-widest text-[#7A9E2E] uppercase block mb-3"
+          className="text-xs sm:text-sm font-semibold tracking-widest text-[#89B036] uppercase block mb-3"
         >
           Get In Touch
         </motion.span>
@@ -127,13 +150,13 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * idx }}
-              className="bg-white rounded-3xl p-8 shadow-md border border-gray-100 hover:border-[#7A9E2E]/20 hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center group"
+              className="bg-white rounded-3xl p-8 shadow-md border border-gray-100 hover:border-[#89B036]/20 hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center group"
             >
-              <div className="w-14 h-14 bg-[#7A9E2E]/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 bg-[#89B036]/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 {info.icon}
               </div>
               <h3 className="text-lg font-bold text-[#3A3A3A] mb-2">{info.title}</h3>
-              <p className="text-base font-semibold text-[#7A9E2E] mb-1">{info.details}</p>
+              <p className="text-base font-semibold text-[#89B036] mb-1">{info.details}</p>
               <p className="text-xs text-[#4A4A4A]">{info.subtext}</p>
             </motion.a>
           ))}
@@ -185,7 +208,7 @@ export default function ContactPage() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Aditi Rao"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
 
@@ -200,7 +223,7 @@ export default function ContactPage() {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="e.g. +91 98765 43210"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
                 </div>
@@ -216,7 +239,7 @@ export default function ContactPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="e.g. aditi@example.com"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
 
@@ -228,7 +251,7 @@ export default function ContactPage() {
                     <select
                       value={service}
                       onChange={(e) => setService(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     >
                       <option value="Interior">Interior Design</option>
                       <option value="Landscaping">Landscaping & Gardens</option>
@@ -247,7 +270,7 @@ export default function ContactPage() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Tell us about your home/office size, garden space, timeline, and design preferences..."
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7A9E2E] text-sm text-[#3A3A3A]"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                   />
                 </div>
 
@@ -255,7 +278,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full inline-flex items-center justify-center px-6 py-3.5 font-semibold text-sm text-[#FFFFFF] bg-[#7A9E2E] rounded-xl hover:bg-[#4A5A1E] transition-all duration-300 shadow-md focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full inline-flex items-center justify-center px-6 py-3.5 font-semibold text-sm text-[#FFFFFF] bg-[#89B036] rounded-xl hover:bg-[#546622] transition-all duration-300 shadow-md focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {submitting ? (
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
@@ -275,28 +298,13 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-            {/* Showroom timing card */}
-            <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-lg flex items-start gap-4">
-              <div className="p-3 bg-[#7A9E2E]/10 rounded-2xl text-[#7A9E2E]">
-                <Clock className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-[#3A3A3A] mb-1">Showroom & Office Hours</h3>
-                <p className="text-sm text-[#4A4A4A] mb-2">Feel free to drop by to explore physical catalogs, material samples, and discuss in person.</p>
-                <div className="grid grid-cols-2 gap-x-6 text-xs font-semibold text-[#3A3A3A]">
-                  <div>Monday - Saturday:</div>
-                  <div className="text-right text-[#7A9E2E]">9:30 AM - 7:00 PM</div>
-                  <div>Sunday:</div>
-                  <div className="text-right text-[#4A4A4A]">Prior Appointment Only</div>
-                </div>
-              </div>
-            </div>
 
-            {/* Google Map Iframe (Bangalore Indiranagar placeholder layout) */}
+
+            {/* Google Map Iframe (Dynamically Linked) */}
             <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg h-96 relative group">
               <iframe
-                title="Rexon Bangalore Showroom Location Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.9890539109033!2d77.64010377507647!3d12.972520387342898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae16a62f555555%3A0x6e2df1b997c6db98!2sIndiranagar%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1716500000000!5m2!1sen!2sin"
+                title="Rexon Showroom Location Map"
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(settings.address)}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -308,18 +316,18 @@ export default function ContactPage() {
             </div>
 
             {/* Direct WhatsApp Call */}
-            <div className="bg-gradient-to-r from-[#7A9E2E] to-[#4A5A1E] text-white rounded-3xl p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="bg-gradient-to-r from-[#89B036] to-[#546622] text-white rounded-3xl p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
               <div>
                 <h3 className="text-xl font-bold font-serif mb-2">Need a Quick Chat?</h3>
                 <p className="text-sm text-white/80">Connect directly with our design manager on WhatsApp for fast answers.</p>
               </div>
               <a
-                href="https://wa.me/919876543210?text=Hi%20Rexon%20team,%20I%20would%20like%20to%20consult%20for%20my%20home%20design"
+                href={`https://wa.me/${settings.phone.replace(/[^0-9]/g, '')}?text=Hi%20Rexon%20team,%20I%20would%20like%20to%20consult%20for%20my%20home%20design`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3 font-semibold text-sm text-[#7A9E2E] bg-white rounded-full hover:bg-gray-50 transition-all duration-300 shadow-md"
+                className="inline-flex items-center justify-center px-6 py-3 font-semibold text-sm text-[#89B036] bg-white rounded-full hover:bg-gray-50 transition-all duration-300 shadow-md"
               >
-                <MessageSquare className="w-4 h-4 mr-2" />
+                <WhatsAppIcon className="w-5 h-5 mr-2" />
                 WhatsApp Design Lead
               </a>
             </div>

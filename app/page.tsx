@@ -6,6 +6,7 @@ import ServicesGrid from "@/components/home/ServicesGrid";
 import ProcessTimeline from "@/components/home/ProcessTimeline";
 import RecentWork from "@/components/home/RecentWork";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
+import ReviewStats from "@/components/home/ReviewStats";
 import TestimonialsSlider from "@/components/home/TestimonialsSlider";
 import GalleryPreview from "@/components/home/GalleryPreview";
 import LeadCapture from "@/components/home/LeadCapture";
@@ -41,8 +42,11 @@ export default function HomePage() {
       {/* Section 7 – Why Choose Us */}
       <WhyChooseUs />
 
-      {/* Section 8 – Testimonials */}
-      <TestimonialsSlider />
+      {/* Section 8 – Testimonials & Stats */}
+      <div className="bg-[#F9F8F5]">
+        <ReviewStats />
+        <TestimonialsSlider />
+      </div>
 
       {/* Section 9 – Gallery Preview */}
       <GalleryPreview />

@@ -208,10 +208,10 @@ export default function ServicesPage() {
           <div className="flex flex-col lg:flex-row gap-10">
 
             {/* Sidebar */}
-            <aside className="w-full lg:w-72 flex-shrink-0">
-              <div className="bg-[#F9F8F5] rounded-2xl border border-[#E8E8E8] p-4 sticky top-24">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-[#89B036] px-3 mb-3">All Services</p>
-                <nav className="space-y-1">
+            <aside className="w-full lg:w-72 flex-shrink-0 z-20">
+              <div className="bg-[#F9F8F5] rounded-2xl border border-[#E8E8E8] p-3 lg:p-4 sticky top-20 lg:top-24">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-[#89B036] px-3 mb-3 hidden lg:block">All Services</p>
+                <nav className="flex flex-row overflow-x-auto lg:flex-col gap-2 lg:space-y-1 pb-1 lg:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   {services.map((s) => {
                     const SIcon = s.icon;
                     const isActive = s.id === active;
@@ -219,7 +219,7 @@ export default function ServicesPage() {
                       <button
                         key={s.id}
                         onClick={() => setActive(s.id)}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 text-sm font-semibold ${
+                        className={`w-auto lg:w-full flex-shrink-0 flex items-center gap-2.5 lg:gap-3 px-4 py-2.5 lg:py-3 rounded-xl text-left transition-all duration-200 text-xs lg:text-sm font-semibold whitespace-nowrap ${
                           isActive
                             ? "bg-[#89B036] text-white shadow-md"
                             : "text-[#3A3A3A] hover:bg-[#89B036]/10 hover:text-[#89B036]"

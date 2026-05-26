@@ -106,22 +106,6 @@ export default function LeadCapture() {
           </div>
         </div>
       </section>
-
-      {/* ── Sticky Mobile CTA bar ── */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 flex md:hidden">
-        <Link
-          href="tel:+919999999999"
-          className="flex-1 flex items-center justify-center gap-2 bg-[#3A3A3A] text-white py-4 text-sm font-bold uppercase tracking-wider"
-        >
-          <Phone className="w-4 h-4" /> Call Us
-        </Link>
-        <Link
-          href="/get-quote"
-          className="flex-1 flex items-center justify-center gap-2 bg-[#89B036] text-white py-4 text-sm font-bold uppercase tracking-wider"
-        >
-          Get Quote <ArrowRight className="w-4 h-4" />
-        </Link>
-      </div>
     </>
   );
 }

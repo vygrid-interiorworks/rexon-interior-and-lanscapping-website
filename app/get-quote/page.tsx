@@ -252,13 +252,13 @@ Looking forward to consulting soon.`;
                   <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-3">
                     What are you looking to design?
                   </label>
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {(["Interior", "Landscaping", "Both"] as const).map((type) => (
                       <button
                         key={type}
                         type="button"
                         onClick={() => setProjectType(type)}
-                        className={`py-4 rounded-xl border text-sm font-semibold tracking-wide transition-all ${
+                        className={`py-3.5 sm:py-4 rounded-xl border text-sm font-semibold tracking-wide transition-all ${
                           projectType === type
                             ? "bg-[#89B036] text-white border-[#89B036] shadow-md"
                             : "bg-gray-50 border-gray-200 text-[#3A3A3A] hover:bg-gray-100"

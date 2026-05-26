@@ -160,7 +160,7 @@ export default function ServicesGrid() {
 
                 <Link
                   href={`/services#${service.slug}`}
-                  className="mt-4 text-xs font-bold text-[#89B036] uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="mt-4 text-xs font-bold text-[#89B036] uppercase tracking-wider flex items-center gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 >
                   Learn More →
                 </Link>

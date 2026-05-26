@@ -123,7 +123,7 @@ export default function CompanyIntro() {
               />
             </div>
             {/* Floating accent image */}
-            <div className="absolute -bottom-8 -right-8 w-48 h-48 lg:w-64 lg:h-64 rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+            <div className="absolute -bottom-2 sm:-bottom-8 right-2 sm:-right-8 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
               <img
                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80"
                 alt="Rexon Landscaping"

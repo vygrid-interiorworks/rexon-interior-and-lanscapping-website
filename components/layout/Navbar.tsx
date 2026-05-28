@@ -45,13 +45,13 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center focus:outline-none p-[12px]">
+            <Link href="/" className="flex items-center focus:outline-none p-1 sm:p-[12px]">
               <Image
                 src="/rexon_2d_logo.png"
                 alt="Rexon Logo"
                 width={200}
                 height={66}
-                className="h-16 w-auto object-contain"
+                className="h-11 sm:h-16 w-auto object-contain"
                 priority
               />
             </Link>

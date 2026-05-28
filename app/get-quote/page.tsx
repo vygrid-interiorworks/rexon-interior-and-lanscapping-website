@@ -125,7 +125,7 @@ Looking forward to consulting soon.`;
   };
 
   return (
-    <main className="min-h-screen pt-24 pb-20 bg-gradient-to-b from-[#F9F8F5] to-[#FFFFFF] text-[#3A3A3A]">
+    <main className="min-h-screen pt-[140px] pb-20 lg:pt-[170px] bg-gradient-to-b from-[#F9F8F5] to-[#FFFFFF] text-[#3A3A3A]">
       {/* Progress Header */}
       <section className="max-w-3xl mx-auto px-4 py-8">
         <div className="text-center mb-8">
@@ -151,7 +151,7 @@ Looking forward to consulting soon.`;
         </div>
 
         {/* Main interactive Box */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 sm:p-10 border border-gray-100 min-h-[480px] flex flex-col justify-between">
+        <div className="bg-white rounded-3xl shadow-xl p-8 sm:p-10 border border-gray-100 min-h-[480px] flex flex-col justify-between overflow-hidden">
           <AnimatePresence mode="wait">
             {currentStep === "details" && (
               <motion.div

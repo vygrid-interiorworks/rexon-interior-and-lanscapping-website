@@ -1,7 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Sofa, ChefHat, TreePine, Paintbrush, Layers, Flower2,
   Lightbulb, Hammer, BrickWall, Droplets
@@ -103,6 +104,20 @@ const cardVariants = {
 };
 
 export default function ServicesGrid() {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <section className="py-24 bg-[#F9F8F5]" id="services">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -134,7 +149,8 @@ export default function ServicesGrid() {
           viewport={{ once: true, margin: "-60px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
         >
-          {services.map((service) => {
+          {/* Top 3 services always visible */}
+          {services.slice(0, 3).map((service) => {
             const Icon = service.icon;
             return (
               <motion.div
@@ -167,8 +183,59 @@ export default function ServicesGrid() {
               </motion.div>
             );
           })}
+
+          {/* Remaining services: collapsible on mobile, always visible on desktop */}
+          <div className="col-span-1 sm:contents">
+            <AnimatePresence initial={false}>
+              {(isExpanded || !isMobile || !mounted) && (
+                <motion.div
+                  key="extra-services"
+                  initial={mounted && isMobile ? { height: 0, opacity: 0 } : false}
+                  animate={mounted && isMobile ? { height: "auto", opacity: 1 } : false}
+                  exit={mounted && isMobile ? { height: 0, opacity: 0 } : undefined}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  className="grid grid-cols-1 gap-6 sm:contents overflow-hidden"
+                >
+                  {services.slice(3).map((service) => {
+                    const Icon = service.icon;
+                    return (
+                      <motion.div
+                        key={service.slug}
+                        variants={cardVariants}
+                        whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.12)" }}
+                        className="group bg-white rounded-2xl p-6 border border-[#E8E8E8] cursor-pointer transition-all duration-300 flex flex-col"
+                      >
+                        <div
+                          className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
+                          style={{ backgroundColor: `${service.color}18` }}
+                        >
+                          <Icon className="w-6 h-6" style={{ color: service.color }} />
+                        </div>
+
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#A0A0A0] mb-2">
+                          {service.tag}
+                        </span>
+                        <h3 className="text-base font-bold text-[#3A3A3A] mb-2 leading-snug group-hover:text-[#89B036] transition-colors duration-300">
+                          {service.title}
+                        </h3>
+                        <p className="text-xs text-[#4A4A4A] leading-relaxed flex-grow">{service.desc}</p>
+
+                        <Link
+                          href={`/services#${service.slug}`}
+                          className="mt-4 text-xs font-bold text-[#89B036] uppercase tracking-wider flex items-center gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        >
+                          Learn More →
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </motion.div>
 
+        {/* View All Services / Toggle Button */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -176,12 +243,21 @@ export default function ServicesGrid() {
           transition={{ delay: 0.4, duration: 0.6 }}
           className="text-center mt-12"
         >
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            View All Services
-          </Link>
+          {mounted && isMobile ? (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none"
+            >
+              {isExpanded ? "Show Less" : "View All Services"}
+            </button>
+          ) : (
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              View All Services
+            </Link>
+          )}
         </motion.div>
       </div>
     </section>

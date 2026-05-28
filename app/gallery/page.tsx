@@ -50,7 +50,7 @@ export default function GalleryPage() {
   return (
     <div className="bg-[#F9F8F5]">
       {/* Hero */}
-      <section className="bg-[#2E3A1E] py-28 relative overflow-hidden">
+      <section className="bg-[#2E3A1E] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_bottom_left,_#89B036_0%,_transparent_60%)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-[#A8D65A]">Visual Stories</span>

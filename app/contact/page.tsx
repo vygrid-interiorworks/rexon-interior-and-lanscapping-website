@@ -109,7 +109,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <main className="min-h-screen pt-24 pb-20 bg-gradient-to-b from-[#F9F8F5] to-[#FFFFFF] text-[#3A3A3A]">
+    <main className="min-h-screen pt-[140px] pb-20 lg:pt-[170px] bg-gradient-to-b from-[#F9F8F5] to-[#FFFFFF] text-[#3A3A3A]">
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
         <motion.span
@@ -164,7 +164,7 @@ export default function ContactPage() {
       </section>
 
       {/* Split Form & Map Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Contact Form */}
           <motion.div

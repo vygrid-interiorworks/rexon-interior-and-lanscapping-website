@@ -103,7 +103,7 @@ export default function CompanyIntro() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -117,16 +117,8 @@ export default function CompanyIntro() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
               <img
-                src="https://images.unsplash.com/photo-1558904541-efa843a96f09?auto=format&fit=crop&w=800&q=80"
+                src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=1200&q=80"
                 alt="Rexon Premium Interior Design"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Floating accent image */}
-            <div className="absolute -bottom-2 sm:-bottom-8 right-2 sm:-right-8 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
-              <img
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80"
-                alt="Rexon Landscaping"
                 className="w-full h-full object-cover"
               />
             </div>

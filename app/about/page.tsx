@@ -26,7 +26,7 @@ export default function AboutPage() {
   return (
     <div className="bg-white">
       {/* ── Hero ── */}
-      <section className="relative bg-[#2E3A1E] py-32 overflow-hidden">
+      <section className="relative bg-[#2E3A1E] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_#89B036_0%,_transparent_65%)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-[#A8D65A]">Our Story</span>
@@ -131,27 +131,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Team ── */}
-      <section className="py-20 bg-[#F9F8F5]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">Meet the Team</span>
-            <h2 className="text-4xl font-playfair font-bold text-[#3A3A3A] mt-3">The People Behind the Spaces</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {team.map((member) => (
-              <div key={member.name} className="group text-center">
-                <div className="relative w-40 h-40 mx-auto mb-5 rounded-full overflow-hidden ring-4 ring-[#E8E8E8] group-hover:ring-[#89B036] transition-all duration-300">
-                  <img src={member.img} alt={member.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                </div>
-                <h3 className="text-base font-bold text-[#3A3A3A]">{member.name}</h3>
-                <div className="text-xs font-bold text-[#89B036] uppercase tracking-widest mt-1 mb-3">{member.role}</div>
-                <p className="text-xs text-[#4A4A4A] leading-relaxed max-w-[200px] mx-auto">{member.bio}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

@@ -25,7 +25,7 @@ const services = [
       "End-to-end project management",
       "Post-handover support",
     ],
-    img: "https://images.unsplash.com/photo-1558904541-efa843a96f09?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "modular-kitchen",
@@ -59,7 +59,7 @@ const services = [
       "Outdoor lighting design",
       "Seasonal maintenance plans",
     ],
-    img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "false-ceiling",
@@ -76,7 +76,7 @@ const services = [
       "Drop ceiling for commercial spaces",
       "Quick 5–7 day installation",
     ],
-    img: "https://images.unsplash.com/photo-1583847268964-b28ce8f52859?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "wallpaper-decor",
@@ -93,7 +93,7 @@ const services = [
       "Eco-friendly water-based paints",
       "Professional installation",
     ],
-    img: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "garden-maintenance",
@@ -110,7 +110,7 @@ const services = [
       "Seasonal flower planting",
       "Irrigation system upkeep",
     ],
-    img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1592150621744-aca64f48394a?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "lighting-design",
@@ -127,7 +127,7 @@ const services = [
       "Landscape & garden lighting",
       "Energy audit & optimisation",
     ],
-    img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1565538810844-1e119df60efc?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "carpentry",
@@ -144,7 +144,7 @@ const services = [
       "Italian laminate & veneer finishes",
       "Anti-termite treatment included",
     ],
-    img: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "stone-tile",
@@ -178,7 +178,7 @@ const services = [
       "Pump, filter & UV systems",
       "Ongoing maintenance plans",
     ],
-    img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
@@ -190,7 +190,7 @@ export default function ServicesPage() {
   return (
     <div className="bg-white">
       {/* Hero */}
-      <section className="bg-[#2E3A1E] py-28 relative overflow-hidden">
+      <section className="bg-[#2E3A1E] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_left,_#89B036_0%,_transparent_60%)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-[#A8D65A]">What We Offer</span>
@@ -245,7 +245,7 @@ export default function ServicesPage() {
                   transition={{ duration: 0.35 }}
                 >
                   {/* Image */}
-                  <div className="rounded-2xl overflow-hidden shadow-xl mb-10 aspect-[16/9]">
+                  <div className="rounded-2xl overflow-hidden shadow-xl mb-10 aspect-[16/9] max-h-[320px] sm:max-h-[360px] lg:max-h-[400px] w-full">
                     <img src={current.img} alt={current.title} className="w-full h-full object-cover" />
                   </div>
 

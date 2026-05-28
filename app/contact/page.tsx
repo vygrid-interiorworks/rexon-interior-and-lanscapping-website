@@ -207,7 +207,6 @@ export default function ContactPage() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Aditi Rao"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
@@ -222,7 +221,6 @@ export default function ContactPage() {
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="e.g. +91 98765 43210"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
@@ -238,7 +236,6 @@ export default function ContactPage() {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="e.g. aditi@example.com"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
@@ -269,7 +266,6 @@ export default function ContactPage() {
                     rows={4}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Tell us about your home/office size, garden space, timeline, and design preferences..."
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                   />
                 </div>

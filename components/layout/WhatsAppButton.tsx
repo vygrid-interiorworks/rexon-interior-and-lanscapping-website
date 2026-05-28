@@ -1,16 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X } from "lucide-react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
+import { apiService } from "@/lib/api";
 
 export default function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const [settings, setSettings] = useState({
+    whatsapp: "919876543210",
+    instagram: "https://www.instagram.com/rexon_interiors",
+    youtube: "https://www.youtube.com/@rexon_interiors",
+  });
 
-  const whatsappUrl = "https://wa.me/919876543210?text=Hi%20Rexon%20Interiors,%20I%20would%20like%20to%20get%20a%20free%20design%20consultation.";
-  const instagramUrl = "https://www.instagram.com/rexon_interiors";
-  const youtubeUrl = "https://www.youtube.com/@rexon_interiors";
+  useEffect(() => {
+    const fetchSocialSettings = async () => {
+      try {
+        const data = await apiService.getSettings();
+        if (data) {
+          setSettings({
+            whatsapp: data.whatsapp || "919876543210",
+            instagram: data.instagram || "https://www.instagram.com/rexon_interiors",
+            youtube: data.youtube || "https://www.youtube.com/@rexon_interiors",
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load FAB settings:", err);
+      }
+    };
+    fetchSocialSettings();
+  }, []);
+
+  const whatsappUrl = `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=Hi%20Rexon%20Interiors,%20I%20would%20like%20to%20get%20a%20free%20design%20consultation.`;
+  const instagramUrl = settings.instagram;
+  const youtubeUrl = settings.youtube;
 
   const socialLinks = [
     {

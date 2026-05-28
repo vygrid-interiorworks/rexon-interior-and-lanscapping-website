@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -13,13 +14,46 @@ import {
   MessageSquare,
 } from "lucide-react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
+import { apiService } from "@/lib/api";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const [settings, setSettings] = useState({
+    phone: "+91 98765 43210",
+    email: "info@rexoninteriors.com",
+    address: "Rexon Tower, Near NH Bypass,\nKochi, Kerala - 682024",
+    whatsapp: "919876543210",
+    instagram: "https://instagram.com",
+    facebook: "https://facebook.com",
+    youtube: "https://youtube.com",
+  });
+
+  useEffect(() => {
+    const fetchFooterSettings = async () => {
+      try {
+        const data = await apiService.getSettings();
+        if (data) {
+          setSettings({
+            phone: data.phone || "+91 98765 43210",
+            email: data.email || "info@rexoninteriors.com",
+            address: data.address || "Rexon Tower, Near NH Bypass,\nKochi, Kerala - 682024",
+            whatsapp: data.whatsapp || "919876543210",
+            instagram: data.instagram || "https://instagram.com",
+            facebook: data.facebook || "https://facebook.com",
+            youtube: data.youtube || "https://youtube.com",
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load footer settings:", err);
+      }
+    };
+    fetchFooterSettings();
+  }, []);
+
   const handleWhatsAppClick = () => {
     window.open(
-      "https://wa.me/919876543210?text=Hi%20Rexon%20Interiors,%20I%20would%20like%20to%20get%20a%20free%20design%20consultation.",
+      `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=Hi%20Rexon%20Interiors,%20I%20would%20like%20to%20get%20a%20free%20design%20consultation.`,
       "_blank",
       "noopener,noreferrer"
     );
@@ -48,7 +82,7 @@ export default function Footer() {
               {/* Social Icons */}
               <div className="flex items-center space-x-4">
                 <a
-                  href="https://instagram.com"
+                  href={settings.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#89B036] flex items-center justify-center text-white hover:text-white transition-all duration-300"
@@ -57,7 +91,7 @@ export default function Footer() {
                   <Camera className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://facebook.com"
+                  href={settings.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#89B036] flex items-center justify-center text-white hover:text-white transition-all duration-300"
@@ -66,7 +100,7 @@ export default function Footer() {
                   <Globe className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://youtube.com"
+                  href={settings.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#89B036] flex items-center justify-center text-white hover:text-white transition-all duration-300"
@@ -147,22 +181,20 @@ export default function Footer() {
               <ul className="space-y-4 text-sm">
                 <li className="flex items-start">
                   <MapPin className="w-5 h-5 text-[#89B036] mr-3 shrink-0 mt-0.5" />
-                  <span>
-                    Rexon Tower, Near NH Bypass,
-                    <br />
-                    Kochi, Kerala - 682024
+                  <span className="whitespace-pre-line">
+                    {settings.address}
                   </span>
                 </li>
                 <li className="flex items-center">
                   <Phone className="w-5 h-5 text-[#89B036] mr-3 shrink-0" />
-                  <a href="tel:+919876543210" className="hover:text-[#89B036] transition-colors">
-                    +91 98765 43210
+                  <a href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`} className="hover:text-[#89B036] transition-colors">
+                    {settings.phone}
                   </a>
                 </li>
                 <li className="flex items-center">
                   <Mail className="w-5 h-5 text-[#89B036] mr-3 shrink-0" />
-                  <a href="mailto:info@rexoninteriors.com" className="hover:text-[#89B036] transition-colors">
-                    info@rexoninteriors.com
+                  <a href={`mailto:${settings.email}`} className="hover:text-[#89B036] transition-colors">
+                    {settings.email}
                   </a>
                 </li>
               </ul>
@@ -193,7 +225,7 @@ export default function Footer() {
       {/* Mobile Sticky CTA bar (visible only on mobile viewports under lg) */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FFFFFF] shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t border-[#3A3A3A]/10 px-4 py-3 flex items-center justify-between">
         <a
-          href="tel:+919876543210"
+          href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`}
           className="flex-1 mr-3 flex items-center justify-center py-2.5 px-4 text-sm font-bold border border-[#89B036] rounded-full text-[#89B036] hover:bg-[#89B036]/10 transition-colors focus:outline-none"
         >
           <Phone className="mr-2 w-4 h-4" />

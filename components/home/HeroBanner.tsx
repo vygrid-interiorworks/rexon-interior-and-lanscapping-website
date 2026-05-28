@@ -4,32 +4,49 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { apiService } from "@/lib/api";
+
+const defaultSlides = [
+  {
+    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
+    title: "Transforming Spaces,",
+    highlight: "Inside & Out",
+    subtext: "Elegantly stylized luxury home interiors curated for standard modern living across Kerala.",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+    title: "Breathtaking Gardens,",
+    highlight: "Tailored Landscapes",
+    subtext: "State-of-the-art outdoor architecture, pathways, and green retreats designed to wow.",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80",
+    title: "Functional Aesthetics,",
+    highlight: "Smart Living",
+    subtext: "Custom modular kitchens, living zones, and workspaces crafted with premium long-lasting wood.",
+  },
+];
 
 export default function HeroBanner() {
+  const [slides, setSlides] = useState(defaultSlides);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const slides = [
-    {
-      image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
-      title: "Transforming Spaces,",
-      highlight: "Inside & Out",
-      subtext: "Elegantly stylized luxury home interiors curated for standard modern living across Kerala.",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-      title: "Breathtaking Gardens,",
-      highlight: "Tailored Landscapes",
-      subtext: "State-of-the-art outdoor architecture, pathways, and green retreats designed to wow.",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80",
-      title: "Functional Aesthetics,",
-      highlight: "Smart Living",
-      subtext: "Custom modular kitchens, living zones, and workspaces crafted with premium long-lasting wood.",
-    },
-  ];
+  useEffect(() => {
+    const loadHeroSlides = async () => {
+      try {
+        const data = await apiService.getSettings();
+        if (data && data.heroSlides && data.heroSlides.length > 0) {
+          setSlides(data.heroSlides);
+        }
+      } catch (err) {
+        console.error("Failed to load hero slides:", err);
+      }
+    };
+    loadHeroSlides();
+  }, []);
 
   useEffect(() => {
+    if (slides.length <= 1) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);

@@ -3,13 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Home, TreePine, Users, Award } from "lucide-react";
-
-const stats = [
-  { icon: Home, value: 850, suffix: "+", label: "Interiors Designed" },
-  { icon: TreePine, value: 320, suffix: "+", label: "Landscapes Created" },
-  { icon: Users, value: 1200, suffix: "+", label: "Happy Clients" },
-  { icon: Award, value: 12, suffix: " Yrs", label: "Years of Excellence" },
-];
+import { apiService } from "@/lib/api";
 
 function CountUp({ target, suffix }: { target: number; suffix: string }) {
   const [count, setCount] = useState(0);
@@ -20,7 +14,7 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
     if (!inView) return;
     let start = 0;
     const duration = 2000;
-    const step = Math.ceil(target / (duration / 16));
+    const step = Math.ceil(target / (duration / 16)) || 1;
     const timer = setInterval(() => {
       start += step;
       if (start >= target) {
@@ -42,6 +36,32 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
 }
 
 export default function StatsBar() {
+  const [stats, setStats] = useState([
+    { icon: Home, value: 850, suffix: "+", label: "Interiors Designed" },
+    { icon: TreePine, value: 320, suffix: "+", label: "Landscapes Created" },
+    { icon: Users, value: 1200, suffix: "+", label: "Happy Clients" },
+    { icon: Award, value: 12, suffix: " Yrs", label: "Years of Excellence" },
+  ]);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await apiService.getSettings();
+        if (data) {
+          setStats([
+            { icon: Home, value: Number(data.interiorsDesigned) || 850, suffix: "+", label: "Interiors Designed" },
+            { icon: TreePine, value: Number(data.propertiesLandscapes) || 320, suffix: "+", label: "Landscapes Created" },
+            { icon: Users, value: Number(data.happyClients) || 1200, suffix: "+", label: "Happy Clients" },
+            { icon: Award, value: Number(data.yearsExperience) || 12, suffix: " Yrs", label: "Years of Excellence" },
+          ]);
+        }
+      } catch (err) {
+        console.error("Failed to load settings stats:", err);
+      }
+    };
+    fetchStats();
+  }, []);
+
   return (
     <section className="bg-[#f2f7ec] py-16 relative overflow-hidden">
       {/* Subtle texture */}

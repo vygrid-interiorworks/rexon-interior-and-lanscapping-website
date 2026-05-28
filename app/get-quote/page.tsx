@@ -181,7 +181,6 @@ Looking forward to consulting soon.`;
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Priya Nair"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
@@ -194,7 +193,6 @@ Looking forward to consulting soon.`;
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="e.g. +91 98765 43210"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
@@ -209,7 +207,6 @@ Looking forward to consulting soon.`;
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="e.g. priya@nair.com"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
@@ -221,7 +218,6 @@ Looking forward to consulting soon.`;
                       type="text"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
-                      placeholder="e.g. Jayanagar, Bangalore"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                     />
                   </div>
@@ -427,7 +423,6 @@ Looking forward to consulting soon.`;
                     rows={3}
                     value={specialRequirements}
                     onChange={(e) => setSpecialRequirements(e.target.value)}
-                    placeholder="e.g. Pet-friendly plants, double-height ceiling requirements, space-saving kitchen attachments..."
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
                   />
                 </div>

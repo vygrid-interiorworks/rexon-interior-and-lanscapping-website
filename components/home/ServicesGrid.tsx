@@ -149,90 +149,49 @@ export default function ServicesGrid() {
           viewport={{ once: true, margin: "-60px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
         >
-          {/* Top 3 services always visible */}
-          {services.slice(0, 3).map((service) => {
+          {services.map((service, index) => {
+            const isExtra = index >= 3;
             const Icon = service.icon;
+            const shouldShow = !isExtra || isExpanded || !isMobile || !mounted;
+
             return (
-              <motion.div
-                key={service.slug}
-                variants={cardVariants}
-                whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.12)" }}
-                className="group bg-white rounded-2xl p-6 border border-[#E8E8E8] cursor-pointer transition-all duration-300 flex flex-col"
-              >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
-                  style={{ backgroundColor: `${service.color}18` }}
-                >
-                  <Icon className="w-6 h-6" style={{ color: service.color }} />
-                </div>
+              <AnimatePresence key={service.slug} initial={false}>
+                {shouldShow && (
+                  <motion.div
+                    variants={cardVariants}
+                    initial={isExtra && mounted && isMobile ? { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0, marginTop: 0, marginBottom: 0 } : "show"}
+                    animate={isExtra && mounted && isMobile ? { opacity: 1, height: "auto", paddingTop: 24, paddingBottom: 24, marginTop: "", marginBottom: "" } : "show"}
+                    exit={isExtra && mounted && isMobile ? { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0, marginTop: 0, marginBottom: 0 } : undefined}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.12)" }}
+                    className="group bg-white rounded-2xl p-6 border border-[#E8E8E8] cursor-pointer transition-all duration-300 flex flex-col overflow-hidden"
+                  >
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
+                      style={{ backgroundColor: `${service.color}18` }}
+                    >
+                      <Icon className="w-6 h-6" style={{ color: service.color }} />
+                    </div>
 
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#A0A0A0] mb-2">
-                  {service.tag}
-                </span>
-                <h3 className="text-base font-bold text-[#3A3A3A] mb-2 leading-snug group-hover:text-[#89B036] transition-colors duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-xs text-[#4A4A4A] leading-relaxed flex-grow">{service.desc}</p>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#A0A0A0] mb-2">
+                      {service.tag}
+                    </span>
+                    <h3 className="text-base font-bold text-[#3A3A3A] mb-2 leading-snug group-hover:text-[#89B036] transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-xs text-[#4A4A4A] leading-relaxed flex-grow">{service.desc}</p>
 
-                <Link
-                  href={`/services#${service.slug}`}
-                  className="mt-4 text-xs font-bold text-[#89B036] uppercase tracking-wider flex items-center gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                >
-                  Learn More →
-                </Link>
-              </motion.div>
+                    <Link
+                      href={`/services#${service.slug}`}
+                      className="mt-4 text-xs font-bold text-[#89B036] uppercase tracking-wider flex items-center gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    >
+                      Learn More →
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             );
           })}
-
-          {/* Remaining services: collapsible on mobile, always visible on desktop */}
-          <div className="col-span-1 sm:contents">
-            <AnimatePresence initial={false}>
-              {(isExpanded || !isMobile || !mounted) && (
-                <motion.div
-                  key="extra-services"
-                  initial={mounted && isMobile ? { height: 0, opacity: 0 } : false}
-                  animate={mounted && isMobile ? { height: "auto", opacity: 1 } : false}
-                  exit={mounted && isMobile ? { height: 0, opacity: 0 } : undefined}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="grid grid-cols-1 gap-6 sm:contents overflow-hidden"
-                >
-                  {services.slice(3).map((service) => {
-                    const Icon = service.icon;
-                    return (
-                      <motion.div
-                        key={service.slug}
-                        variants={cardVariants}
-                        whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.12)" }}
-                        className="group bg-white rounded-2xl p-6 border border-[#E8E8E8] cursor-pointer transition-all duration-300 flex flex-col"
-                      >
-                        <div
-                          className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
-                          style={{ backgroundColor: `${service.color}18` }}
-                        >
-                          <Icon className="w-6 h-6" style={{ color: service.color }} />
-                        </div>
-
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#A0A0A0] mb-2">
-                          {service.tag}
-                        </span>
-                        <h3 className="text-base font-bold text-[#3A3A3A] mb-2 leading-snug group-hover:text-[#89B036] transition-colors duration-300">
-                          {service.title}
-                        </h3>
-                        <p className="text-xs text-[#4A4A4A] leading-relaxed flex-grow">{service.desc}</p>
-
-                        <Link
-                          href={`/services#${service.slug}`}
-                          className="mt-4 text-xs font-bold text-[#89B036] uppercase tracking-wider flex items-center gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        >
-                          Learn More →
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
         </motion.div>
 
         {/* View All Services / Toggle Button */}

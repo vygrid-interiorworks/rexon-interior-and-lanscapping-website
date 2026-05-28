@@ -35,7 +35,7 @@ export default function Footer() {
               {/* Logo in light container with 12px minimum padding */}
               <div className="inline-block bg-[#FFFFFF] rounded-xl p-[14px] shadow-md">
                 <Image
-                  src="/rexon_2d_logo.png"
+                  src="/rexon-logob.png"
                   alt="Rexon Interiors & Landscaping"
                   width={150}
                   height={50}

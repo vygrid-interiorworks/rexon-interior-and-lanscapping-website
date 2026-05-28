@@ -241,7 +241,7 @@ export default function ProjectsPage() {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.95, y: 30, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 220 }}
-              className="relative bg-white w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col lg:flex-row max-h-[90vh]"
+              className="relative bg-white w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col lg:flex-row max-h-[92vh] lg:max-h-[90vh]"
             >
               {/* Close Button */}
               <button
@@ -253,9 +253,9 @@ export default function ProjectsPage() {
               </button>
 
               {/* Left Side: Image Gallery */}
-              <div className="w-full lg:w-1/2 bg-[#171717] relative flex flex-col justify-center p-6 min-h-[320px] lg:min-h-0">
+              <div className="w-full lg:w-1/2 bg-[#171717] relative flex flex-col justify-center p-4 sm:p-6 min-h-[220px] lg:min-h-0">
                 {/* Main Image View */}
-                <div className="relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl aspect-[4/3]">
+                <div className="relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl aspect-[16/9] lg:aspect-[4/3] max-h-[240px] lg:max-h-none">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={activeImgIndex}
@@ -302,12 +302,12 @@ export default function ProjectsPage() {
 
                 {/* Thumbnails list */}
                 {selectedProject.images.length > 1 && (
-                  <div className="flex justify-center gap-3 mt-4 overflow-x-auto pb-1">
+                  <div className="flex justify-center gap-2 mt-3 overflow-x-auto pb-1 max-h-[48px] lg:max-h-none">
                     {selectedProject.images.map((img, idx) => (
                       <button
                         key={idx}
                         onClick={() => setActiveImgIndex(idx)}
-                        className={`relative w-16 h-12 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
+                        className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
                           activeImgIndex === idx
                             ? "border-[#89B036] scale-105 shadow-md"
                             : "border-transparent opacity-60 hover:opacity-100"
@@ -325,7 +325,7 @@ export default function ProjectsPage() {
               </div>
 
               {/* Right Side: Details Content */}
-              <div className="w-full lg:w-1/2 p-8 lg:p-10 overflow-y-auto flex flex-col justify-between bg-white max-h-[50vh] lg:max-h-[90vh]">
+              <div className="w-full lg:w-1/2 p-5 sm:p-8 lg:p-10 overflow-y-auto flex flex-col justify-between bg-white max-h-[50vh] lg:max-h-[90vh]">
                 <div>
                   {/* Category tag */}
                   <span className="inline-block px-3 py-1 bg-[#89B036]/10 text-[#89B036] text-[10px] font-extrabold uppercase tracking-widest rounded-full mb-3">
@@ -394,16 +394,16 @@ export default function ProjectsPage() {
                   </div>
                 </div>
 
-                <div className="pt-5 border-t border-[#F2F2F2] flex items-center justify-between mt-auto">
+                <div className="pt-4 border-t border-[#F2F2F2] flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto w-full">
                   <Link
                     href="/get-quote"
-                    className="inline-flex items-center justify-center px-5 py-2.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-2xs uppercase tracking-wider transition-colors duration-300 shadow-md"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-xs sm:text-2xs uppercase tracking-wider transition-colors duration-300 shadow-md text-center"
                   >
                     Consult on this
                   </Link>
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="text-2xs font-bold text-[#A0A0A0] hover:text-[#3A3A3A] uppercase tracking-wider transition-colors cursor-pointer"
+                    className="w-full sm:w-auto py-2 text-center text-xs sm:text-2xs font-bold text-[#A0A0A0] hover:text-[#3A3A3A] uppercase tracking-wider transition-colors cursor-pointer"
                   >
                     Close
                   </button>

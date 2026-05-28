@@ -51,7 +51,7 @@ export default function WhatsAppButton() {
   ];
 
   return (
-    <div className="fixed bottom-20 right-6 md:bottom-6 md:right-6 z-[9999] flex flex-col items-center">
+    <div className="fixed bottom-28 right-6 md:bottom-6 md:right-6 z-[45] flex flex-col items-center">
       {/* Sub social bubbles fanning out upwards */}
       <AnimatePresence>
         {isOpen && (

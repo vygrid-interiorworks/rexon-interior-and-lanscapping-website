@@ -47,7 +47,7 @@ export default function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center focus:outline-none p-1 sm:p-[12px]">
               <Image
-                src="/rexon_2d_logo.png"
+                src="/rexon-logob.png"
                 alt="Rexon Logo"
                 width={200}
                 height={66}

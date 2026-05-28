@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import WhatsAppButton from "@/components/layout/WhatsAppButton";
+import PublicLayoutWrapper from "@/components/layout/PublicLayoutWrapper";
 import { Toaster } from "react-hot-toast";
 
 const playfair = Playfair_Display({
@@ -61,10 +59,7 @@ export default function RootLayout({
           `}
         </Script>
         <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <PublicLayoutWrapper>{children}</PublicLayoutWrapper>
       </body>
     </html>
   );

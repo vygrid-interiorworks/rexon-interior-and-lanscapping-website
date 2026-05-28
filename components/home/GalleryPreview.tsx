@@ -6,10 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn } from "lucide-react";
 
 const galleryItems = [
-  { id: 1, src: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80", alt: "Living Room Design", cat: "Interior", tall: true },
-  { id: 2, src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80", alt: "Tropical Garden", cat: "Landscaping", tall: false },
-  { id: 3, src: "https://images.unsplash.com/photo-1583847268964-b28ce8f52859?auto=format&fit=crop&w=800&q=80", alt: "Modular Kitchen", cat: "Kitchen", tall: false },
-  { id: 4, src: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80", alt: "Garden Pathway", cat: "Landscaping", tall: true },
+  { id: 1, src: "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=800&q=80", alt: "Living Room Design", cat: "Interior", tall: true },
+  { id: 2, src: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80", alt: "Tropical Garden", cat: "Landscaping", tall: false },
+  { id: 3, src: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80", alt: "Modular Kitchen", cat: "Kitchen", tall: false },
+  { id: 4, src: "https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=800&q=80", alt: "Garden Pathway", cat: "Landscaping", tall: true },
   { id: 5, src: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80", alt: "Master Bedroom", cat: "Interior", tall: false },
   { id: 6, src: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80", alt: "False Ceiling Design", cat: "Interior", tall: false },
 ];

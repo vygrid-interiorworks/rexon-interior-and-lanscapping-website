@@ -44,7 +44,7 @@ export default function MobileMenu({
             <div className="flex items-center justify-between border-b border-[#3A3A3A]/10 pb-4 mb-6">
               <Link href="/" onClick={onClose} className="p-[4px]">
                 <Image
-                  src="/rexon_2d_logo.png"
+                  src="/rexon-logob.png"
                   alt="Rexon Logo"
                   width={130}
                   height={40}

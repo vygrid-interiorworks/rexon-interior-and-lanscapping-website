@@ -101,6 +101,9 @@ export default function GalleryPage() {
                     <img
                       src={item.image}
                       alt={item.title}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&q=80&w=800";
+                      }}
                       className={`w-full object-cover group-hover:scale-105 transition-transform duration-600 ${index % 3 === 0 ? "h-72 lg:h-96" : "h-48 lg:h-60"}`}
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/45 transition-all duration-300 flex flex-col items-center justify-center gap-2">
@@ -132,7 +135,14 @@ export default function GalleryPage() {
               <button onClick={() => setLightbox(null)} className="absolute -top-12 right-0 z-10 w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white">
                 <X className="w-5 h-5" />
               </button>
-              <img src={lightbox.src} alt={lightbox.alt} className="w-full rounded-2xl shadow-2xl max-h-[80vh] object-contain" />
+              <img
+                src={lightbox.src}
+                alt={lightbox.alt}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&q=80&w=800";
+                }}
+                className="w-full rounded-2xl shadow-2xl max-h-[80vh] object-contain"
+              />
               <div className="flex items-center justify-between w-full mt-4 px-2">
                 <button onClick={prev} className="text-white/60 hover:text-white text-sm font-bold uppercase tracking-wider transition-colors">← Prev</button>
                 <p className="text-white/60 text-sm">{lightbox.alt}</p>

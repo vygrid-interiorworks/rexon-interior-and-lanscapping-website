@@ -22,7 +22,7 @@ export async function GET() {
       category: "Landscaping",
       description: "Custom landscaping project featuring a koi pond, bamboo fencing, and a zen meditation area.",
       featured: true,
-      image: "https://images.unsplash.com/photo-1558904541-efa843a96f09?auto=format&fit=crop&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&q=80&w=800",
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });

@@ -48,6 +48,7 @@ type Tab =
   | "hero"
   | "services"
   | "projects"
+  | "packages"
   | "stats"
   | "enquiries"
   | "quotes"
@@ -55,6 +56,77 @@ type Tab =
   | "cta_section"
   | "gallery"
   | "testimonials";
+
+type PackageRoom = { room: string; items: string };
+
+const EMPTY_PKG_FORM = {
+  name: "",
+  tagline: "",
+  originalPrice: "",
+  offerPrice: "",
+  image: "",
+  imageFile: null as File | null,
+  rooms: [
+    { room: "Foyer", items: "" },
+    { room: "Living Room", items: "" },
+    { room: "Dining Room", items: "" },
+    { room: "Master Bedroom", items: "" },
+    { room: "Guest Bedroom", items: "" },
+    { room: "Modular Kitchen", items: "" },
+  ] as PackageRoom[],
+};
+
+// Default packages — mirrors what PackageOffers.tsx shows as static fallback
+const DEFAULT_PACKAGES = [
+  {
+    name: "HARMONY",
+    tagline: "Smart interiors for a comfortable 2BHK home",
+    originalPrice: "₹9.50 Lac",
+    offerPrice: "₹6.85 Lac*",
+    image: "/images/package-interior-hero.jpg",
+    rooms: [
+      { room: "Foyer", items: ["Shoe rack unit with cabinets and shutters"] },
+      { room: "Living Room", items: ["Premium TV display unit with aluminium profile & glass shutter"] },
+      { room: "Dining Room", items: ["6 Seater dining table", "3 dining chairs", "1 dining bench (3-seater)"] },
+      { room: "Master Bedroom", items: ["3-door soft-close hinged wardrobe", "Queen size bed with headboard", "2 open bedside tables"] },
+      { room: "Guest Bedroom", items: ["3-door soft-close hinged wardrobe", "Queen size bed with headboard", "2 open bedside tables"] },
+      { room: "Modular Kitchen", items: ["Bottom & overhead cabinets", "6 Hettich accessories (German-made, 15-yr warranty)", "Hood & Hob by Faber"] },
+    ],
+  },
+  {
+    name: "SIGNATURE",
+    tagline: "Refined design & full woodwork for a 3BHK",
+    originalPrice: "₹17.20 Lac",
+    offerPrice: "₹12.35 Lac*",
+    image: "/images/package-interior-hero.jpg",
+    rooms: [
+      { room: "Foyer", items: ["Shoe rack unit with cabinets and shutters"] },
+      { room: "Living Room", items: ["Premium TV display unit with aluminium profile & glass shutter", "Prayer unit with open storage"] },
+      { room: "Dining Room", items: ["6-seater dining table", "3 dining chairs", "1 dining bench", "Custom living-dining partition"] },
+      { room: "Master Bedroom", items: ["3-door soft-close hinged wardrobe", "Dressing unit with cabinet & drawer", "Custom study table", "Queen size bed with headboard", "2 bedside tables"] },
+      { room: "Kids Room", items: ["Wardrobe up to ceiling", "Custom study table", "Queen size bed with headboard", "1 bedside table"] },
+      { room: "Guest Bedroom", items: ["Wardrobe up to ceiling", "Queen size bed with headboard", "1 bedside table"] },
+      { room: "Modular Kitchen", items: ["Top & bottom cabinets", "6 Hettich accessories", "Hood & Hob by Faber", "Accessories: Cutlery tray, plain basket, plate rack, bottle pull-out, waste bin pull-out, detergent holder"] },
+    ],
+  },
+  {
+    name: "GRANDEUR",
+    tagline: "Luxury turnkey interiors for a premium 3BHK",
+    originalPrice: "₹26.50 Lac",
+    offerPrice: "₹18.55 Lac*",
+    image: "/images/package-interior-hero.jpg",
+    rooms: [
+      { room: "Foyer", items: ["Shoe rack & ledges", "Round mirror", "Cement wall texture"] },
+      { room: "Living Room", items: ["Premium TV display unit", "Prayer unit", "Curtains with lining", "Super premium wall panelling", "Decorative clock", "3-seater sofa set with lounge", "4 cushions", "Designer carpet", "Centre table"] },
+      { room: "Dining Room", items: ["6-seater dining table", "3 dining chairs", "1 dining bench", "Living-dining partition", "Wash area with frameless projected mirror", "Cement wall texture"] },
+      { room: "Master Bedroom", items: ["Soft-close hinged wardrobe", "Dressing unit", "Custom study unit", "King size bed with headboard & bottom drawer", "2 double-drawer bedside tables", "Premium Roman blinds", "Single accent chair", "3 rolls wallpaper", "6\" Peps mattress", "Bed setting"] },
+      { room: "Kids Bedroom", items: ["Queen size bed", "2 bedside tables", "Bed setting", "Mattress", "Wardrobe", "Custom study unit", "3 rolls wallpaper"] },
+      { room: "Guest Bedroom", items: ["Queen size bed", "2 bedside tables", "Premium Roman blinds", "3 rolls wallpaper", "Mattress", "Bed setting", "Wardrobe", "1 coat primer + 2 coat premium emulsion"] },
+      { room: "Kitchen", items: ["Top & bottom cabinets", "6 Hettich accessories", "Hood & Hob by Faber", "Accessories: Cutlery tray, plain basket, plate rack, bottle pull-out, waste bin pull-out, detergent holder"] },
+    ],
+  },
+];
+
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -78,6 +150,12 @@ export default function AdminDashboardPage() {
   const [gallery, setGallery] = useState<any[]>([]);
   const [testimonials, setTestimonials] = useState<any[]>([]);
   const [services, setServices] = useState<any[]>([]);
+  const [packages, setPackages] = useState<any[]>([]);
+
+  // Package Form State
+  const [pkgForm, setPkgForm] = useState<typeof EMPTY_PKG_FORM>(EMPTY_PKG_FORM);
+  const [editingPkgId, setEditingPkgId] = useState<string | null>(null);
+  const [pkgSaving, setPkgSaving] = useState(false);
   
   // Settings & Banner States
   const [settings, setSettings] = useState<any>({
@@ -202,6 +280,13 @@ export default function AdminDashboardPage() {
         console.warn("Failed fetching services");
       }
 
+      let pkgList: any[] = [];
+      try {
+        pkgList = await apiService.getPackages();
+      } catch (e) {
+        console.warn("Failed fetching packages");
+      }
+
       let setts: any = null;
       try {
         setts = await apiService.getSettings();
@@ -214,6 +299,7 @@ export default function AdminDashboardPage() {
       setGallery(galList || []);
       setTestimonials(testList || []);
       setServices(servsList || []);
+      setPackages(pkgList || []);
       if (setts) setSettings(setts);
 
       // Split leads list locally
@@ -586,11 +672,120 @@ export default function AdminDashboardPage() {
     }
   };
 
+  // ── Package CRUD Handlers ────────────────────────────────────────────────
+  const handleSavePackage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!pkgForm.name) return;
+    setPkgSaving(true);
+    try {
+      let imgUrl = pkgForm.image;
+      if (pkgForm.imageFile) {
+        imgUrl = await uploadSingleFile(pkgForm.imageFile);
+      }
+      // Serialize rooms: convert comma-string items → string[] per room
+      const roomsSerialized = pkgForm.rooms
+        .filter((r) => r.room.trim() && r.items.trim())
+        .map((r) => ({
+          room: r.room.trim(),
+          items: r.items.split("\n").map((s: string) => s.trim()).filter(Boolean),
+        }));
+      const payload = {
+        name: pkgForm.name.trim().toUpperCase(),
+        tagline: pkgForm.tagline.trim(),
+        originalPrice: pkgForm.originalPrice.trim(),
+        offerPrice: pkgForm.offerPrice.trim(),
+        image: imgUrl,
+        rooms: roomsSerialized,
+      };
+      if (editingPkgId) {
+        const updated = await apiService.updatePackageDirect(editingPkgId, payload);
+        setPackages((prev) => prev.map((p) => (p._id === editingPkgId ? updated : p)));
+        alert("Package updated successfully!");
+        setEditingPkgId(null);
+      } else {
+        const added = await apiService.createPackageDirect(payload);
+        setPackages((prev) => [...prev, added]);
+        alert("Package published successfully!");
+      }
+      setPkgForm(EMPTY_PKG_FORM);
+    } catch (err) {
+      alert("Error saving package.");
+    } finally {
+      setPkgSaving(false);
+    }
+  };
+
+  const handleEditPackage = (pkg: any) => {
+    setEditingPkgId(pkg._id);
+    // Deserialize rooms back to textarea strings
+    const rooms = (pkg.rooms || []).map((r: any) => ({
+      room: r.room || "",
+      items: Array.isArray(r.items) ? r.items.join("\n") : r.items || "",
+    }));
+    // Pad to at least 6 rows
+    while (rooms.length < 6) rooms.push({ room: "", items: "" });
+    setPkgForm({
+      name: pkg.name || "",
+      tagline: pkg.tagline || "",
+      originalPrice: pkg.originalPrice || "",
+      offerPrice: pkg.offerPrice || "",
+      image: pkg.image || "",
+      imageFile: null,
+      rooms,
+    });
+  };
+
+  const handleDeletePackage = async (id: string) => {
+    if (!confirm("Delete this package? This cannot be undone.")) return;
+    try {
+      await apiService.deletePackage(id);
+      setPackages((prev) => prev.filter((p) => p._id !== id));
+      alert("Package deleted.");
+    } catch (err) {
+      setPackages((prev) => prev.filter((p) => p._id !== id));
+    }
+  };
+
+  const updatePkgRoom = (idx: number, field: "room" | "items", val: string) => {
+    const updated = pkgForm.rooms.map((r, i) => (i === idx ? { ...r, [field]: val } : r));
+    setPkgForm({ ...pkgForm, rooms: updated });
+  };
+
+  const addPkgRoom = () =>
+    setPkgForm({ ...pkgForm, rooms: [...pkgForm.rooms, { room: "", items: "" }] });
+
+  const removePkgRoom = (idx: number) =>
+    setPkgForm({ ...pkgForm, rooms: pkgForm.rooms.filter((_, i) => i !== idx) });
+
+  const handleSeedDefaultPackages = async () => {
+    const msg = packages.length > 0
+      ? `There are already ${packages.length} package(s) in the database.\n\nClick OK to ADD the 3 default packages alongside them, or Cancel to abort.`
+      : "This will add the 3 default packages (HARMONY, SIGNATURE, GRANDEUR) to the database. Continue?";
+    if (!confirm(msg)) return;
+    setPkgSaving(true);
+    try {
+      const added: any[] = [];
+      for (const pkg of DEFAULT_PACKAGES) {
+        const result = await apiService.createPackageDirect(pkg);
+        added.push(result);
+      }
+      setPackages((prev) => [...prev, ...added]);
+      alert(`✅ ${added.length} default packages added successfully! They are now live on the website.`);
+    } catch (err) {
+      alert("❌ Failed to seed default packages. Please try again.");
+    } finally {
+      setPkgSaving(false);
+    }
+  };
+
+
+
   const navLinks = [
     { id: "overview", label: "Dashboard Overview", icon: <TrendingUp className="w-4 h-4" /> },
     { id: "hero", label: "Hero Banner Management", icon: <Layout className="w-4 h-4" /> },
     { id: "services", label: "Services Manager", icon: <Layers className="w-4 h-4" /> },
-    { id: "projects", label: "Portfolio recent work", icon: <FolderOpen className="w-4 h-4" /> },
+    { id: "projects", label: "Portfolio Recent Work", icon: <FolderOpen className="w-4 h-4" /> },
+    { id: "packages", label: "Package Offers Manager", icon: <DollarSign className="w-4 h-4" /> },
     { id: "stats", label: "Counters & Metrics", icon: <Sliders className="w-4 h-4" /> },
     { id: "enquiries", label: "Contact Us Messages", icon: <Mail className="w-4 h-4" /> },
     { id: "quotes", label: "Free Quote Requests", icon: <DollarSign className="w-4 h-4" /> },
@@ -1512,8 +1707,330 @@ export default function AdminDashboardPage() {
                 </div>
               )}
 
+              {/* ── TAB: PACKAGE OFFERS MANAGER ── */}
+              {activeTab === "packages" && (
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+                  {/* ── Left: Create / Edit Form ── */}
+                  <div className="lg:col-span-2 bg-white border border-[#EBEAE5] rounded-3xl p-6 shadow-xs h-fit">
+                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-5 flex items-center gap-2">
+                      {editingPkgId ? <Edit className="w-4 h-4 text-amber-500" /> : <Plus className="w-4 h-4 text-[#89B036]" />}
+                      {editingPkgId ? "Edit Package" : "Add New Package"}
+                    </h3>
+
+                    <form onSubmit={handleSavePackage} className="space-y-4">
+                      {/* Package Name */}
+                      <div>
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                          Package Name <span className="text-red-400">*</span>
+                        </label>
+                        <input
+                          required
+                          type="text"
+                          value={pkgForm.name}
+                          onChange={(e) => setPkgForm({ ...pkgForm, name: e.target.value })}
+                          placeholder="e.g. HARMONY, SIGNATURE, GRANDEUR"
+                          className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none transition-all"
+                        />
+                      </div>
+
+                      {/* Tagline */}
+                      <div>
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                          Tagline / Short Description
+                        </label>
+                        <input
+                          type="text"
+                          value={pkgForm.tagline}
+                          onChange={(e) => setPkgForm({ ...pkgForm, tagline: e.target.value })}
+                          placeholder="e.g. Smart interiors for a 2BHK home"
+                          className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none transition-all"
+                        />
+                      </div>
+
+                      {/* Prices */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                            Original Price
+                          </label>
+                          <input
+                            type="text"
+                            value={pkgForm.originalPrice}
+                            onChange={(e) => setPkgForm({ ...pkgForm, originalPrice: e.target.value })}
+                            placeholder="₹17.20 Lac"
+                            className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none transition-all"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                            Offer Price (with *)
+                          </label>
+                          <input
+                            type="text"
+                            value={pkgForm.offerPrice}
+                            onChange={(e) => setPkgForm({ ...pkgForm, offerPrice: e.target.value })}
+                            placeholder="₹12.35 Lac*"
+                            className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none transition-all"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Image URL */}
+                      <div>
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                          Package Image URL
+                        </label>
+                        <input
+                          type="text"
+                          value={pkgForm.image}
+                          onChange={(e) => setPkgForm({ ...pkgForm, image: e.target.value })}
+                          placeholder="https://images.unsplash.com/..."
+                          className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none transition-all"
+                        />
+                      </div>
+
+                      {/* Image Upload */}
+                      <div>
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                          OR Upload Image File
+                        </label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => setPkgForm({ ...pkgForm, imageFile: e.target.files?.[0] || null })}
+                          className="w-full text-[10px] text-gray-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[9px] file:font-bold file:uppercase file:tracking-wider file:bg-[#89B036]/10 file:text-[#89B036] file:cursor-pointer"
+                        />
+                        {pkgForm.imageFile && (
+                          <p className="text-[9px] text-[#89B036] mt-1 font-semibold">✓ {pkgForm.imageFile.name} selected</p>
+                        )}
+                        {pkgForm.image && !pkgForm.imageFile && (
+                          <img src={pkgForm.image} alt="preview" className="mt-2 w-full h-24 object-cover rounded-xl border border-[#EBEAE5]" />
+                        )}
+                      </div>
+
+                      {/* Divider */}
+                      <div className="pt-2 pb-1">
+                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">
+                          Room-by-Room Inclusions
+                        </p>
+                        <p className="text-[9px] text-gray-400 mt-0.5">Enter one item per line in the Items field</p>
+                      </div>
+
+                      {/* Dynamic Room Rows */}
+                      <div className="space-y-3 max-h-[420px] overflow-y-auto pr-1">
+                        {pkgForm.rooms.map((room, idx) => (
+                          <div key={idx} className="bg-gray-50/70 border border-[#EBEAE5] rounded-2xl p-3 relative">
+                            <button
+                              type="button"
+                              onClick={() => removePkgRoom(idx)}
+                              className="absolute top-2 right-2 p-1 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg cursor-pointer"
+                              title="Remove room"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                            <div className="mb-2">
+                              <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                                Room Name
+                              </label>
+                              <input
+                                type="text"
+                                value={room.room}
+                                onChange={(e) => updatePkgRoom(idx, "room", e.target.value)}
+                                placeholder="e.g. Master Bedroom"
+                                className="w-full border-0 border-b border-gray-200 focus:border-[#89B036] bg-white px-2 py-1.5 text-xs text-[#3A3A3A] outline-none rounded"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                                Items (one per line)
+                              </label>
+                              <textarea
+                                rows={3}
+                                value={room.items}
+                                onChange={(e) => updatePkgRoom(idx, "items", e.target.value)}
+                                placeholder={"3-door soft-close wardrobe\nQueen size bed with headboard\n2 bedside tables"}
+                                className="w-full border border-gray-200 focus:border-[#89B036] bg-white px-2 py-1.5 text-xs text-[#3A3A3A] outline-none rounded-xl resize-none"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Add Room Button */}
+                      <button
+                        type="button"
+                        onClick={addPkgRoom}
+                        className="w-full flex items-center justify-center gap-2 py-2 border-2 border-dashed border-[#89B036]/40 hover:border-[#89B036] text-[#89B036] text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer hover:bg-[#89B036]/5"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                        Add Room Section
+                      </button>
+
+                      {/* Action Buttons */}
+                      <div className="flex gap-3 pt-2">
+                        {editingPkgId && (
+                          <button
+                            type="button"
+                            onClick={() => { setEditingPkgId(null); setPkgForm(EMPTY_PKG_FORM); }}
+                            className="flex-1 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-600 text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer"
+                          >
+                            Cancel
+                          </button>
+                        )}
+                        <button
+                          type="submit"
+                          disabled={pkgSaving}
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#89B036] hover:bg-[#546622] text-white text-[10px] font-bold uppercase tracking-wider rounded-xl shadow-sm transition-all cursor-pointer disabled:opacity-60"
+                        >
+                          {pkgSaving ? (
+                            <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            editingPkgId ? <><Eye className="w-3.5 h-3.5" /> Update Package</> : <><Upload className="w-3.5 h-3.5" /> Publish Package</>
+                          )}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  {/* ── Right: Packages List ── */}
+                  <div className="lg:col-span-3 space-y-5">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                          Published Packages ({packages.length})
+                        </h3>
+                        <p className="text-[9px] text-gray-400 mt-0.5 italic">Changes reflect live on the website</p>
+                      </div>
+                      {/* Seed defaults button — always visible */}
+                      <button
+                        onClick={handleSeedDefaultPackages}
+                        disabled={pkgSaving}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-[#2E3A1E] hover:bg-[#546622] text-white text-[9px] font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer disabled:opacity-60 shadow-sm"
+                        title="Load the 3 website packages (HARMONY, SIGNATURE, GRANDEUR) into the database"
+                      >
+                        {pkgSaving ? (
+                          <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          <Upload className="w-3 h-3" />
+                        )}
+                        Load Default Packages
+                      </button>
+                    </div>
+
+                    {packages.length === 0 && (
+                      <div className="bg-white border border-dashed border-[#EBEAE5] rounded-3xl p-10 text-center">
+                        <DollarSign className="w-8 h-8 text-gray-300 mx-auto mb-3" />
+                        <p className="text-xs font-bold text-gray-400 mb-1">No packages yet</p>
+                        <p className="text-[10px] text-gray-400 mb-5 leading-relaxed max-w-xs mx-auto">
+                          Add packages manually using the form, or click below to instantly load the 3 default packages shown on the website.
+                        </p>
+                        <button
+                          onClick={handleSeedDefaultPackages}
+                          disabled={pkgSaving}
+                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#89B036] hover:bg-[#546622] text-white text-[10px] font-bold uppercase tracking-wider rounded-xl shadow-sm transition-all cursor-pointer disabled:opacity-60"
+                        >
+                          {pkgSaving ? (
+                            <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            <Upload className="w-3.5 h-3.5" />
+                          )}
+                          Load HARMONY · SIGNATURE · GRANDEUR
+                        </button>
+                      </div>
+                    )}
+
+
+                    {packages.map((pkg: any) => (
+                      <div key={pkg._id} className="bg-white border border-[#EBEAE5] rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-shadow duration-300">
+                        <div className="flex gap-0">
+                          {/* Image strip */}
+                          {pkg.image && (
+                            <div className="w-28 flex-shrink-0 relative">
+                              <img
+                                src={pkg.image}
+                                alt={pkg.name}
+                                className="w-full h-full object-cover"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
+                            </div>
+                          )}
+
+                          {/* Content */}
+                          <div className="flex-1 p-5 min-w-0">
+                            <div className="flex items-start justify-between gap-3 mb-3">
+                              <div>
+                                <h4 className="text-sm font-bold text-[#2E3A1E]">{pkg.name}</h4>
+                                <p className="text-[10px] text-gray-500 mt-0.5 leading-snug">{pkg.tagline}</p>
+                              </div>
+                              <div className="flex items-center gap-2 flex-shrink-0">
+                                <button
+                                  onClick={() => handleEditPackage(pkg)}
+                                  className="p-2 bg-amber-50 hover:bg-amber-100 text-amber-500 rounded-lg border border-amber-100 cursor-pointer transition-colors"
+                                  title="Edit package"
+                                >
+                                  <Edit className="w-3.5 h-3.5" />
+                                </button>
+                                <button
+                                  onClick={() => handleDeletePackage(pkg._id)}
+                                  className="p-2 bg-red-50 hover:bg-red-100 text-red-500 rounded-lg border border-red-100 cursor-pointer transition-colors"
+                                  title="Delete package"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Pricing */}
+                            <div className="flex items-center gap-3 mb-3">
+                              <span className="text-xs text-gray-400 line-through">{pkg.originalPrice}</span>
+                              <span className="text-sm font-extrabold text-[#89B036]">{pkg.offerPrice}</span>
+                            </div>
+
+                            {/* Room pills */}
+                            {pkg.rooms && pkg.rooms.length > 0 && (
+                              <div className="flex flex-wrap gap-1.5">
+                                {pkg.rooms.map((r: any, i: number) => (
+                                  <span key={i} className="text-[9px] bg-[#89B036]/8 text-[#546622] border border-[#89B036]/20 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide">
+                                    {r.room}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Expanded inclusions accordion preview */}
+                        <div className="border-t border-[#EBEAE5] px-5 py-4 bg-gray-50/50">
+                          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-3">Inclusions Preview</p>
+                          <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+                            {(pkg.rooms || []).slice(0, 4).map((r: any, i: number) => (
+                              <div key={i}>
+                                <p className="text-[9px] font-bold text-[#2E3A1E] uppercase tracking-wide mb-1">• {r.room}</p>
+                                <ul className="space-y-0.5">
+                                  {(Array.isArray(r.items) ? r.items : [r.items]).slice(0, 3).map((item: string, j: number) => (
+                                    <li key={j} className="text-[9px] text-gray-500 leading-snug pl-2">— {item}</li>
+                                  ))}
+                                  {(Array.isArray(r.items) ? r.items : [r.items]).length > 3 && (
+                                    <li className="text-[9px] text-[#89B036] font-semibold pl-2">+{(Array.isArray(r.items) ? r.items : [r.items]).length - 3} more</li>
+                                  )}
+                                </ul>
+                              </div>
+                            ))}
+                            {(pkg.rooms || []).length > 4 && (
+                              <p className="text-[9px] text-gray-400 col-span-2 italic">… and {pkg.rooms.length - 4} more room sections</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* ── TAB 5: COUNTERS & METRICS ── */}
               {activeTab === "stats" && (
+
                 <div className="bg-white border border-[#EBEAE5] rounded-3xl p-6 max-w-2xl shadow-xs">
                   <div className="mb-6">
                     <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Dynamic Counters Configuration</h3>

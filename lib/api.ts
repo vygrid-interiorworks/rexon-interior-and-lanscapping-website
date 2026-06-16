@@ -412,6 +412,34 @@ export const apiService = {
     const data = snap.exists() ? snap.data() : {};
     return { page, ...data };
   },
+
+  // ─── Packages ─────────────────────────────────────────────────────────────
+  getPackages: async () => {
+    const q = query(collection(db, "packages"), orderBy("createdAt", "asc"));
+    const snap = await getDocs(q);
+    return snap.docs.map((d) => serializeDoc(d.id, d.data()));
+  },
+
+  createPackageDirect: async (pkg: any) => {
+    const ref = await addDoc(collection(db, "packages"), {
+      ...pkg,
+      createdAt: serverTimestamp(),
+    });
+    return { _id: ref.id, ...pkg };
+  },
+
+  updatePackageDirect: async (id: string, pkg: any) => {
+    await updateDoc(doc(db, "packages", id), {
+      ...pkg,
+      updatedAt: serverTimestamp(),
+    });
+    return { _id: id, ...pkg };
+  },
+
+  deletePackage: async (id: string) => {
+    await deleteDoc(doc(db, "packages", id));
+    return { success: true };
+  },
 };
 
 export default db;

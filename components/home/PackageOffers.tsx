@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { apiService } from "@/lib/api";
 import {
   HelpCircle,
   PlayCircle,
@@ -30,7 +31,7 @@ type Package = {
   rooms: Room[];
 };
 
-const packages: Package[] = [
+const staticPackages: Package[] = [
   {
     id: "harmony",
     name: "HARMONY",
@@ -311,7 +312,40 @@ function RoomsList({ rooms }: { rooms: Room[] }) {
 
 export default function PackageOffers() {
   const [activeId, setActiveId] = useState<string>("signature");
-  const activePackage = packages.find((p) => p.id === activeId)!;
+  const [packages, setPackages] = useState<Package[]>(staticPackages);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const remote = await apiService.getPackages();
+        if (remote && remote.length > 0) {
+          // Normalize rooms: Firestore stores items as string[], textarea uses string
+          const normalized: Package[] = remote.map((p: any) => ({
+            id: p._id,
+            name: p.name || "",
+            tagline: p.tagline || "",
+            originalPrice: p.originalPrice || "",
+            offerPrice: p.offerPrice || "",
+            image: p.image || "/images/package-interior-hero.jpg",
+            rooms: (p.rooms || []).map((r: any) => ({
+              room: r.room || "",
+              items: Array.isArray(r.items) ? r.items : [r.items].filter(Boolean),
+            })),
+          }));
+          setPackages(normalized);
+          // Set first package as active if current active not found
+          setActiveId((prev) =>
+            normalized.some((p) => p.id === prev) ? prev : normalized[0]?.id || prev
+          );
+        }
+      } catch (e) {
+        // Silently fall back to static
+      }
+    };
+    load();
+  }, []);
+
+  const activePackage = packages.find((p) => p.id === activeId) ?? packages[0];
 
   return (
     <section
@@ -385,8 +419,8 @@ export default function PackageOffers() {
                   <div className="absolute top-0 left-0 right-0 h-1 bg-[#89B036] rounded-t-2xl" />
                 )}
 
-                {/* "Most Popular" badge on Signature */}
-                {pkg.id === "signature" && (
+                {/* "Most Popular" badge on middle package */}
+                {i === 1 && packages.length === 3 && (
                   <span
                     className={`absolute -top-3 right-4 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow ${
                       isActive

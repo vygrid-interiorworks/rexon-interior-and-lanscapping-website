@@ -32,11 +32,11 @@ type Package = {
 
 const packages: Package[] = [
   {
-    id: "essential",
-    name: "ESSENTIAL",
-    tagline: "Essential woodwork for a 2BHK",
-    originalPrice: "₹8.85 Lac",
-    offerPrice: "₹6.37 Lac*",
+    id: "harmony",
+    name: "HARMONY",
+    tagline: "Smart interiors for a comfortable 2BHK home",
+    originalPrice: "₹9.50 Lac",
+    offerPrice: "₹6.85 Lac*",
     image: "/images/package-interior-hero.jpg",
     rooms: [
       {
@@ -82,11 +82,11 @@ const packages: Package[] = [
     ],
   },
   {
-    id: "eleganza",
-    name: "ELEGANZA",
-    tagline: "Detailed woodwork for a 3BHK",
-    originalPrice: "₹15.84 Lac",
-    offerPrice: "₹11.41 Lac*",
+    id: "signature",
+    name: "SIGNATURE",
+    tagline: "Refined design & full woodwork for a 3BHK",
+    originalPrice: "₹17.20 Lac",
+    offerPrice: "₹12.35 Lac*",
     image: "/images/package-interior-hero.jpg",
     rooms: [
       {
@@ -148,11 +148,11 @@ const packages: Package[] = [
     ],
   },
   {
-    id: "eleganza-plus",
-    name: "ELEGANZA PLUS",
-    tagline: "Woodwork & beautifications for a 3BHK",
-    originalPrice: "₹24.03 Lac",
-    offerPrice: "₹16.82 Lac*",
+    id: "grandeur",
+    name: "GRANDEUR",
+    tagline: "Luxury turnkey interiors for a premium 3BHK",
+    originalPrice: "₹26.50 Lac",
+    offerPrice: "₹18.55 Lac*",
     image: "/images/package-interior-hero.jpg",
     rooms: [
       {
@@ -310,7 +310,7 @@ function RoomsList({ rooms }: { rooms: Room[] }) {
 // ─── Main Component ─────────────────────────────────────────────────────────
 
 export default function PackageOffers() {
-  const [activeId, setActiveId] = useState<string>("eleganza");
+  const [activeId, setActiveId] = useState<string>("signature");
   const activePackage = packages.find((p) => p.id === activeId)!;
 
   return (
@@ -385,8 +385,8 @@ export default function PackageOffers() {
                   <div className="absolute top-0 left-0 right-0 h-1 bg-[#89B036] rounded-t-2xl" />
                 )}
 
-                {/* "Best Value" badge on Eleganza */}
-                {pkg.id === "eleganza" && (
+                {/* "Most Popular" badge on Signature */}
+                {pkg.id === "signature" && (
                   <span
                     className={`absolute -top-3 right-4 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow ${
                       isActive

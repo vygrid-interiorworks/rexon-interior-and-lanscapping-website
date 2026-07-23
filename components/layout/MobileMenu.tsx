@@ -38,10 +38,10 @@ export default function MobileMenu({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", bounce: 0.1, duration: 0.4 }}
-            className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-[#FFFFFF] shadow-2xl flex flex-col p-6 lg:hidden"
+            className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-[#F5F5F3] shadow-2xl flex flex-col p-6 lg:hidden font-sans"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-[#3A3A3A]/10 pb-4 mb-6">
+            <div className="flex items-center justify-between border-b border-[#2B2C2E]/10 pb-4 mb-6">
               <Link href="/" onClick={onClose} className="p-[4px]">
                 <Image
                   src="/rexon-logob.png"
@@ -53,7 +53,7 @@ export default function MobileMenu({
               </Link>
               <button
                 onClick={onClose}
-                className="p-2 rounded-full hover:bg-[#F2F2F2] text-[#3A3A3A] hover:text-[#89B036] focus:outline-none"
+                className="p-2 rounded-full hover:bg-[#DCE8CC]/50 text-[#2B2C2E] hover:text-[#7CB342] focus:outline-none"
                 aria-label="Close Menu"
               >
                 <X className="w-6 h-6" />
@@ -63,18 +63,19 @@ export default function MobileMenu({
             {/* Nav Links */}
             <nav className="flex flex-col space-y-4 flex-grow overflow-y-auto pr-2">
               {navLinks.map((link) => {
-                const isActive =
-                  pathname === link.path ||
-                  (link.path !== "/" && pathname.startsWith(link.path));
+                const isActive = link.path.startsWith("/#")
+                  ? pathname === "/"
+                  : pathname === link.path ||
+                    (link.path !== "/" && pathname.startsWith(link.path));
                 return (
                   <Link
                     key={link.name}
                     href={link.path}
                     onClick={onClose}
-                    className={`px-4 py-3 text-base font-semibold rounded-lg transition-all ${
+                    className={`px-4 py-3 text-base font-medium rounded-xl transition-all ${
                       isActive
-                        ? "bg-[#89B036]/10 text-[#89B036]"
-                        : "text-[#3A3A3A] hover:bg-[#F2F2F2] hover:text-[#89B036]"
+                        ? "bg-[#DCE8CC] text-[#2B2C2E] font-semibold"
+                        : "text-[#2B2C2E] hover:bg-[#DCE8CC]/40 hover:text-[#7CB342]"
                     }`}
                   >
                     {link.name}
@@ -84,22 +85,22 @@ export default function MobileMenu({
             </nav>
 
             {/* Footer / CTA Actions */}
-            <div className="mt-auto border-t border-[#3A3A3A]/10 pt-6 space-y-4">
+            <div className="mt-auto border-t border-[#2B2C2E]/10 pt-6 space-y-4">
               <Link
                 href="/get-quote"
                 onClick={onClose}
-                className="flex items-center justify-center w-full py-3 px-6 text-base font-bold tracking-wider text-white bg-[#89B036] rounded-full hover:bg-[#546622] transition-all shadow-md focus:outline-none"
+                className="flex items-center justify-center w-full py-3.5 px-6 text-base font-medium tracking-wider text-white bg-[#2B2C2E] rounded-full hover:bg-[#1A1A1B] transition-all shadow-md focus:outline-none"
               >
                 Get Free Quote
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-2 w-5 h-5 text-[#7CB342]" />
               </Link>
 
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <a
                   href="tel:+919876543210"
-                  className="flex items-center justify-center py-2.5 px-4 text-sm font-semibold border border-[#3A3A3A]/20 rounded-full text-[#3A3A3A] hover:bg-[#F2F2F2] transition-all"
+                  className="flex items-center justify-center py-2.5 px-4 text-sm font-semibold border border-[#2B2C2E]/20 rounded-full text-[#2B2C2E] hover:bg-[#DCE8CC]/40 transition-all"
                 >
-                  <Phone className="mr-2 w-4 h-4 text-[#89B036]" />
+                  <Phone className="mr-2 w-4 h-4 text-[#7CB342]" />
                   Call Us
                 </a>
                 <a

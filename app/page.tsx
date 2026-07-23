@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import HeroBanner from "@/components/home/HeroBanner";
 import StatsBar from "@/components/home/StatsBar";
-import CompanyIntro from "@/components/home/CompanyIntro";
 import ServicesGrid from "@/components/home/ServicesGrid";
-import ProcessTimeline from "@/components/home/ProcessTimeline";
 import RecentWork from "@/components/home/RecentWork";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import PackageOffers from "@/components/home/PackageOffers";
 import ReviewStats from "@/components/home/ReviewStats";
 import TestimonialsSlider from "@/components/home/TestimonialsSlider";
-import GalleryPreview from "@/components/home/GalleryPreview";
 import LeadCapture from "@/components/home/LeadCapture";
 
 export const metadata: Metadata = {
@@ -28,34 +25,25 @@ export default function HomePage() {
       {/* Section 2 – Animated Stats */}
       <StatsBar />
 
-      {/* Section 3 – Who We Are + Lead Modal */}
-      <CompanyIntro />
-
-      {/* Section 4 – Services Grid */}
+      {/* Section 3 – Services Grid */}
       <ServicesGrid />
 
-      {/* Section 5 – Design Process Timeline */}
-      <ProcessTimeline />
-
-      {/* Section 6 – Recent Work (filterable) */}
+      {/* Section 4 – Recent Work (filterable) */}
       <RecentWork />
 
-      {/* Section 7 – Why Choose Us */}
+      {/* Section 5 – Why Choose Us */}
       <WhyChooseUs />
 
-      {/* Section 8 – Package Offers */}
+      {/* Section 6 – Package Offers */}
       <PackageOffers />
 
-      {/* Section 9 – Testimonials & Stats */}
+      {/* Section 7 – Testimonials & Stats */}
       <div className="bg-[#F9F8F5]">
         <ReviewStats />
         <TestimonialsSlider />
       </div>
 
-      {/* Section 9 – Gallery Preview */}
-      <GalleryPreview />
-
-      {/* Section 10 – Lead Capture + Sticky Mobile Bar */}
+      {/* Section 8 – Lead Capture + Sticky Mobile Bar */}
       <LeadCapture />
     </>
   );

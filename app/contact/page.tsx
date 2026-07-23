@@ -86,21 +86,21 @@ export default function ContactPage() {
 
   const contactInfos = [
     {
-      icon: <Phone className="w-6 h-6 text-[#89B036]" />,
+      icon: <Phone className="w-6 h-6 text-[#7CB342]" />,
       title: "Call Us",
       details: settings.phone,
       subtext: "Mon-Sat from 9am to 6pm",
       link: `tel:${settings.phone.replace(/[^0-9+]/g, '')}`,
     },
     {
-      icon: <Mail className="w-6 h-6 text-[#89B036]" />,
+      icon: <Mail className="w-6 h-6 text-[#7CB342]" />,
       title: "Email Us",
       details: settings.email,
       subtext: "We respond within 24 hours",
       link: `mailto:${settings.email}`,
     },
     {
-      icon: <MapPin className="w-6 h-6 text-[#89B036]" />,
+      icon: <MapPin className="w-6 h-6 text-[#7CB342]" />,
       title: "Visit Showroom",
       details: settings.address,
       subtext: "Indiranagar, Bangalore - 560038",
@@ -109,14 +109,14 @@ export default function ContactPage() {
   ];
 
   return (
-    <main className="min-h-screen pt-[140px] pb-20 lg:pt-[170px] bg-gradient-to-b from-[#F9F8F5] to-[#FFFFFF] text-[#3A3A3A]">
+    <main className="min-h-screen pt-[140px] pb-20 lg:pt-[170px] bg-[#F5F5F3] text-[#58595B] font-sans">
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
         <motion.span
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-xs sm:text-sm font-semibold tracking-widest text-[#89B036] uppercase block mb-3"
+          className="text-xs font-semibold tracking-widest text-[#7CB342] uppercase block mb-3"
         >
           Get In Touch
         </motion.span>
@@ -124,7 +124,7 @@ export default function ContactPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl sm:text-5xl font-serif text-[#3A3A3A] font-bold mb-6 tracking-tight leading-tight"
+          className="text-4xl sm:text-5xl lg:text-6xl font-megalky font-normal text-[#2B2C2E] mb-6 leading-tight"
         >
           Let's Plan Your Dream Project
         </motion.h1>
@@ -132,7 +132,7 @@ export default function ContactPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mx-auto text-[#4A4A4A] text-base sm:text-lg leading-relaxed"
+          className="max-w-2xl mx-auto text-[#58595B] text-base sm:text-lg leading-relaxed font-sans"
         >
           Have questions about our modular interiors, turnkey execution, or landscaping services? Our award-winning design consultants are here to help.
         </motion.p>
@@ -150,14 +150,14 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * idx }}
-              className="bg-white rounded-3xl p-8 shadow-md border border-gray-100 hover:border-[#89B036]/20 hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center group"
+              className="bg-white rounded-3xl p-8 shadow-sm border border-[#DCE8CC] hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center group"
             >
-              <div className="w-14 h-14 bg-[#89B036]/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 bg-[#DCE8CC]/50 border border-[#7CB342]/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-[#7CB342]">
                 {info.icon}
               </div>
-              <h3 className="text-lg font-bold text-[#3A3A3A] mb-2">{info.title}</h3>
-              <p className="text-base font-semibold text-[#89B036] mb-1">{info.details}</p>
-              <p className="text-xs text-[#4A4A4A]">{info.subtext}</p>
+              <h3 className="text-xl font-megalky font-bold text-[#2B2C2E] mb-2">{info.title}</h3>
+              <p className="text-base font-semibold text-[#7CB342] mb-1 font-sans">{info.details}</p>
+              <p className="text-xs text-[#58595B] font-sans">{info.subtext}</p>
             </motion.a>
           ))}
         </div>
@@ -171,12 +171,12 @@ export default function ContactPage() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-3xl shadow-xl p-8 sm:p-10 border border-gray-100"
+            className="bg-white rounded-3xl shadow-xl p-8 sm:p-10 border border-[#DCE8CC]"
           >
-            <h2 className="text-2xl font-serif font-bold text-[#3A3A3A] mb-2">
+            <h2 className="text-2xl lg:text-3xl font-megalky font-bold text-[#2B2C2E] mb-2">
               Send Us a Message
             </h2>
-            <p className="text-sm text-[#4A4A4A] mb-8">
+            <p className="text-sm text-[#58595B] mb-8 font-sans">
               Fill out this form and a professional designer will get back to you with custom layout ideas within one business day.
             </p>
 
@@ -184,13 +184,13 @@ export default function ContactPage() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-green-50 rounded-2xl border border-green-200 p-8 text-center"
+                className="bg-[#DCE8CC]/60 rounded-3xl border border-[#7CB342]/30 p-8 text-center"
               >
-                <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-[#7CB342]/20 text-[#7CB342] rounded-full flex items-center justify-center mx-auto mb-4">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h3 className="text-xl font-bold text-green-900 mb-2">Message Sent Successfully!</h3>
-                <p className="text-green-700 text-sm">
+                <h3 className="text-xl font-megalky font-bold text-[#2B2C2E] mb-2">Message Sent Successfully!</h3>
+                <p className="text-[#58595B] text-sm font-sans">
                   Thank you for contacting Rexon. We have received your query and will contact you shortly.
                 </p>
               </motion.div>
@@ -199,7 +199,7 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Name */}
                   <div>
-                    <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                       Full Name *
                     </label>
                     <input
@@ -207,13 +207,13 @@ export default function ContactPage() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                      className="w-full px-5 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                     />
                   </div>
 
                   {/* Phone */}
                   <div>
-                    <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                       Phone Number *
                     </label>
                     <input
@@ -221,7 +221,7 @@ export default function ContactPage() {
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                      className="w-full px-5 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                     />
                   </div>
                 </div>
@@ -229,26 +229,26 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Email */}
                   <div>
-                    <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                       Email Address
                     </label>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                      className="w-full px-5 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                     />
                   </div>
 
                   {/* Service */}
                   <div>
-                    <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                       Interested In
                     </label>
                     <select
                       value={service}
                       onChange={(e) => setService(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                      className="w-full px-4 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                     >
                       <option value="Interior">Interior Design</option>
                       <option value="Landscaping">Landscaping & Gardens</option>
@@ -259,14 +259,14 @@ export default function ContactPage() {
 
                 {/* Message */}
                 <div>
-                  <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                     Describe Your Space / Requirements
                   </label>
                   <textarea
                     rows={4}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                    className="w-full px-5 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-2xl focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                   />
                 </div>
 
@@ -274,12 +274,12 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full inline-flex items-center justify-center px-6 py-3.5 font-semibold text-sm text-[#FFFFFF] bg-[#89B036] rounded-xl hover:bg-[#546622] transition-all duration-300 shadow-md focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full inline-flex items-center justify-center px-6 py-3.5 font-medium text-sm text-white bg-[#2B2C2E] hover:bg-[#1A1A1B] rounded-full transition-all duration-300 shadow-md focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {submitting ? (
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
                   ) : (
-                    <Send className="w-4 h-4 mr-2" />
+                    <Send className="w-4 h-4 mr-2 text-[#7CB342]" />
                   )}
                   Send Enquiry
                 </button>
@@ -294,10 +294,8 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-
-
-            {/* Google Map Iframe (Dynamically Linked) */}
-            <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg h-96 relative group">
+            {/* Google Map Iframe */}
+            <div className="bg-white rounded-3xl overflow-hidden border border-[#DCE8CC] shadow-lg h-96 relative group">
               <iframe
                 title="Rexon Showroom Location Map"
                 src={`https://maps.google.com/maps?q=${encodeURIComponent(settings.address)}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
@@ -312,16 +310,16 @@ export default function ContactPage() {
             </div>
 
             {/* Direct WhatsApp Call */}
-            <div className="bg-gradient-to-r from-[#89B036] to-[#546622] text-white rounded-3xl p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="bg-[#2B2C2E] text-white rounded-3xl p-8 shadow-xl border border-[#7CB342]/20 flex flex-col sm:flex-row items-center justify-between gap-6">
               <div>
-                <h3 className="text-xl font-bold font-serif mb-2">Need a Quick Chat?</h3>
-                <p className="text-sm text-white/80">Connect directly with our design manager on WhatsApp for fast answers.</p>
+                <h3 className="text-xl font-bold font-megalky mb-2">Need a Quick Chat?</h3>
+                <p className="text-sm text-[#DCE8CC]/90 font-sans">Connect directly with our design manager on WhatsApp for fast answers.</p>
               </div>
               <a
                 href={`https://wa.me/${settings.phone.replace(/[^0-9]/g, '')}?text=Hi%20Rexon%20team,%20I%20would%20like%20to%20consult%20for%20my%20home%20design`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3 font-semibold text-sm text-[#89B036] bg-white rounded-full hover:bg-gray-50 transition-all duration-300 shadow-md"
+                className="inline-flex items-center justify-center px-6 py-3 font-medium text-sm text-white bg-[#7CB342] hover:bg-[#689F38] rounded-full transition-all duration-300 shadow-md flex-shrink-0"
               >
                 <WhatsAppIcon className="w-5 h-5 mr-2" />
                 WhatsApp Design Lead

@@ -95,9 +95,220 @@ export const apiService = {
 
   // ─── Services ────────────────────────────────────────────────────────────
   getServices: async () => {
-    const q = query(collection(db, "services"), orderBy("createdAt", "desc"));
-    const snap = await getDocs(q);
-    return snap.docs.map((d) => serializeDoc(d.id, d.data()));
+    try {
+      const q = query(collection(db, "services"), orderBy("createdAt", "desc"));
+      const snap = await getDocs(q);
+      if (!snap.empty) {
+        return snap.docs.map((d) => serializeDoc(d.id, d.data()));
+      }
+
+      // Auto-seed default services if Firestore table is empty
+      const defaultServicesList = [
+        {
+          id: "interior-design",
+          title: "Interior Design",
+          icon: "Sofa",
+          tag: "Interiors",
+          tagline: "Spaces that reflect who you are.",
+          desc: "Our interior design service covers every corner of your home or office — from mood boards and 3D renders to material selection, furniture layout, and final installation. We create spaces that are beautiful, functional, and deeply personal.",
+          features: [
+            "Personalised 3D concept renders",
+            "Material and colour palette curation",
+            "Furniture layout planning",
+            "False ceiling & lighting integration",
+            "End-to-end project management",
+            "Post-handover support"
+          ],
+          img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
+          color: "#7CB342",
+          showOnHome: true
+        },
+        {
+          id: "modular-kitchen",
+          title: "Modular Kitchen",
+          icon: "ChefHat",
+          tag: "Interiors",
+          tagline: "Kitchens crafted for how you live.",
+          desc: "From Italian-finish laminates to premium hardware and smart storage solutions, our modular kitchens combine elegance with efficiency. We design for your cooking style, your family, and your aesthetic.",
+          features: [
+            "Custom cabinet design & finishes",
+            "Premium Hettich / Blum hardware",
+            "Quartz & granite countertops",
+            "Integrated appliance planning",
+            "Tall units, islands & breakfast counters",
+            "10-year structure warranty"
+          ],
+          img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80",
+          color: "#2B2C2E",
+          showOnHome: true
+        },
+        {
+          id: "landscaping",
+          title: "Landscaping & Gardens",
+          icon: "TreePine",
+          tag: "Outdoors",
+          tagline: "Transforming land into living art.",
+          desc: "We design and build breathtaking outdoor spaces — from sweeping villa gardens to compact apartment balconies. Our landscape architects combine native flora, stone, water, and light to create retreats that feel timeless.",
+          features: [
+            "Site analysis & concept design",
+            "Native & exotic plant selection",
+            "Irrigation & drainage planning",
+            "Stone pathways & edging",
+            "Outdoor lighting design",
+            "Seasonal maintenance plans"
+          ],
+          img: "https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=800&q=80",
+          color: "#7CB342",
+          showOnHome: true
+        },
+        {
+          id: "false-ceiling",
+          title: "False Ceiling",
+          icon: "Layers",
+          tag: "Interiors",
+          tagline: "Ceilings that define the room.",
+          desc: "Our false ceiling solutions use gypsum, POP, and wood-panel systems to add drama, depth, and ambient warmth to any space. We integrate concealed LED coves, spotlights, and chandeliers seamlessly.",
+          features: [
+            "Gypsum board & POP ceilings",
+            "Coffered & tray ceiling designs",
+            "Concealed LED cove lighting",
+            "Acoustic & moisture-resistant options",
+            "Drop ceiling for commercial spaces",
+            "Quick 5–7 day installation"
+          ],
+          img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+          color: "#2B2C2E",
+          showOnHome: true
+        },
+        {
+          id: "wallpaper-decor",
+          title: "Wallpaper & Wall Décor",
+          icon: "Paintbrush",
+          tag: "Interiors",
+          tagline: "Walls that tell your story.",
+          desc: "From luxury wallpapers and textured paints to feature wall panelling and murals, we transform plain walls into statement pieces that set the mood for the entire room.",
+          features: [
+            "500+ curated wallpaper collections",
+            "Textured & Venetian plaster finishes",
+            "3D panel & MDF wall art",
+            "Hand-painted accent murals",
+            "Eco-friendly water-based paints",
+            "Professional installation"
+          ],
+          img: "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=800&q=80",
+          color: "#7CB342",
+          showOnHome: true
+        },
+        {
+          id: "garden-maintenance",
+          title: "Garden Maintenance",
+          icon: "Flower2",
+          tag: "Outdoors",
+          tagline: "Your garden, always in bloom.",
+          desc: "Maintaining a beautiful garden is an ongoing commitment. Our certified horticulturalists offer monthly and annual maintenance plans covering pruning, fertilisation, pest control, and replanting.",
+          features: [
+            "Weekly or monthly service plans",
+            "Pruning, trimming & shaping",
+            "Fertilisation & soil enrichment",
+            "Pest & disease control",
+            "Seasonal flower planting",
+            "Irrigation system upkeep"
+          ],
+          img: "https://images.unsplash.com/photo-1592150621744-aca64f48394a?auto=format&fit=crop&w=800&q=80",
+          color: "#2B2C2E",
+          showOnHome: false
+        },
+        {
+          id: "lighting-design",
+          title: "Lighting Design",
+          icon: "Lightbulb",
+          tag: "Interiors",
+          tagline: "Light that transforms every mood.",
+          desc: "Lighting is the invisible ingredient that makes or breaks a space. We design layered lighting systems — ambient, task, and accent — using smart controls, dimmers, and energy-efficient LED technology.",
+          features: [
+            "Layered ambient & task lighting",
+            "Smart home lighting integration",
+            "Dimmable LED systems",
+            "Cove & strip lighting",
+            "Landscape & garden lighting",
+            "Energy audit & optimisation"
+          ],
+          img: "https://images.unsplash.com/photo-1565538810844-1e119df60efc?auto=format&fit=crop&w=800&q=80",
+          color: "#7CB342",
+          showOnHome: false
+        },
+        {
+          id: "carpentry",
+          title: "Carpentry & Woodwork",
+          icon: "Hammer",
+          tag: "Interiors",
+          tagline: "Bespoke woodwork, built to last.",
+          desc: "Our in-house carpentry team crafts custom wardrobes, TV units, bookshelves, study desks, and door frames using premium marine ply and solid wood — designed to fit your space perfectly.",
+          features: [
+            "Custom wardrobes & walk-in closets",
+            "TV unit & entertainment panels",
+            "Study tables & office furniture",
+            "Solid wood & ply construction",
+            "Italian laminate & veneer finishes",
+            "Anti-termite treatment included"
+          ],
+          img: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=800&q=80",
+          color: "#2B2C2E",
+          showOnHome: false
+        },
+        {
+          id: "stone-tile",
+          title: "Stone & Tile Work",
+          icon: "BrickWall",
+          tag: "Both",
+          tagline: "Natural textures, timeless beauty.",
+          desc: "We specialise in natural stone cladding, designer floor tiles, mosaic feature walls, and outdoor paving. From polished marble to rustic slate, we source premium materials and install them to perfection.",
+          features: [
+            "Marble, granite & slate flooring",
+            "Designer ceramic & vitrified tiles",
+            "Natural stone wall cladding",
+            "Outdoor paving & driveway stones",
+            "Mosaic & encaustic tile features",
+            "Epoxy & sanded grouting"
+          ],
+          img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+          color: "#7CB342",
+          showOnHome: false
+        },
+        {
+          id: "water-features",
+          title: "Water Features",
+          icon: "Droplets",
+          tag: "Outdoors",
+          tagline: "The sound of water, the soul of luxury.",
+          desc: "Nothing elevates an outdoor space like a custom water feature. We design and build garden ponds, natural waterfalls, koi pools, wall fountains, and infinity pools tailored to your landscape.",
+          features: [
+            "Koi ponds & natural pools",
+            "Garden waterfalls & streams",
+            "Wall-mounted water features",
+            "Fibre-optic lighting integration",
+            "Pump, filter & UV systems",
+            "Ongoing maintenance plans"
+          ],
+          img: "https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=800&q=80",
+          color: "#2B2C2E",
+          showOnHome: false
+        }
+      ];
+
+      for (const item of defaultServicesList) {
+        await addDoc(collection(db, "services"), {
+          ...item,
+          createdAt: serverTimestamp(),
+        });
+      }
+
+      const freshSnap = await getDocs(q);
+      return freshSnap.docs.map((d) => serializeDoc(d.id, d.data()));
+    } catch (err) {
+      console.error("Error in getServices:", err);
+      return [];
+    }
   },
 
   getServiceById: async (id: string) => {

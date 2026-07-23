@@ -145,21 +145,21 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="bg-[#F9F8F5]">
+    <div className="bg-[#F5F5F3] font-sans">
       {/* Hero */}
-      <section className="bg-[#2E3A1E] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_right,_#89B036_0%,_transparent_60%)]" />
+      <section className="bg-[#2B2C2E] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_right,_#7CB342_0%,_transparent_60%)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#A8D65A]">Our Portfolio</span>
-          <h1 className="text-5xl lg:text-6xl font-playfair font-bold text-white mt-4 mb-6">Our Projects</h1>
-          <p className="text-white/70 text-lg max-w-2xl mx-auto">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">Our Portfolio</span>
+          <h1 className="text-5xl lg:text-6xl font-megalky font-normal text-white mt-4 mb-6 leading-tight">Our Projects</h1>
+          <p className="text-[#DCE8CC]/90 text-lg max-w-2xl mx-auto leading-relaxed font-sans">
             Every project tells a transformation story. Explore our portfolio of interiors and landscapes.
           </p>
         </div>
       </section>
 
       {/* Main Grid */}
-      <section className="py-16">
+      <section className="py-16 bg-[#F5F5F3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Filter */}
           <div className="flex flex-wrap justify-center gap-3 mb-12">
@@ -167,10 +167,10 @@ export default function ProjectsPage() {
               <button
                 key={c}
                 onClick={() => setActiveCategory(c)}
-                className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
+                className={`px-6 py-2.5 rounded-full text-xs font-medium tracking-wider transition-all duration-300 cursor-pointer ${
                   activeCategory === c
-                    ? "bg-[#89B036] text-white shadow-lg"
-                    : "bg-white text-[#4A4A4A] border border-[#E8E8E8] hover:border-[#89B036] hover:text-[#89B036]"
+                    ? "bg-[#7CB342] text-white shadow-md"
+                    : "bg-white text-[#2B2C2E] border border-[#DCE8CC] hover:border-[#7CB342] hover:text-[#7CB342]"
                 }`}
               >
                 {c}
@@ -179,7 +179,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Grid */}
-          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <AnimatePresence>
               {filtered.map((project) => (
                 <motion.div
@@ -189,7 +189,7 @@ export default function ProjectsPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4 }}
-                  className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+                  className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-[#DCE8CC] cursor-pointer"
                   onClick={() => handleProjectClick(project)}
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
@@ -198,18 +198,18 @@ export default function ProjectsPage() {
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600"
                     />
-                    <span className="absolute top-4 left-4 bg-[#89B036] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    <span className="absolute top-4 left-4 bg-[#7CB342] text-white text-[10px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
                       {project.category}
                     </span>
                   </div>
-                  <div className="p-5">
-                    <span className="text-[10px] font-bold text-[#A0A0A0] uppercase tracking-widest block mb-1">
+                  <div className="p-6">
+                    <span className="text-[10px] font-semibold text-[#7CB342] uppercase tracking-widest block mb-1 font-sans">
                       {project.location}
                     </span>
-                    <h3 className="text-base font-bold text-[#3A3A3A] mb-2 group-hover:text-[#89B036] transition-colors duration-300">
+                    <h3 className="text-xl font-megalky font-bold text-[#2B2C2E] mb-2 group-hover:text-[#7CB342] transition-colors duration-300">
                       {project.title}
                     </h3>
-                    <p className="text-xs text-[#4A4A4A] line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-[#58595B] line-clamp-2 leading-relaxed font-sans">
                       {project.description}
                     </p>
                   </div>
@@ -227,7 +227,7 @@ export default function ProjectsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
           >
             {/* Background click to close */}
             <div
@@ -241,19 +241,19 @@ export default function ProjectsPage() {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.95, y: 30, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 220 }}
-              className="relative bg-white w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col lg:flex-row max-h-[92vh] lg:max-h-[90vh]"
+              className="relative bg-white w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col lg:flex-row max-h-[92vh] lg:max-h-[90vh] border border-[#DCE8CC]"
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-5 right-5 z-20 p-2.5 bg-black/50 hover:bg-black/75 text-white rounded-full transition-colors backdrop-blur-sm shadow-md cursor-pointer"
+                className="absolute top-5 right-5 z-20 p-2.5 bg-[#2B2C2E]/70 hover:bg-[#2B2C2E] text-white rounded-full transition-colors backdrop-blur-sm shadow-md cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
 
               {/* Left Side: Image Gallery */}
-              <div className="w-full lg:w-1/2 bg-[#171717] relative flex flex-col justify-center p-4 sm:p-6 min-h-[220px] lg:min-h-0">
+              <div className="w-full lg:w-1/2 bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6 min-h-[220px] lg:min-h-0">
                 {/* Main Image View */}
                 <div className="relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl aspect-[16/9] lg:aspect-[4/3] max-h-[240px] lg:max-h-none">
                   <AnimatePresence mode="wait">
@@ -307,9 +307,9 @@ export default function ProjectsPage() {
                       <button
                         key={idx}
                         onClick={() => setActiveImgIndex(idx)}
-                        className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
+                        className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
                           activeImgIndex === idx
-                            ? "border-[#89B036] scale-105 shadow-md"
+                            ? "border-[#7CB342] scale-105 shadow-md"
                             : "border-transparent opacity-60 hover:opacity-100"
                         }`}
                       >
@@ -328,82 +328,82 @@ export default function ProjectsPage() {
               <div className="w-full lg:w-1/2 p-5 sm:p-8 lg:p-10 overflow-y-auto flex flex-col justify-between bg-white max-h-[50vh] lg:max-h-[90vh]">
                 <div>
                   {/* Category tag */}
-                  <span className="inline-block px-3 py-1 bg-[#89B036]/10 text-[#89B036] text-[10px] font-extrabold uppercase tracking-widest rounded-full mb-3">
+                  <span className="inline-block px-3 py-1 bg-[#DCE8CC] text-[#7CB342] text-[10px] font-semibold uppercase tracking-widest rounded-full mb-3 font-sans">
                     {selectedProject.category}
                   </span>
 
-                  <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mb-1.5 leading-tight">
+                  <h3 className="text-2xl lg:text-3xl font-megalky font-bold text-[#2B2C2E] mb-1.5 leading-tight">
                     {selectedProject.title}
                   </h3>
 
-                  <p className="text-xs text-[#89B036] font-bold mb-5 flex items-center">
-                    <span className="w-1.5 h-1.5 bg-[#89B036] rounded-full mr-2" />
+                  <p className="text-xs text-[#7CB342] font-semibold mb-5 flex items-center font-sans">
+                    <span className="w-1.5 h-1.5 bg-[#7CB342] rounded-full mr-2" />
                     {selectedProject.location}
                   </p>
 
-                  <div className="border-t border-[#F2F2F2] pt-5 mb-5">
-                    <h4 className="text-[10px] font-bold text-[#A0A0A0] uppercase tracking-wider mb-1.5">Project Overview</h4>
-                    <p className="text-[#4A4A4A] text-xs leading-relaxed">
+                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
+                    <h4 className="text-[10px] font-semibold text-[#58595B]/70 uppercase tracking-wider mb-1.5 font-sans">Project Overview</h4>
+                    <p className="text-[#58595B] text-xs leading-relaxed font-sans">
                       {selectedProject.description}
                     </p>
                   </div>
 
                   {/* Spec list */}
-                  <div className="border-t border-[#F2F2F2] pt-5 mb-5">
-                    <h4 className="text-[10px] font-bold text-[#A0A0A0] uppercase tracking-wider mb-3.5">Project Specifications</h4>
+                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
+                    <h4 className="text-[10px] font-semibold text-[#58595B]/70 uppercase tracking-wider mb-3.5 font-sans">Project Specifications</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex items-start gap-2.5">
-                        <User className="w-4 h-4 text-[#89B036] mt-0.5 flex-shrink-0" />
+                        <User className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-[9px] font-bold text-[#A0A0A0] uppercase tracking-wider">Client</p>
-                          <p className="text-xs text-[#3A3A3A] font-semibold">{selectedProject.details.client}</p>
+                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Client</p>
+                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.client}</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2.5">
-                        <Maximize2 className="w-4 h-4 text-[#89B036] mt-0.5 flex-shrink-0" />
+                        <Maximize2 className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-[9px] font-bold text-[#A0A0A0] uppercase tracking-wider">Area</p>
-                          <p className="text-xs text-[#3A3A3A] font-semibold">{selectedProject.details.area}</p>
+                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Area</p>
+                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.area}</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2.5">
-                        <Calendar className="w-4 h-4 text-[#89B036] mt-0.5 flex-shrink-0" />
+                        <Calendar className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-[9px] font-bold text-[#A0A0A0] uppercase tracking-wider">Duration</p>
-                          <p className="text-xs text-[#3A3A3A] font-semibold">{selectedProject.details.duration}</p>
+                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Duration</p>
+                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.duration}</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2.5">
-                        <Briefcase className="w-4 h-4 text-[#89B036] mt-0.5 flex-shrink-0" />
+                        <Briefcase className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-[9px] font-bold text-[#A0A0A0] uppercase tracking-wider">Scope</p>
-                          <p className="text-xs text-[#3A3A3A] font-semibold">{selectedProject.details.scope}</p>
+                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Scope</p>
+                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.scope}</p>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="border-t border-[#F2F2F2] pt-5 mb-5">
+                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
                     <div className="flex items-start gap-2.5">
-                      <Hammer className="w-4 h-4 text-[#89B036] mt-0.5 flex-shrink-0" />
+                      <Hammer className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-[9px] font-bold text-[#A0A0A0] uppercase tracking-wider">Key Materials</p>
-                        <p className="text-xs text-[#3A3A3A] font-medium leading-relaxed mt-0.5">{selectedProject.details.materials}</p>
+                        <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Key Materials</p>
+                        <p className="text-xs text-[#58595B] font-medium leading-relaxed mt-0.5 font-sans">{selectedProject.details.materials}</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-[#F2F2F2] flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto w-full">
+                <div className="pt-4 border-t border-[#DCE8CC] flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto w-full">
                   <Link
                     href="/get-quote"
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-xs sm:text-2xs uppercase tracking-wider transition-colors duration-300 shadow-md text-center"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-xs tracking-wider transition-colors duration-300 shadow-md text-center"
                   >
                     Consult on this
                   </Link>
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="w-full sm:w-auto py-2 text-center text-xs sm:text-2xs font-bold text-[#A0A0A0] hover:text-[#3A3A3A] uppercase tracking-wider transition-colors cursor-pointer"
+                    className="w-full sm:w-auto py-2 text-center text-xs font-semibold text-[#58595B] hover:text-[#2B2C2E] tracking-wider transition-colors cursor-pointer font-sans"
                   >
                     Close
                   </button>

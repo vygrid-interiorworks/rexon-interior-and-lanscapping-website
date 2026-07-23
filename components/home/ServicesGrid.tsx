@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sofa, ChefHat, TreePine, Paintbrush, Layers, Flower2,
-  Lightbulb, Hammer, BrickWall, Droplets, HelpCircle
+  Lightbulb, Hammer, BrickWall, Droplets, ArrowRight
 } from "lucide-react";
 import { apiService } from "@/lib/api";
 
@@ -26,109 +26,59 @@ const defaultServices = [
   {
     icon: "Sofa",
     title: "Interior Design",
-    desc: "Elegant and functional living spaces — from concept boards to final installation.",
-    color: "#89B036",
+    desc: "Elegant and functional living spaces — from concept mood boards and 3D renders to material selection and final installation.",
+    color: "#7CB342",
     slug: "interior-design",
     tag: "Interiors",
+    img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
     showOnHome: true,
   },
   {
     icon: "ChefHat",
     title: "Modular Kitchen",
-    desc: "Smart, stylish kitchens with premium hardware and custom cabinet finishes.",
-    color: "#546622",
+    desc: "Smart, stylish kitchens with premium hardware, quartz countertops, and custom cabinet finishes tailored for modern living.",
+    color: "#2B2C2E",
     slug: "modular-kitchen",
     tag: "Interiors",
+    img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80",
     showOnHome: true,
   },
   {
     icon: "TreePine",
     title: "Landscaping & Gardens",
-    desc: "Transforming outdoor spaces into breathtaking natural retreats.",
-    color: "#89B036",
+    desc: "Transforming land into living art — outdoor architecture, stone pathways, water features, and lush green retreats.",
+    color: "#7CB342",
     slug: "landscaping",
     tag: "Outdoors",
+    img: "https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=800&q=80",
     showOnHome: true,
   },
   {
     icon: "Layers",
     title: "False Ceiling",
-    desc: "Designer gypsum and POP false ceilings with integrated lighting.",
-    color: "#546622",
+    desc: "Designer gypsum and POP ceiling systems with concealed LED cove lighting and acoustic insulation integration.",
+    color: "#2B2C2E",
     slug: "false-ceiling",
     tag: "Interiors",
+    img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
     showOnHome: true,
-  },
-  {
-    icon: "Paintbrush",
-    title: "Wallpaper & Wall Décor",
-    desc: "Premium wallpapers, textures, and accent wall treatments.",
-    color: "#89B036",
-    slug: "wallpaper-decor",
-    tag: "Interiors",
-    showOnHome: true,
-  },
-  {
-    icon: "Flower2",
-    title: "Garden Maintenance",
-    desc: "Scheduled upkeep, pruning, fertilization, and seasonal replanting.",
-    color: "#546622",
-    slug: "garden-maintenance",
-    tag: "Outdoors",
-    showOnHome: false,
-  },
-  {
-    icon: "Lightbulb",
-    title: "Lighting Design",
-    desc: "Ambient, task, and accent lighting systems for mood-perfect spaces.",
-    color: "#89B036",
-    slug: "lighting-design",
-    tag: "Interiors",
-    showOnHome: false,
-  },
-  {
-    icon: "Hammer",
-    title: "Carpentry & Woodwork",
-    desc: "Bespoke wardrobes, TV units, and custom wooden furniture crafted locally.",
-    color: "#546622",
-    slug: "carpentry",
-    tag: "Interiors",
-    showOnHome: false,
-  },
-  {
-    icon: "BrickWall",
-    title: "Stone & Tile Work",
-    desc: "Natural stone cladding, floor tiling, and mosaic feature walls.",
-    color: "#89B036",
-    slug: "stone-tile",
-    tag: "Both",
-    showOnHome: false,
-  },
-  {
-    icon: "Droplets",
-    title: "Water Features",
-    desc: "Custom ponds, waterfalls, and fountain installations for outdoor luxury.",
-    color: "#546622",
-    slug: "water-features",
-    tag: "Outdoors",
-    showOnHome: false,
   },
 ];
 
 const containerVariants = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.08 },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
+  hidden: { opacity: 0, y: 35, scale: 0.96 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
 };
 
 export default function ServicesGrid() {
-  const [services, setServices] = useState<any[]>([]);
+  const [services, setServices] = useState<any[]>(defaultServices);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -136,7 +86,7 @@ export default function ServicesGrid() {
   useEffect(() => {
     setMounted(true);
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640);
+      setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -145,28 +95,26 @@ export default function ServicesGrid() {
       try {
         const fetched = await apiService.getServices();
         if (fetched && fetched.length > 0) {
-          // Normalize properties to support DB formats
           const normalized = fetched.map((s: any) => ({
             ...s,
             title: s.title || s.name,
             desc: s.desc || s.description,
             icon: s.icon || "Sofa",
             slug: s.slug || (s.title || s.name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-            color: s.color || "#89B036",
+            color: s.color || "#7CB342",
             tag: s.tag || "Interiors",
+            img: s.img || s.image || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
             showOnHome: s.showOnHome !== false,
           }));
           
-          // Filter to only show home-page enabled services
           const homeEnabled = normalized.filter((s: any) => s.showOnHome);
           setServices(homeEnabled.length > 0 ? homeEnabled : normalized);
         } else {
-          // Filter default services to those showing on home
-          setServices(defaultServices.filter(s => s.showOnHome));
+          setServices(defaultServices);
         }
       } catch (err) {
-        console.error("Failed to load services:", err);
-        setServices(defaultServices.filter(s => s.showOnHome));
+        console.error("Failed to load services for grid:", err);
+        setServices(defaultServices);
       }
     };
     loadServicesData();
@@ -174,10 +122,20 @@ export default function ServicesGrid() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Determine optimal responsive grid class based on service count
+  const getGridColsClass = () => {
+    const count = services.length;
+    if (count === 1) return "grid-cols-1 max-w-xl mx-auto";
+    if (count === 2) return "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto";
+    if (count === 3) return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto";
+    return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto";
+  };
+
   return (
-    <section className="py-24 bg-[#F9F8F5]" id="services">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <section className="py-24 bg-[#F5F5F3] font-sans relative overflow-hidden" id="services">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -185,64 +143,93 @@ export default function ServicesGrid() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
             What We Offer
           </span>
-          <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
+          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-5">
             Our Premium Services
           </h2>
-          <p className="text-[#4A4A4A] text-base leading-relaxed">
+          <p className="text-[#58595B] text-base leading-relaxed font-sans">
             A complete spectrum of interior and exterior solutions — all under one roof,
             delivered with craftsmanship that exceeds expectations.
           </p>
         </motion.div>
 
-        {/* Grid */}
+        {/* Dynamic Responsive Feature Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
+          className={`grid gap-8 ${getGridColsClass()}`}
         >
           {services.map((service, index) => {
-            const isExtra = index >= 3;
+            const isExtra = index >= 4;
             const Icon = iconMap[service.icon] || Sofa;
             const shouldShow = !isExtra || isExpanded || !isMobile || !mounted;
+            const formattedIndex = (index + 1).toString().padStart(2, "0");
 
             return (
-              <AnimatePresence key={service.slug} initial={false}>
+              <AnimatePresence key={service.slug || service.id || index} initial={false}>
                 {shouldShow && (
                   <motion.div
                     variants={cardVariants}
-                    initial={isExtra && mounted && isMobile ? { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0, marginTop: 0, marginBottom: 0 } : "show"}
-                    animate={isExtra && mounted && isMobile ? { opacity: 1, height: "auto", paddingTop: 24, paddingBottom: 24, marginTop: "", marginBottom: "" } : "show"}
-                    exit={isExtra && mounted && isMobile ? { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0, marginTop: 0, marginBottom: 0 } : undefined}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                    whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.12)" }}
-                    className="group bg-white rounded-2xl p-6 border border-[#E8E8E8] cursor-pointer transition-all duration-300 flex flex-col overflow-hidden"
+                    whileHover={{ y: -8 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="group bg-white rounded-[24px] border border-[#DCE8CC] hover:border-[#7CB342]/60 cursor-pointer flex flex-col overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.03),0_12px_28px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_rgba(124,179,66,0.14),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 relative"
                   >
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
-                      style={{ backgroundColor: `${service.color}18` }}
-                    >
-                      <Icon className="w-6 h-6" style={{ color: service.color }} />
+                    {/* Top Image Block */}
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-100 border-b border-[#DCE8CC]/50">
+                      <img
+                        src={service.img}
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2B2C2E]/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+                      
+                      {/* Category Pill Tag */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-[#7CB342] bg-white/90 backdrop-blur-md border border-[#7CB342]/20 px-3 py-1 rounded-full shadow-sm font-sans">
+                          {service.tag}
+                        </span>
+                      </div>
+
+                      {/* Faint Editorial Number Badge */}
+                      <span className="absolute top-3 right-4 z-10 font-megalky font-bold text-3xl text-white/70 drop-shadow-md select-none">
+                        {formattedIndex}
+                      </span>
                     </div>
 
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#A0A0A0] mb-2">
-                      {service.tag}
-                    </span>
-                    <h3 className="text-base font-bold text-[#3A3A3A] mb-2 leading-snug group-hover:text-[#89B036] transition-colors duration-300">
-                      {service.title}
-                    </h3>
-                    <p className="text-xs text-[#4A4A4A] leading-relaxed flex-grow">{service.desc}</p>
+                    {/* Card Content Body */}
+                    <div className="p-6 sm:p-7 flex flex-col flex-grow relative bg-white">
+                      
+                      {/* Floating Gradient Icon Badge */}
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 bg-gradient-to-br from-[#DCE8CC]/80 via-white to-[#DCE8CC]/50 border border-[#7CB342]/30 text-[#7CB342] shadow-sm group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-[0_0_20px_rgba(124,179,66,0.3)] transition-all duration-300 -mt-12 relative z-20">
+                        <Icon className="w-6 h-6" />
+                      </div>
+
+                      {/* Title & Description */}
+                      <h3 className="text-2xl font-megalky font-normal text-[#2B2C2E] mb-3 leading-snug group-hover:text-[#7CB342] transition-colors duration-300">
+                        {service.title}
+                      </h3>
+                      
+                      <p className="text-xs sm:text-sm text-[#58595B] leading-relaxed flex-grow font-sans mb-6">
+                        {service.desc}
+                      </p>
+
+                      {/* Interactive CTA Link */}
+                      <div className="pt-4 border-t border-[#DCE8CC]/40 flex items-center justify-between text-xs font-semibold text-[#7CB342] uppercase tracking-wider font-sans mt-auto">
+                        <span className="group-hover:translate-x-1 transition-transform duration-300 flex items-center gap-1.5">
+                          Explore Details <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                        </span>
+                      </div>
+                    </div>
 
                     <Link
-                      href={`/services#${service.slug}`}
-                      className="mt-4 text-xs font-bold text-[#89B036] uppercase tracking-wider flex items-center gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    >
-                      Learn More →
-                    </Link>
+                      href={`/services?id=${encodeURIComponent(service.slug || service.id || service.title)}`}
+                      className="absolute inset-0 z-30 focus:outline-none"
+                      aria-label={`View ${service.title} details`}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -250,27 +237,29 @@ export default function ServicesGrid() {
           })}
         </motion.div>
 
-        {/* View All Services / Toggle Button */}
+        {/* View All Services Button */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="text-center mt-12"
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="text-center mt-16"
         >
-          {mounted && isMobile ? (
+          {mounted && isMobile && services.length > 4 ? (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-sm tracking-wider transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none cursor-pointer"
             >
               {isExpanded ? "Show Less" : "View All Services"}
+              <ArrowRight className="w-4 h-4 text-[#7CB342]" />
             </button>
           ) : (
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-sm tracking-wider transition-all duration-300 shadow-md hover:shadow-lg"
             >
               View All Services
+              <ArrowRight className="w-4 h-4 text-[#7CB342]" />
             </Link>
           )}
         </motion.div>

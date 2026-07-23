@@ -203,7 +203,10 @@ export default function AdminDashboardPage() {
     title: "",
     icon: "Sofa",
     desc: "",
-    color: "#89B036",
+    tagline: "",
+    featuresText: "",
+    img: "",
+    color: "#7CB342",
     tag: "Interiors",
     showOnHome: true,
   });
@@ -384,15 +387,25 @@ export default function AdminDashboardPage() {
     if (!newService.title) return;
 
     try {
+      const featArr = newService.featuresText
+        ? newService.featuresText.split("\n").map((f) => f.trim()).filter(Boolean)
+        : undefined;
+
+      const payload = {
+        ...newService,
+        slug: newService.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+        features: featArr && featArr.length > 0 ? featArr : undefined,
+      };
+
       if (editingServiceId) {
         // Edit service
-        const updated = await apiService.updateServiceDirect(editingServiceId, newService);
+        const updated = await apiService.updateServiceDirect(editingServiceId, payload);
         setServices((prev) => prev.map((s) => (s._id === editingServiceId ? updated : s)));
         alert("Service updated successfully!");
         setEditingServiceId(null);
       } else {
         // Add new service
-        const added = await apiService.createServiceDirect(newService);
+        const added = await apiService.createServiceDirect(payload);
         setServices((prev) => [added, ...prev]);
         alert("Service added successfully!");
       }
@@ -400,7 +413,10 @@ export default function AdminDashboardPage() {
         title: "",
         icon: "Sofa",
         desc: "",
-        color: "#89B036",
+        tagline: "",
+        featuresText: "",
+        img: "",
+        color: "#7CB342",
         tag: "Interiors",
         showOnHome: true,
       });
@@ -423,11 +439,20 @@ export default function AdminDashboardPage() {
 
   const handleEditService = (service: any) => {
     setEditingServiceId(service._id);
+    const featStr = Array.isArray(service.features)
+      ? service.features.join("\n")
+      : typeof service.features === "string"
+      ? service.features
+      : "";
+
     setNewService({
       title: service.title || service.name || "",
       icon: service.icon || "Sofa",
       desc: service.desc || service.description || "",
-      color: service.color || "#89B036",
+      tagline: service.tagline || "",
+      featuresText: featStr,
+      img: service.img || service.image || "",
+      color: service.color || "#7CB342",
       tag: service.tag || "Interiors",
       showOnHome: service.showOnHome !== false,
     });
@@ -1386,6 +1411,32 @@ export default function AdminDashboardPage() {
 
                       <div>
                         <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                          Service Tagline / Subtitle
+                        </label>
+                        <input
+                          type="text"
+                          value={newService.tagline}
+                          onChange={(e) => setNewService({ ...newService, tagline: e.target.value })}
+                          placeholder="e.g. Kitchens crafted for how you live."
+                          className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                          Cover Image URL
+                        </label>
+                        <input
+                          type="text"
+                          value={newService.img}
+                          onChange={(e) => setNewService({ ...newService, img: e.target.value })}
+                          placeholder="https://images.unsplash.com/photo-..."
+                          className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
                           Service Description
                         </label>
                         <textarea
@@ -1394,6 +1445,19 @@ export default function AdminDashboardPage() {
                           value={newService.desc}
                           onChange={(e) => setNewService({ ...newService, desc: e.target.value })}
                           placeholder="Smart, stylish modular kitchens with custom wood styling..."
+                          className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                          What&apos;s Included / Features (One per line)
+                        </label>
+                        <textarea
+                          rows={3}
+                          value={newService.featuresText}
+                          onChange={(e) => setNewService({ ...newService, featuresText: e.target.value })}
+                          placeholder="Custom cabinet design & finishes&#10;Premium Hettich / Blum hardware&#10;Quartz & granite countertops"
                           className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                         />
                       </div>
@@ -1421,7 +1485,10 @@ export default function AdminDashboardPage() {
                                 title: "",
                                 icon: "Sofa",
                                 desc: "",
-                                color: "#89B036",
+                                tagline: "",
+                                featuresText: "",
+                                img: "",
+                                color: "#7CB342",
                                 tag: "Interiors",
                                 showOnHome: true,
                               });

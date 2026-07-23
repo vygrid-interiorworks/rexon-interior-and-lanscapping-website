@@ -18,7 +18,7 @@ export default function GalleryPreview() {
   const [lightbox, setLightbox] = useState<null | { src: string; alt: string }>(null);
 
   return (
-    <section className="py-24 bg-[#F9F8F5]" id="gallery">
+    <section className="py-24 bg-[#F5F5F3] font-sans" id="gallery">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -28,19 +28,19 @@ export default function GalleryPreview() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
             Photo Gallery
           </span>
-          <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
+          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-5">
             Moments of Transformation
           </h2>
-          <p className="text-[#4A4A4A] text-base leading-relaxed">
+          <p className="text-[#58595B] text-base leading-relaxed font-sans">
             A glimpse into the worlds we&apos;ve created — spaces that tell stories of craft and care.
           </p>
         </motion.div>
 
-        {/* Masonry Grid */}
-        <div className="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
+        {/* Masonry / Trio Grid with Arch-topped Cards */}
+        <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
           {galleryItems.map((item, i) => (
             <motion.div
               key={item.id}
@@ -48,23 +48,23 @@ export default function GalleryPreview() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.07 }}
-              className="break-inside-avoid group relative rounded-2xl overflow-hidden cursor-pointer shadow-md"
+              className="break-inside-avoid group relative rounded-t-[100px] rounded-b-[16px] overflow-hidden cursor-pointer shadow-md border-2 border-white bg-white"
               onClick={() => setLightbox({ src: item.src, alt: item.alt })}
             >
               <img
                 src={item.src}
                 alt={item.alt}
-                className={`w-full object-cover transition-transform duration-700 group-hover:scale-110 ${
-                  item.tall ? "h-80 md:h-[420px]" : "h-48 md:h-60"
+                className={`w-full object-cover transition-transform duration-700 group-hover:scale-105 ${
+                  item.tall ? "h-80 md:h-[420px]" : "h-56 md:h-64"
                 }`}
               />
               {/* Hover overlay */}
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-center justify-center">
+              <div className="absolute inset-0 bg-[#2B2C2E]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-12 h-12 rounded-full bg-white/20 border border-white/50 flex items-center justify-center">
                     <ZoomIn className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-[10px] font-bold text-white uppercase tracking-widest">{item.cat}</span>
+                  <span className="text-xs font-semibold text-white uppercase tracking-wider">{item.cat}</span>
                 </div>
               </div>
             </motion.div>
@@ -80,7 +80,7 @@ export default function GalleryPreview() {
         >
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-sm tracking-wider transition-all duration-300 shadow-md hover:shadow-lg"
           >
             View Full Gallery →
           </Link>
@@ -107,7 +107,7 @@ export default function GalleryPreview() {
             >
               <button
                 onClick={() => setLightbox(null)}
-                className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-white text-[#3A3A3A] hover:bg-[#89B036] hover:text-white flex items-center justify-center transition-colors z-10 shadow-lg"
+                className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-white text-[#2B2C2E] hover:bg-[#7CB342] hover:text-white flex items-center justify-center transition-colors z-10 shadow-lg"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -116,7 +116,7 @@ export default function GalleryPreview() {
                 alt={lightbox.alt}
                 className="w-full rounded-2xl shadow-2xl max-h-[85vh] object-contain"
               />
-              <p className="text-white/70 text-center text-sm mt-4">{lightbox.alt}</p>
+              <p className="text-white/80 text-center text-sm mt-4 font-sans">{lightbox.alt}</p>
             </motion.div>
           </motion.div>
         )}

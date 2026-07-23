@@ -44,7 +44,7 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#F9F8F5]">
+      <body className="min-h-full flex flex-col bg-[#F5F5F3] text-[#58595B]">
         {/* Google Analytics – loaded after page is interactive */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"

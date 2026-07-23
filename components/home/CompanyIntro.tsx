@@ -31,52 +31,52 @@ function LeadModal({ onClose }: { onClose: () => void }) {
     >
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
       <motion.div
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 z-10"
+        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 z-10 font-sans border border-[#DCE8CC]"
         initial={{ scale: 0.9, y: 30 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 30 }}
         transition={{ type: "spring", damping: 25 }}
       >
-        <button onClick={onClose} className="absolute top-4 right-4 text-[#4A4A4A] hover:text-[#3A3A3A] transition-colors">
+        <button onClick={onClose} className="absolute top-5 right-5 text-[#58595B] hover:text-[#2B2C2E] transition-colors">
           <X className="w-6 h-6" />
         </button>
 
         {submitted ? (
           <div className="text-center py-8">
-            <div className="w-16 h-16 rounded-full bg-[#89B036]/15 flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 className="w-9 h-9 text-[#89B036]" />
+            <div className="w-16 h-16 rounded-full bg-[#DCE8CC] flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="w-9 h-9 text-[#7CB342]" />
             </div>
-            <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mb-2">Thank You!</h3>
-            <p className="text-[#4A4A4A] text-sm leading-relaxed">
+            <h3 className="text-2xl font-megalky font-bold text-[#2B2C2E] mb-2">Thank You!</h3>
+            <p className="text-[#58595B] text-sm leading-relaxed">
               We&apos;ve received your request. Our team will contact you within 24 hours.
             </p>
           </div>
         ) : (
           <>
             <div className="mb-6">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">Free Consultation</span>
-              <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mt-1">Get Expert Advice</h3>
-              <p className="text-sm text-[#4A4A4A] mt-1">Fill in your details and we&apos;ll call you back for free.</p>
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">Free Consultation</span>
+              <h3 className="text-2xl font-megalky font-bold text-[#2B2C2E] mt-1">Get Expert Advice</h3>
+              <p className="text-sm text-[#58595B] mt-1">Fill in your details and we&apos;ll call you back for free.</p>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 required type="text" placeholder="Your Full Name"
                 value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors placeholder:text-[#AAAAAA]"
+                className="w-full border border-[#DCE8CC] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors placeholder:text-[#58595B]/60 text-[#2B2C2E]"
               />
               <input
                 required type="tel" placeholder="Phone Number"
                 value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
-                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors placeholder:text-[#AAAAAA]"
+                className="w-full border border-[#DCE8CC] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors placeholder:text-[#58595B]/60 text-[#2B2C2E]"
               />
               <input
                 type="email" placeholder="Email Address (optional)"
                 value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
-                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors placeholder:text-[#AAAAAA]"
+                className="w-full border border-[#DCE8CC] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors placeholder:text-[#58595B]/60 text-[#2B2C2E]"
               />
               <select
                 value={form.service} onChange={e => setForm({ ...form, service: e.target.value })}
-                className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors text-[#3A3A3A]"
+                className="w-full border border-[#DCE8CC] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors text-[#2B2C2E]"
               >
                 <option>Interior Design</option>
                 <option>Modular Kitchen</option>
@@ -87,7 +87,7 @@ function LeadModal({ onClose }: { onClose: () => void }) {
               </select>
               <button
                 type="submit"
-                className="w-full bg-[#89B036] hover:bg-[#546622] text-white font-bold py-3.5 rounded-lg transition-colors duration-300 text-sm uppercase tracking-wider"
+                className="w-full bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium py-3.5 rounded-full transition-colors duration-300 text-sm tracking-wider"
               >
                 Request Free Consultation
               </button>
@@ -103,11 +103,11 @@ export default function CompanyIntro() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="py-24 bg-[#F5F5F3] relative overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-          {/* Left: Images */}
+          {/* Left: Dual Overlapping Images + Accent Blob */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -115,7 +115,10 @@ export default function CompanyIntro() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
+            {/* Organic sage blob shape behind */}
+            <div className="absolute -top-6 -left-6 w-full h-full bg-[#DCE8CC] rounded-[40px] transform -rotate-2 -z-10" />
+
+            <div className="relative rounded-[28px] overflow-hidden shadow-xl aspect-[4/3] border-4 border-white">
               <img
                 src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=1200&q=80"
                 alt="Rexon Premium Interior Design"
@@ -123,9 +126,9 @@ export default function CompanyIntro() {
               />
             </div>
             {/* Badge */}
-            <div className="absolute top-6 left-6 bg-[#89B036] text-white rounded-xl px-5 py-3 shadow-lg">
-              <div className="text-3xl font-extrabold font-playfair leading-none">12+</div>
-              <div className="text-xs font-semibold tracking-widest uppercase mt-1">Years Expert</div>
+            <div className="absolute top-6 left-6 bg-[#7CB342] text-white rounded-2xl px-5 py-3 shadow-lg">
+              <div className="text-3xl font-bold font-serif leading-none">12+</div>
+              <div className="text-[11px] font-medium tracking-wider uppercase mt-1">Years Expert</div>
             </div>
           </motion.div>
 
@@ -135,14 +138,14 @@ export default function CompanyIntro() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="lg:pl-8"
+            className="lg:pl-4"
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">Who We Are</span>
-            <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-6 leading-tight">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">Who We Are</span>
+            <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-6 leading-[1.18]">
               Design That Speaks,{" "}
-              <span className="text-rexon-green-gradient">Spaces That Inspire</span>
+              <span className="text-rexon-green-gradient italic">Spaces That Inspire</span>
             </h2>
-            <p className="text-[#4A4A4A] text-base leading-relaxed mb-6">
+            <p className="text-[#58595B] text-base leading-relaxed mb-6 font-sans">
               Rexon Interiors and Landscaping is Kerala&apos;s premier design studio specializing in
               transforming residential and commercial spaces with unmatched craftsmanship.
               From elegant home interiors to lush garden landscapes, we bring your vision to life
@@ -161,8 +164,8 @@ export default function CompanyIntro() {
                     transition={{ delay: i * 0.1, duration: 0.5 }}
                     className="flex items-start gap-3"
                   >
-                    <Icon className="w-5 h-5 text-[#89B036] mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-[#3A3A3A] leading-snug">{usp.text}</span>
+                    <Icon className="w-5 h-5 text-[#7CB342] mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-[#58595B] leading-snug font-sans">{usp.text}</span>
                   </motion.li>
                 );
               })}
@@ -171,13 +174,13 @@ export default function CompanyIntro() {
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center justify-center px-7 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-sm tracking-wider transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
               >
                 Book Free Consultation
               </button>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center px-7 py-3.5 border-2 border-[#89B036] text-[#89B036] hover:bg-[#89B036] hover:text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300"
+                className="inline-flex items-center justify-center px-7 py-3.5 border border-[#7CB342] text-[#7CB342] hover:bg-[#7CB342] hover:text-white font-medium rounded-full text-sm tracking-wider transition-all duration-300"
               >
                 Our Story <ArrowRight className="ml-2 w-4 h-4" />
               </Link>

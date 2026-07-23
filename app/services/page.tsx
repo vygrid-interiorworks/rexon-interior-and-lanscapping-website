@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -8,8 +9,22 @@ import {
   Flower2, Lightbulb, Hammer, BrickWall, Droplets,
   ArrowRight, CheckCircle2,
 } from "lucide-react";
+import { apiService } from "@/lib/api";
 
-const services = [
+const iconMap: Record<string, any> = {
+  Sofa,
+  ChefHat,
+  TreePine,
+  Paintbrush,
+  Layers,
+  Flower2,
+  Lightbulb,
+  Hammer,
+  BrickWall,
+  Droplets,
+};
+
+const defaultServices = [
   {
     id: "interior-design",
     icon: Sofa,
@@ -182,20 +197,109 @@ const services = [
   },
 ];
 
-export default function ServicesPage() {
-  const [active, setActive] = useState(services[0].id);
-  const current = services.find((s) => s.id === active)!;
-  const Icon = current.icon;
+function ServicesPageContent() {
+  const searchParams = useSearchParams();
+  const queryId = searchParams.get("id");
+
+  const [servicesList, setServicesList] = useState<any[]>(defaultServices);
+  const [active, setActive] = useState<string>(defaultServices[0].id);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServicesData = async () => {
+      try {
+        setLoading(true);
+        const fetched = await apiService.getServices();
+        const targetId = queryId || (typeof window !== "undefined" ? window.location.hash.replace("#", "") : "");
+
+        const rawList = (fetched && fetched.length > 0) ? fetched : defaultServices;
+        const normalized = rawList.map((s: any) => {
+          const IconComp = iconMap[s.icon] || Sofa;
+          let featArr: string[] = [];
+          if (Array.isArray(s.features)) {
+            featArr = s.features;
+          } else if (typeof s.features === "string") {
+            featArr = s.features.split("\n").map((f: string) => f.trim()).filter(Boolean);
+          } else {
+            featArr = [
+              "Personalised 3D concept renders",
+              "Material and colour palette curation",
+              "Furniture layout planning",
+              "End-to-end project management"
+            ];
+          }
+
+          const rawTitle = s.title || s.name || "Custom Service";
+          const rawSlug = s.slug || rawTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+          return {
+            id: s._id || s.id || rawSlug,
+            slug: rawSlug,
+            title: rawTitle,
+            icon: IconComp,
+            tag: s.tag || "Interiors",
+            tagline: s.tagline || "Spaces crafted for how you live.",
+            desc: s.desc || s.description || "Our design service covers every corner of your home or office.",
+            features: featArr,
+            img: s.img || s.image || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
+          };
+        });
+
+        setServicesList(normalized);
+
+        if (targetId) {
+          const cleanTarget = decodeURIComponent(targetId).toLowerCase().replace(/[^a-z0-9]/g, "");
+          const matched = normalized.find((item: any) => {
+            const cleanTitle = item.title.toLowerCase().replace(/[^a-z0-9]/g, "");
+            const cleanId = (item.id || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+            const cleanSlug = (item.slug || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+
+            return (
+              cleanTitle.includes(cleanTarget) ||
+              cleanTarget.includes(cleanTitle) ||
+              cleanId === cleanTarget ||
+              cleanSlug === cleanTarget ||
+              cleanId.includes(cleanTarget) ||
+              cleanSlug.includes(cleanTarget)
+            );
+          });
+
+          if (matched) {
+            setActive(matched.id);
+            setTimeout(() => {
+              const el = document.getElementById("service-details");
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth" });
+              }
+            }, 300);
+          } else if (normalized.length > 0) {
+            setActive(normalized[0].id);
+          }
+        } else if (normalized.length > 0) {
+          setActive(normalized[0].id);
+        }
+      } catch (err) {
+        console.error("Failed loading dynamic services for services page:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServicesData();
+  }, [queryId]);
+
+  const current = servicesList.find((s) => s.id === active) || servicesList[0] || defaultServices[0];
+  const Icon = current.icon || Sofa;
 
   return (
-    <div className="bg-white">
+    <div className="bg-[#F5F5F3] font-sans">
       {/* Hero */}
-      <section className="bg-[#2E3A1E] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_left,_#89B036_0%,_transparent_60%)]" />
+      <section className="bg-[#2B2C2E] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_left,_#7CB342_0%,_transparent_60%)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#A8D65A]">What We Offer</span>
-          <h1 className="text-5xl lg:text-6xl font-playfair font-bold text-white mt-4 mb-6">Our Services</h1>
-          <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">What We Offer</span>
+          <h1 className="text-5xl lg:text-6xl font-megalky font-normal text-white mt-4 mb-6 leading-tight">Our Services</h1>
+          <p className="text-[#DCE8CC]/90 text-lg max-w-2xl mx-auto leading-relaxed font-sans">
             A complete suite of interior and landscaping solutions — designed, managed, and delivered
             by specialists who care as much as you do.
           </p>
@@ -203,29 +307,29 @@ export default function ServicesPage() {
       </section>
 
       {/* Tabbed Content */}
-      <section className="py-20">
+      <section className="py-20 bg-[#F5F5F3]" id="service-details">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-10">
 
             {/* Sidebar */}
             <aside className="w-full lg:w-72 flex-shrink-0 z-20">
-              <div className="bg-[#F9F8F5] rounded-2xl border border-[#E8E8E8] p-3 lg:p-4 sticky top-20 lg:top-24">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-[#89B036] px-3 mb-3 hidden lg:block">All Services</p>
-                <nav className="flex flex-row overflow-x-auto lg:flex-col gap-2 lg:space-y-1 pb-1 lg:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                  {services.map((s) => {
-                    const SIcon = s.icon;
+              <div className="bg-white rounded-3xl border border-[#DCE8CC] p-3 lg:p-4 sticky top-20 lg:top-24 shadow-sm">
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7CB342] px-3 mb-3 hidden lg:block font-sans">All Services ({servicesList.length})</p>
+                <nav className="flex flex-row overflow-x-auto lg:flex-col gap-2 lg:space-y-1.5 pb-1 lg:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {servicesList.map((s) => {
+                    const SIcon = s.icon || Sofa;
                     const isActive = s.id === active;
                     return (
                       <button
                         key={s.id}
                         onClick={() => setActive(s.id)}
-                        className={`w-auto lg:w-full flex-shrink-0 flex items-center gap-2.5 lg:gap-3 px-4 py-2.5 lg:py-3 rounded-xl text-left transition-all duration-200 text-xs lg:text-sm font-semibold whitespace-nowrap ${
+                        className={`w-auto lg:w-full flex-shrink-0 flex items-center gap-2.5 lg:gap-3 px-4 py-2.5 lg:py-3 rounded-full text-left transition-all duration-200 text-xs lg:text-sm font-medium whitespace-nowrap cursor-pointer ${
                           isActive
-                            ? "bg-[#89B036] text-white shadow-md"
-                            : "text-[#3A3A3A] hover:bg-[#89B036]/10 hover:text-[#89B036]"
+                            ? "bg-[#2B2C2E] text-white shadow-md"
+                            : "text-[#2B2C2E] hover:bg-[#DCE8CC]/50 hover:text-[#7CB342]"
                         }`}
                       >
-                        <SIcon className="w-4 h-4 flex-shrink-0" />
+                        <SIcon className={`w-4 h-4 flex-shrink-0 ${isActive ? "text-[#7CB342]" : ""}`} />
                         {s.title}
                       </button>
                     );
@@ -245,25 +349,25 @@ export default function ServicesPage() {
                   transition={{ duration: 0.35 }}
                 >
                   {/* Image */}
-                  <div className="rounded-2xl overflow-hidden shadow-xl mb-10 aspect-[16/9] max-h-[320px] sm:max-h-[360px] lg:max-h-[400px] w-full">
+                  <div className="rounded-3xl overflow-hidden shadow-xl mb-10 aspect-[16/9] max-h-[320px] sm:max-h-[360px] lg:max-h-[400px] w-full border-2 border-white">
                     <img src={current.img} alt={current.title} className="w-full h-full object-cover" />
                   </div>
 
                   {/* Badge + heading */}
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-[#89B036] bg-[#89B036]/10 px-3 py-1 rounded-full mb-4">
+                  <span className="inline-block text-[10px] font-semibold uppercase tracking-widest text-[#7CB342] bg-[#DCE8CC]/60 border border-[#7CB342]/20 px-3.5 py-1 rounded-full mb-4 font-sans">
                     {current.tag}
                   </span>
-                  <h2 className="text-4xl font-playfair font-bold text-[#3A3A3A] mb-3">{current.title}</h2>
-                  <p className="text-lg font-semibold text-[#89B036] italic mb-5">{current.tagline}</p>
-                  <p className="text-[#4A4A4A] leading-relaxed text-base mb-10">{current.desc}</p>
+                  <h2 className="text-4xl font-megalky font-normal text-[#2B2C2E] mb-3">{current.title}</h2>
+                  <p className="text-lg font-medium text-[#7CB342] italic mb-5 font-sans">{current.tagline}</p>
+                  <p className="text-[#58595B] leading-relaxed text-base mb-10 font-sans">{current.desc}</p>
 
                   {/* Features */}
-                  <div className="bg-[#F9F8F5] rounded-2xl border border-[#E8E8E8] p-8 mb-10">
-                    <h3 className="text-lg font-bold text-[#3A3A3A] mb-6">What&apos;s Included</h3>
+                  <div className="bg-white rounded-3xl border border-[#DCE8CC] p-8 mb-10 shadow-sm">
+                    <h3 className="text-xl font-megalky font-bold text-[#2B2C2E] mb-6">What&apos;s Included</h3>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {current.features.map((f) => (
-                        <li key={f} className="flex items-start gap-3 text-sm text-[#3A3A3A]">
-                          <CheckCircle2 className="w-5 h-5 text-[#89B036] flex-shrink-0 mt-0.5" />
+                      {current.features.map((f: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-3 text-sm text-[#58595B] font-sans">
+                          <CheckCircle2 className="w-5 h-5 text-[#7CB342] flex-shrink-0 mt-0.5" />
                           {f}
                         </li>
                       ))}
@@ -273,13 +377,13 @@ export default function ServicesPage() {
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link
                       href="/get-quote"
-                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-lg"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-sm tracking-wider transition-all duration-300 shadow-md hover:shadow-lg"
                     >
-                      Get a Free Quote <ArrowRight className="w-4 h-4" />
+                      Get a Free Quote <ArrowRight className="w-4 h-4 text-[#7CB342]" />
                     </Link>
                     <Link
                       href="/contact"
-                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border-2 border-[#89B036] text-[#89B036] hover:bg-[#89B036] hover:text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[#7CB342] text-[#7CB342] hover:bg-[#7CB342] hover:text-white font-medium rounded-full text-sm tracking-wider transition-all duration-300 shadow-sm"
                     >
                       Speak to a Designer
                     </Link>
@@ -291,5 +395,13 @@ export default function ServicesPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function ServicesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#F5F5F3]" />}>
+      <ServicesPageContent />
+    </Suspense>
   );
 }

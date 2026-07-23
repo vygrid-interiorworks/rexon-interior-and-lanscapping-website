@@ -1,40 +1,72 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.cdnfonts.com/css/megalky');
+
+@font-face {
+  font-family: 'MegalkyDigitsFix';
+  src: local('Playfair Display'), local('Georgia'), local('Times New Roman'), serif;
+  unicode-range: U+0030-0039, U+002B, U+002C, U+0025, U+20B9, U+0024, U+00A3, U+002D;
+}
+
 @import "tailwindcss";
 
 @theme {
-  --color-rexon-green: #89B036;
-  --color-rexon-dark-green: #546622;
-  --color-rexon-footer-green: #2E3A1E;
-  --color-rexon-grey: #6B6B6B;
-  --color-rexon-dark-grey: #3A3A3A;
-  --color-rexon-light-grey: #F2F2F2;
-  --color-rexon-bg: #F9F8F5;
-  
-  --font-heading: var(--font-playfair), serif;
-  --font-body: var(--font-inter), sans-serif;
+  --color-primary: #7CB342;
+  --color-secondary: #2B2C2E;
+  --color-neutral-dark: #58595B;
+  --color-background: #F5F5F3;
+  --color-accent-tint: #DCE8CC;
+  --color-white: #FFFFFF;
+
+  --color-rexon-green: #7CB342;
+  --color-rexon-dark-green: #2B2C2E;
+  --color-rexon-footer-green: #2B2C2E;
+  --color-rexon-grey: #58595B;
+  --color-rexon-dark-grey: #2B2C2E;
+  --color-rexon-light-grey: #DCE8CC;
+  --color-rexon-bg: #F5F5F3;
+
+  --font-heading: 'MegalkyDigitsFix', 'Megalky', 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Satoshi', system-ui, -apple-system, sans-serif;
+  --font-megalky: 'MegalkyDigitsFix', 'Megalky', 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-satoshi: 'Satoshi', system-ui, -apple-system, sans-serif;
+  --font-playfair: 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
 :root {
-  --background: #FFFFFF;
-  --foreground: #3A3A3A;
+  --color-primary: #7CB342;
+  --color-secondary: #2B2C2E;
+  --color-neutral-dark: #58595B;
+  --color-background: #F5F5F3;
+  --color-accent-tint: #DCE8CC;
+  --color-white: #FFFFFF;
+  --background: #F5F5F3;
+  --foreground: #58595B;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-neutral-dark);
+  font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
+  line-height: 1.65;
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6, .font-playfair {
-  font-family: var(--font-playfair), serif;
-  font-weight: 700;
+h1, h2, h3, h4, h5, h6, .font-megalky {
+  font-family: 'MegalkyDigitsFix', 'Megalky', 'Playfair Display', Georgia, 'Times New Roman', serif;
+  letter-spacing: -0.01em;
 }
 
 .text-rexon-green-gradient {
-  background: linear-gradient(135deg, #89B036 0%, #546622 100%);
+  background: linear-gradient(135deg, #7CB342 0%, #2B2C2E 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Arch Card style */
+.arch-card {
+  border-radius: 100px 100px 16px 16px;
 }
 
 /* Custom scrollbar */
@@ -43,20 +75,46 @@ h1, h2, h3, h4, h5, h6, .font-playfair {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F9F8F5;
+  background: #F5F5F3;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #89B036;
+  background: #7CB342;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #546622;
+  background: #2B2C2E;
 }
 
-/* Custom animation delay classes */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
+/* Custom animation keyframes for background ambient motion */
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(60px, -50px) scale(1.2) rotate(120deg); }
+  66% { transform: translate(-40px, 40px) scale(0.88) rotate(240deg); }
+}
+
+@keyframes float-reverse {
+  0%, 100% { transform: translate(0, 0) scale(1.1) rotate(0deg); }
+  33% { transform: translate(-70px, 50px) scale(0.85) rotate(-120deg); }
+  66% { transform: translate(50px, -40px) scale(1.25) rotate(-240deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.18); }
+}
+
+.animate-float-slow {
+  animation: float-slow 10s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 13s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 7s ease-in-out infinite;
+}
+
 

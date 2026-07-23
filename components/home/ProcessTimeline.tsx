@@ -38,7 +38,7 @@ const steps = [
 
 export default function ProcessTimeline() {
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section className="py-24 bg-[#F5F5F3] overflow-hidden font-sans border-t border-[#DCE8CC]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -48,13 +48,13 @@ export default function ProcessTimeline() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-20"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
             How We Work
           </span>
-          <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
+          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-5">
             Our Design Process
           </h2>
-          <p className="text-[#4A4A4A] text-base leading-relaxed">
+          <p className="text-[#58595B] text-base leading-relaxed font-sans">
             A streamlined, transparent journey from first call to final handover —
             built around your comfort and confidence.
           </p>
@@ -62,8 +62,8 @@ export default function ProcessTimeline() {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Dashed connector — desktop */}
-          <div className="hidden lg:block absolute top-10 left-0 right-0 h-px border-t-2 border-dashed border-[#89B036]/35 mx-[10%]" />
+          {/* Connector — desktop */}
+          <div className="hidden lg:block absolute top-10 left-0 right-0 h-px border-t-2 border-dashed border-[#7CB342]/40 mx-[10%]" />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-6">
             {steps.map((step, i) => {
@@ -71,28 +71,28 @@ export default function ProcessTimeline() {
               return (
                 <motion.div
                   key={step.step}
-                  initial={{ opacity: 0, y: 50 }}
+                  initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.6, delay: i * 0.12 }}
                   className="flex flex-col items-center text-center relative"
                 >
                   {/* Step number badge */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-extrabold text-[#89B036] tracking-widest bg-white px-2 z-10">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-[#7CB342] tracking-widest bg-[#F5F5F3] px-2 z-10 font-sans">
                     {step.step}
                   </div>
 
                   {/* Icon circle */}
                   <motion.div
-                    whileHover={{ scale: 1.12, boxShadow: "0 8px 30px rgba(122,158,46,0.25)" }}
+                    whileHover={{ scale: 1.08, boxShadow: "0 8px 25px rgba(124,179,66,0.25)" }}
                     transition={{ type: "spring", stiffness: 300 }}
-                    className="w-20 h-20 rounded-full bg-[#F9F8F5] border-2 border-[#89B036]/30 flex items-center justify-center mb-5 relative z-10 cursor-pointer"
+                    className="w-20 h-20 rounded-full bg-white border-2 border-[#7CB342]/30 flex items-center justify-center mb-5 relative z-10 cursor-pointer shadow-sm text-[#7CB342]"
                   >
-                    <Icon className="w-9 h-9 text-[#89B036]" />
+                    <Icon className="w-8 h-8" />
                   </motion.div>
 
-                  <h3 className="text-base font-bold text-[#3A3A3A] mb-2">{step.title}</h3>
-                  <p className="text-xs text-[#4A4A4A] leading-relaxed max-w-[160px]">{step.desc}</p>
+                  <h3 className="text-lg font-megalky font-bold text-[#2B2C2E] mb-2">{step.title}</h3>
+                  <p className="text-xs text-[#58595B] leading-relaxed max-w-[160px] font-sans">{step.desc}</p>
                 </motion.div>
               );
             })}

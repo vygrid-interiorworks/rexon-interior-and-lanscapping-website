@@ -102,7 +102,7 @@ export default function TestimonialsSlider() {
   };
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section className="py-24 bg-[#F5F5F3] overflow-hidden font-sans border-t border-[#DCE8CC]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -112,13 +112,13 @@ export default function TestimonialsSlider() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
             Client Stories
           </span>
-          <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
+          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-5">
             What Our Clients Say
           </h2>
-          <p className="text-[#4A4A4A] text-base leading-relaxed">
+          <p className="text-[#58595B] text-base leading-relaxed font-sans">
             Don&apos;t just take our word for it — hear from the families and businesses we&apos;ve transformed.
           </p>
         </motion.div>
@@ -134,32 +134,33 @@ export default function TestimonialsSlider() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -60, scale: 0.95 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
-                className="w-full max-w-2xl bg-[#F9F8F5] rounded-3xl p-8 lg:p-12 relative border border-[#E8E8E8] shadow-xl"
+                className="w-full max-w-2xl bg-white rounded-3xl p-8 lg:p-12 relative border border-[#DCE8CC] shadow-xl"
               >
-                {/* Quote icon */}
-                <Quote className="absolute top-8 right-8 w-10 h-10 text-[#89B036]/15" />
+                {/* Oversized Quote icon graphic in light tint #DCE8CC */}
+                <Quote className="absolute top-6 right-8 w-20 h-20 text-[#DCE8CC] stroke-[1.5]" />
 
                 {/* Stars */}
-                <div className="flex gap-1 mb-5">
+                <div className="flex gap-1 mb-5 relative z-10">
                   {Array.from({ length: testimonials[current].rating }).map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-[#F59E0B] fill-[#F59E0B]" />
                   ))}
                 </div>
 
-                <p className="text-[#3A3A3A] text-lg leading-relaxed italic mb-8">
+                <p className="text-[#2B2C2E] text-lg leading-[1.7] italic mb-8 relative z-10 font-sans">
                   &ldquo;{testimonials[current].text}&rdquo;
                 </p>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 relative z-10">
+                  {/* Testimonial avatar in rounded-arch frame */}
                   <img
                     src={testimonials[current].avatar}
                     alt={testimonials[current].name}
-                    className="w-14 h-14 rounded-full object-cover ring-2 ring-[#89B036]/30"
+                    className="w-14 h-16 rounded-t-full rounded-b-xl object-cover ring-2 ring-[#7CB342]"
                   />
                   <div>
-                    <div className="font-bold text-[#3A3A3A] text-base">{testimonials[current].name}</div>
-                    <div className="text-xs text-[#4A4A4A]">{testimonials[current].role}</div>
-                    <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-widest text-[#89B036]">
+                    <div className="font-megalky font-bold text-[#2B2C2E] text-lg">{testimonials[current].name}</div>
+                    <div className="text-xs text-[#58595B] font-sans">{testimonials[current].role}</div>
+                    <span className="inline-block mt-1 text-[10px] font-semibold uppercase tracking-widest text-[#7CB342] font-sans">
                       {testimonials[current].category}
                     </span>
                   </div>
@@ -168,11 +169,11 @@ export default function TestimonialsSlider() {
             </AnimatePresence>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation Controls */}
           <div className="flex items-center justify-center gap-6 mt-10">
             <button
               onClick={prev}
-              className="w-11 h-11 rounded-full border-2 border-[#89B036] text-[#89B036] hover:bg-[#89B036] hover:text-white flex items-center justify-center transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-[#7CB342] text-[#7CB342] hover:bg-[#7CB342] hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer shadow-sm"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -184,8 +185,8 @@ export default function TestimonialsSlider() {
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}
-                  className={`rounded-full transition-all duration-300 ${
-                    i === current ? "w-6 h-2.5 bg-[#89B036]" : "w-2.5 h-2.5 bg-[#89B036]/25 hover:bg-[#89B036]/50"
+                  className={`rounded-full transition-all duration-300 cursor-pointer ${
+                    i === current ? "w-6 h-2.5 bg-[#7CB342]" : "w-2.5 h-2.5 bg-[#7CB342]/30 hover:bg-[#7CB342]/60"
                   }`}
                   aria-label={`Go to testimonial ${i + 1}`}
                 />
@@ -194,7 +195,7 @@ export default function TestimonialsSlider() {
 
             <button
               onClick={next}
-              className="w-11 h-11 rounded-full border-2 border-[#89B036] text-[#89B036] hover:bg-[#89B036] hover:text-white flex items-center justify-center transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-[#7CB342] text-[#7CB342] hover:bg-[#7CB342] hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer shadow-sm"
               aria-label="Next testimonial"
             >
               <ChevronRight className="w-5 h-5" />
@@ -210,16 +211,16 @@ export default function TestimonialsSlider() {
                   key={idx}
                   onClick={() => setCurrent(idx)}
                   whileHover={{ scale: 1.04 }}
-                  className="w-44 bg-[#F9F8F5] rounded-xl p-4 border border-[#E8E8E8] cursor-pointer opacity-60 hover:opacity-100 transition-all duration-300 flex items-center gap-3"
+                  className="w-44 bg-white rounded-2xl p-4 border border-[#DCE8CC] cursor-pointer opacity-60 hover:opacity-100 transition-all duration-300 flex items-center gap-3 shadow-sm"
                 >
                   <img
                     src={testimonials[idx].avatar}
                     alt={testimonials[idx].name}
-                    className="w-10 h-10 rounded-full object-cover"
+                    className="w-10 h-12 rounded-t-full rounded-b-md object-cover"
                   />
                   <div>
-                    <div className="text-xs font-bold text-[#3A3A3A] leading-tight">{testimonials[idx].name}</div>
-                    <div className="text-[10px] text-[#4A4A4A]">{testimonials[idx].category}</div>
+                    <div className="text-xs font-megalky font-bold text-[#2B2C2E] leading-tight">{testimonials[idx].name}</div>
+                    <div className="text-[10px] text-[#58595B] font-sans">{testimonials[idx].category}</div>
                   </div>
                 </motion.div>
               );
@@ -230,7 +231,7 @@ export default function TestimonialsSlider() {
           <div className="text-center mt-12">
             <button
               onClick={() => setFormOpen(true)}
-              className="inline-flex items-center gap-2 px-8 py-3.5 border-2 border-[#89B036] hover:bg-[#89B036] hover:text-white text-[#89B036] font-bold rounded-full text-xs uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-xs tracking-wider transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
             >
               Add Your Experience
             </button>
@@ -265,25 +266,25 @@ export default function TestimonialsSlider() {
 
               {submitted ? (
                 <div className="text-center py-8">
-                  <div className="w-16 h-16 rounded-full bg-[#89B036]/15 flex items-center justify-center mx-auto mb-4">
-                    <Star className="w-9 h-9 text-[#89B036] fill-[#89B036]" />
+                  <div className="w-16 h-16 rounded-full bg-[#DCE8CC] flex items-center justify-center mx-auto mb-4">
+                    <Star className="w-9 h-9 text-[#7CB342] fill-[#7CB342]" />
                   </div>
-                  <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mb-2">Thank You!</h3>
-                  <p className="text-[#4A4A4A] text-sm leading-relaxed">
+                  <h3 className="text-2xl font-megalky font-bold text-[#2B2C2E] mb-2">Thank You!</h3>
+                  <p className="text-[#58595B] text-sm leading-relaxed">
                     Your experience has been shared successfully. Thank you for taking the time to write a review!
                   </p>
                 </div>
               ) : (
                 <>
                   <div className="mb-6">
-                    <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">Share Your Story</span>
-                    <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mt-1">Add Your Experience</h3>
-                    <p className="text-xs text-[#4A4A4A] mt-1">We value your honest feedback and design experience.</p>
+                    <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">Share Your Story</span>
+                    <h3 className="text-2xl font-megalky font-bold text-[#2B2C2E] mt-1">Add Your Experience</h3>
+                    <p className="text-xs text-[#58595B] mt-1">We value your honest feedback and design experience.</p>
                   </div>
 
                   <form onSubmit={handleSubmitReview} className="space-y-4">
                     <div>
-                      <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-1.5">
+                      <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-1.5 font-sans">
                         Your Name *
                       </label>
                       <input
@@ -291,12 +292,12 @@ export default function TestimonialsSlider() {
                         type="text"
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className="w-full border border-[#E5E5E5] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors text-[#3A3A3A]"
+                        className="w-full border border-[#DCE8CC] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors text-[#2B2C2E] font-sans"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-1.5">
+                      <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-1.5 font-sans">
                         Location / Role *
                       </label>
                       <input
@@ -305,19 +306,19 @@ export default function TestimonialsSlider() {
                         placeholder="e.g. Homeowner, Kochi"
                         value={form.role}
                         onChange={(e) => setForm({ ...form, role: e.target.value })}
-                        className="w-full border border-[#E5E5E5] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors placeholder:text-[#AAAAAA] text-[#3A3A3A]"
+                        className="w-full border border-[#DCE8CC] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors placeholder:text-[#58595B]/50 text-[#2B2C2E] font-sans"
                       />
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-1.5">
+                        <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-1.5 font-sans">
                           Project Category
                         </label>
                         <select
                           value={form.category}
                           onChange={(e) => setForm({ ...form, category: e.target.value })}
-                          className="w-full border border-[#E5E5E5] rounded-xl px-3 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors text-[#3A3A3A]"
+                          className="w-full border border-[#DCE8CC] rounded-full px-4 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors text-[#2B2C2E] font-sans"
                         >
                           <option>Interior Design</option>
                           <option>Landscaping</option>
@@ -328,7 +329,7 @@ export default function TestimonialsSlider() {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-1.5">
+                        <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-1.5 font-sans">
                           Rating *
                         </label>
                         <div className="flex gap-1.5 h-11 items-center">
@@ -353,7 +354,7 @@ export default function TestimonialsSlider() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-1.5">
+                      <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-1.5 font-sans">
                         Share Your Experience *
                       </label>
                       <textarea
@@ -361,14 +362,14 @@ export default function TestimonialsSlider() {
                         rows={4}
                         value={form.text}
                         onChange={(e) => setForm({ ...form, text: e.target.value })}
-                        className="w-full border border-[#E5E5E5] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#89B036] transition-colors text-[#3A3A3A]"
+                        className="w-full border border-[#DCE8CC] rounded-2xl px-5 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors text-[#2B2C2E] font-sans"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={submitting}
-                      className="w-full bg-[#89B036] hover:bg-[#546622] text-white font-bold py-3.5 rounded-xl transition-colors duration-300 text-sm uppercase tracking-wider shadow-md focus:outline-none disabled:opacity-50 cursor-pointer"
+                      className="w-full bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium py-3.5 rounded-full transition-colors duration-300 text-sm tracking-wider shadow-md focus:outline-none disabled:opacity-50 cursor-pointer"
                     >
                       {submitting ? "Submitting..." : "Submit Experience"}
                     </button>

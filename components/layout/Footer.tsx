@@ -61,7 +61,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="bg-[#2E3A1E] text-[#D6D6D6] pt-16 pb-8 border-t border-[#546622]/30 relative z-10">
+      <footer className="bg-[#2B2C2E] text-[#DCE8CC] pt-16 pb-8 border-t border-[#7CB342]/20 relative z-10 font-sans">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             {/* Column 1: About */}
@@ -76,7 +76,7 @@ export default function Footer() {
                   className="h-10 w-auto object-contain"
                 />
               </div>
-              <p className="text-sm leading-relaxed text-[#D6D6D6]/80">
+              <p className="text-sm leading-relaxed text-[#DCE8CC]/80">
                 Rexon Interiors and Landscaping is a premium service provider delivering state-of-the-art interior spaces and beautiful landscape designs across Kerala. Transforming spaces inside and out.
               </p>
               {/* Social Icons */}
@@ -85,7 +85,7 @@ export default function Footer() {
                   href={settings.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#89B036] flex items-center justify-center text-white hover:text-white transition-all duration-300"
+                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#7CB342] flex items-center justify-center text-white hover:text-white transition-all duration-300"
                   aria-label="Instagram"
                 >
                   <Camera className="w-5 h-5" />
@@ -94,7 +94,7 @@ export default function Footer() {
                   href={settings.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#89B036] flex items-center justify-center text-white hover:text-white transition-all duration-300"
+                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#7CB342] flex items-center justify-center text-white hover:text-white transition-all duration-300"
                   aria-label="Facebook"
                 >
                   <Globe className="w-5 h-5" />
@@ -103,7 +103,7 @@ export default function Footer() {
                   href={settings.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#89B036] flex items-center justify-center text-white hover:text-white transition-all duration-300"
+                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#7CB342] flex items-center justify-center text-white hover:text-white transition-all duration-300"
                   aria-label="YouTube"
                 >
                   <Video className="w-5 h-5" />
@@ -120,7 +120,7 @@ export default function Footer() {
 
             {/* Column 2: Quick Links */}
             <div>
-              <h3 className="text-lg font-bold text-white mb-6 border-b-2 border-[#89B036] pb-2 inline-block">
+              <h3 className="text-xl font-megalky font-bold text-white mb-6 border-b-2 border-[#7CB342] pb-2 inline-block">
                 Quick Links
               </h3>
               <ul className="space-y-3">
@@ -129,15 +129,14 @@ export default function Footer() {
                   { name: "About Us", path: "/about" },
                   { name: "Services", path: "/services" },
                   { name: "Projects / Portfolio", path: "/projects" },
-                  { name: "Gallery", path: "/gallery" },
                   { name: "Contact Us", path: "/contact" },
                 ].map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.path}
-                      className="text-sm hover:text-[#89B036] transition-colors flex items-center"
+                      className="text-sm text-[#DCE8CC]/90 hover:text-[#7CB342] transition-colors flex items-center"
                     >
-                      <span className="mr-2 text-[#89B036]">›</span>
+                      <span className="mr-2 text-[#7CB342]">›</span>
                       {link.name}
                     </Link>
                   </li>
@@ -147,7 +146,7 @@ export default function Footer() {
 
             {/* Column 3: Services */}
             <div>
-              <h3 className="text-lg font-bold text-white mb-6 border-b-2 border-[#89B036] pb-2 inline-block">
+              <h3 className="text-xl font-megalky font-bold text-white mb-6 border-b-2 border-[#7CB342] pb-2 inline-block">
                 Our Services
               </h3>
               <ul className="space-y-3">
@@ -163,9 +162,9 @@ export default function Footer() {
                   <li key={service}>
                     <Link
                       href="/services"
-                      className="text-sm hover:text-[#89B036] transition-colors flex items-center"
+                      className="text-sm text-[#DCE8CC]/90 hover:text-[#7CB342] transition-colors flex items-center"
                     >
-                      <span className="mr-2 text-[#89B036]">›</span>
+                      <span className="mr-2 text-[#7CB342]">›</span>
                       {service}
                     </Link>
                   </li>
@@ -175,25 +174,25 @@ export default function Footer() {
 
             {/* Column 4: Contact Info */}
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-white mb-6 border-b-2 border-[#89B036] pb-2 inline-block">
+              <h3 className="text-xl font-megalky font-bold text-white mb-6 border-b-2 border-[#7CB342] pb-2 inline-block">
                 Contact Info
               </h3>
-              <ul className="space-y-4 text-sm">
+              <ul className="space-y-4 text-sm text-[#DCE8CC]/90">
                 <li className="flex items-start">
-                  <MapPin className="w-5 h-5 text-[#89B036] mr-3 shrink-0 mt-0.5" />
+                  <MapPin className="w-5 h-5 text-[#7CB342] mr-3 shrink-0 mt-0.5" />
                   <span className="whitespace-pre-line">
                     {settings.address}
                   </span>
                 </li>
                 <li className="flex items-center">
-                  <Phone className="w-5 h-5 text-[#89B036] mr-3 shrink-0" />
-                  <a href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`} className="hover:text-[#89B036] transition-colors">
+                  <Phone className="w-5 h-5 text-[#7CB342] mr-3 shrink-0" />
+                  <a href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`} className="hover:text-[#7CB342] transition-colors">
                     {settings.phone}
                   </a>
                 </li>
                 <li className="flex items-center">
-                  <Mail className="w-5 h-5 text-[#89B036] mr-3 shrink-0" />
-                  <a href={`mailto:${settings.email}`} className="hover:text-[#89B036] transition-colors">
+                  <Mail className="w-5 h-5 text-[#7CB342] mr-3 shrink-0" />
+                  <a href={`mailto:${settings.email}`} className="hover:text-[#7CB342] transition-colors">
                     {settings.email}
                   </a>
                 </li>
@@ -202,7 +201,7 @@ export default function Footer() {
           </div>
 
           {/* Divider */}
-          <div className="border-t border-[#546622]/30 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between text-xs text-[#D6D6D6]/60">
+          <div className="border-t border-[#7CB342]/20 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between text-xs text-[#DCE8CC]/60">
             <p>
               &copy; {currentYear} Rexon Interiors and Landscaping. All Rights
               Reserved.
@@ -213,7 +212,7 @@ export default function Footer() {
                 href="https://github.com/vygrid-interiorworks"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#89B036] hover:underline"
+                className="text-[#7CB342] hover:underline font-semibold"
               >
                 Vygrid Interiorworks
               </a>
@@ -223,17 +222,17 @@ export default function Footer() {
       </footer>
 
       {/* Mobile Sticky CTA bar (visible only on mobile viewports under lg) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FFFFFF] shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t border-[#3A3A3A]/10 px-4 py-3 flex items-center justify-between">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#2B2C2E] shadow-[0_-4px_10px_rgba(0,0,0,0.2)] border-t border-[#7CB342]/20 px-4 py-3 flex items-center justify-between">
         <a
           href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`}
-          className="flex-1 mr-3 flex items-center justify-center py-2.5 px-4 text-sm font-bold border border-[#89B036] rounded-full text-[#89B036] hover:bg-[#89B036]/10 transition-colors focus:outline-none"
+          className="flex-1 mr-3 flex items-center justify-center py-2.5 px-4 text-sm font-bold border border-[#7CB342] rounded-full text-[#7CB342] hover:bg-[#7CB342]/10 transition-colors focus:outline-none"
         >
           <Phone className="mr-2 w-4 h-4" />
           Call Now
         </a>
         <Link
           href="/get-quote"
-          className="flex-1 flex items-center justify-center py-2.5 px-4 text-sm font-bold text-white bg-[#89B036] rounded-full hover:bg-[#546622] transition-colors shadow-md focus:outline-none"
+          className="flex-1 flex items-center justify-center py-2.5 px-4 text-sm font-bold text-white bg-[#7CB342] rounded-full hover:bg-[#689B32] transition-colors shadow-md focus:outline-none"
         >
           Get Free Quote
           <ArrowRight className="ml-1 w-4 h-4" />

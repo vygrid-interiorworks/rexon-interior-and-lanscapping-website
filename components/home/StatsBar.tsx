@@ -63,30 +63,27 @@ export default function StatsBar() {
   }, []);
 
   return (
-    <section className="bg-[#f2f7ec] py-16 relative overflow-hidden">
-      {/* Subtle texture */}
-      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_right,_#89B036_0%,_transparent_60%)]" />
-
+    <section className="bg-[#DCE8CC]/40 py-16 lg:py-20 relative overflow-hidden font-sans border-y border-[#DCE8CC]/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {stats.map((stat, i) => {
             const Icon = stat.icon;
             return (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="flex flex-col items-center text-center group"
               >
-                <div className="w-14 h-14 rounded-full bg-[#89B036]/10 border border-[#89B036]/30 flex items-center justify-center mb-4 group-hover:bg-[#89B036]/20 transition-colors duration-300">
-                  <Icon className="w-7 h-7 text-[#89B036]" />
+                <div className="w-12 h-12 rounded-2xl bg-white border border-[#7CB342]/20 flex items-center justify-center mb-4 shadow-sm group-hover:bg-[#7CB342] group-hover:text-white text-[#7CB342] transition-colors duration-300">
+                  <Icon className="w-6 h-6" />
                 </div>
-                <div className="text-4xl lg:text-5xl font-extrabold text-[#2E3A1E] font-playfair">
+                <div className="text-4xl lg:text-6xl font-serif font-normal text-[#2B2C2E] leading-none mb-2">
                   <CountUp target={stat.value} suffix={stat.suffix} />
                 </div>
-                <p className="text-sm text-[#546622] mt-2 uppercase tracking-widest font-semibold">
+                <p className="text-xs text-[#58595B] font-medium uppercase tracking-widest font-sans">
                   {stat.label}
                 </p>
               </motion.div>

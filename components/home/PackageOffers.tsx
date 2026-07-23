@@ -350,13 +350,13 @@ export default function PackageOffers() {
   return (
     <section
       id="packages"
-      className="py-24 bg-white relative overflow-hidden"
+      className="py-24 bg-[#F5F5F3] relative overflow-hidden font-sans border-t border-[#DCE8CC]"
       aria-label="Package Offers"
     >
-      {/* Subtle background gradient */}
+      {/* Subtle background shape */}
       <div className="absolute inset-0 opacity-40 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-[#89B036]/5 filter blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-[#546622]/5 filter blur-3xl" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-[#DCE8CC] filter blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-[#DCE8CC]/60 filter blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -368,13 +368,13 @@ export default function PackageOffers() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-14"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
             Package Offers
           </span>
-          <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
+          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-5">
             Choose Your Perfect Package
           </h2>
-          <p className="text-[#4A4A4A] text-base leading-relaxed">
+          <p className="text-[#58595B] text-base leading-relaxed font-sans">
             Choose a package tailored to your space and vision. All packages are
             fully customisable.
           </p>
@@ -409,23 +409,23 @@ export default function PackageOffers() {
                   group flex-1 relative rounded-2xl border-2 p-5 text-left transition-all duration-300 cursor-pointer focus:outline-none
                   ${
                     isActive
-                      ? "bg-[#2E3A1E] border-[#89B036] shadow-xl shadow-[#89B036]/15"
-                      : "bg-white border-[#E8E8E8] hover:border-[#89B036]/50 hover:shadow-md"
+                      ? "bg-[#2B2C2E] border-[#7CB342] shadow-xl"
+                      : "bg-white border-[#DCE8CC] hover:border-[#7CB342]/60 hover:shadow-md"
                   }
                 `}
               >
                 {/* Active indicator bar */}
                 {isActive && (
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-[#89B036] rounded-t-2xl" />
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-[#7CB342] rounded-t-2xl" />
                 )}
 
                 {/* "Most Popular" badge on middle package */}
                 {i === 1 && packages.length === 3 && (
                   <span
-                    className={`absolute -top-3 right-4 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow ${
+                    className={`absolute -top-3 right-4 text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full shadow ${
                       isActive
-                        ? "bg-[#89B036] text-white"
-                        : "bg-[#89B036]/10 text-[#546622]"
+                        ? "bg-[#7CB342] text-white"
+                        : "bg-[#DCE8CC] text-[#2B2C2E]"
                     }`}
                   >
                     Most Popular
@@ -434,21 +434,21 @@ export default function PackageOffers() {
 
                 <p
                   className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${
-                    isActive ? "text-[#89B036]" : "text-[#A0A0A0]"
+                    isActive ? "text-[#7CB342]" : "text-[#58595B]/70"
                   }`}
                 >
                   {i === 0 ? "Starter" : i === 1 ? "Best Value" : "Premium"}
                 </p>
                 <h3
-                  className={`text-base font-bold mb-1 ${
-                    isActive ? "text-white" : "text-[#3A3A3A]"
+                  className={`text-lg font-megalky font-bold mb-1 ${
+                    isActive ? "text-white" : "text-[#2B2C2E]"
                   }`}
                 >
                   {pkg.name}
                 </h3>
                 <p
-                  className={`text-xs mb-4 leading-snug ${
-                    isActive ? "text-[#A8B89A]" : "text-[#6B6B6B]"
+                  className={`text-xs mb-4 leading-snug font-sans ${
+                    isActive ? "text-[#DCE8CC]" : "text-[#58595B]"
                   }`}
                 >
                   {pkg.tagline}
@@ -458,16 +458,12 @@ export default function PackageOffers() {
                 <div className="flex flex-col gap-0.5">
                   <span
                     className={`text-xs line-through ${
-                      isActive ? "text-[#6B8A4E]" : "text-[#A0A0A0]"
+                      isActive ? "text-[#DCE8CC]/60" : "text-[#58595B]/60"
                     }`}
                   >
                     {pkg.originalPrice}
                   </span>
-                  <span
-                    className={`text-xl font-extrabold font-playfair leading-none ${
-                      isActive ? "text-[#89B036]" : "text-[#89B036]"
-                    }`}
-                  >
+                  <span className="text-xl font-serif font-bold leading-none text-[#7CB342]">
                     {pkg.offerPrice}
                   </span>
                 </div>
@@ -476,7 +472,7 @@ export default function PackageOffers() {
           })}
         </motion.div>
 
-        {/* ── Detail Panel ── */}
+        {/* ── Detail Panel in #DCE8CC Tinted Background (Pattern 10) ── */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeId}
@@ -487,7 +483,7 @@ export default function PackageOffers() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
-            className="bg-[#F9F8F5] rounded-3xl overflow-hidden border border-[#E8E8E8] shadow-lg"
+            className="bg-[#DCE8CC]/50 rounded-3xl overflow-hidden border border-[#DCE8CC] shadow-lg"
           >
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
               {/* Left: Image */}
@@ -513,23 +509,23 @@ export default function PackageOffers() {
                 </div>
 
                 {/* Savings badge */}
-                <div className="absolute top-6 left-6 bg-[#89B036] text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
+                <div className="absolute top-6 left-6 bg-[#7CB342] text-white text-xs font-semibold uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
                   Save Up to 30%
                 </div>
               </div>
 
-              {/* Right: Content */}
-              <div className="lg:col-span-3 p-7 lg:p-10 flex flex-col">
+              {/* Right: Content overlay panel */}
+              <div className="lg:col-span-3 p-7 lg:p-10 flex flex-col bg-white/90 backdrop-blur-sm">
                 {/* Package name + pricing (desktop) */}
                 <div className="flex flex-wrap items-start justify-between gap-4 mb-8">
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
+                    <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
                       Package Details
                     </span>
-                    <h3 className="text-2xl lg:text-3xl font-playfair font-bold text-[#2E3A1E] mt-1">
+                    <h3 className="text-2xl lg:text-3xl font-megalky font-bold text-[#2B2C2E] mt-1">
                       {activePackage.name}
                     </h3>
-                    <p className="text-sm text-[#6B6B6B] mt-1">
+                    <p className="text-sm text-[#58595B] mt-1 font-sans">
                       {activePackage.tagline}
                     </p>
                   </div>
@@ -545,7 +541,7 @@ export default function PackageOffers() {
                 </div>
 
                 {/* Divider */}
-                <div className="w-full h-px bg-[#E0E0E0] mb-8" />
+                <div className="w-full h-px bg-[#DCE8CC] mb-8" />
 
                 {/* Room-by-room inclusions */}
                 <div className="flex-1 overflow-auto">
@@ -568,34 +564,34 @@ export default function PackageOffers() {
                 <div className="flex flex-wrap gap-5">
                   <Link
                     href="/#faq"
-                    className="group flex items-center gap-2 text-sm font-semibold text-[#3A3A3A] hover:text-[#89B036] transition-colors duration-200"
+                    className="group flex items-center gap-2 text-sm font-medium text-[#2B2C2E] hover:text-[#7CB342] transition-colors duration-200"
                     aria-label="Frequently Asked Questions"
                   >
-                    <HelpCircle className="w-4 h-4 text-[#89B036] flex-shrink-0" />
+                    <HelpCircle className="w-4 h-4 text-[#7CB342] flex-shrink-0" />
                     Frequently Asked Questions
-                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
+                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200 text-[#7CB342]" />
                   </Link>
 
                   <Link
                     href="#"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-2 text-sm font-semibold text-[#3A3A3A] hover:text-[#89B036] transition-colors duration-200"
+                    className="group flex items-center gap-2 text-sm font-medium text-[#2B2C2E] hover:text-[#7CB342] transition-colors duration-200"
                     aria-label="View Package Video on YouTube"
                   >
-                    <PlayCircle className="w-4 h-4 text-[#89B036] flex-shrink-0" />
+                    <PlayCircle className="w-4 h-4 text-[#7CB342] flex-shrink-0" />
                     View Package Video
-                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
+                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200 text-[#7CB342]" />
                   </Link>
 
                   <Link
                     href="/contact"
-                    className="group flex items-center gap-2 text-sm font-semibold text-[#3A3A3A] hover:text-[#89B036] transition-colors duration-200"
+                    className="group flex items-center gap-2 text-sm font-medium text-[#2B2C2E] hover:text-[#7CB342] transition-colors duration-200"
                     aria-label="Contact us for package details"
                   >
-                    <Phone className="w-4 h-4 text-[#89B036] flex-shrink-0" />
+                    <Phone className="w-4 h-4 text-[#7CB342] flex-shrink-0" />
                     Contact Us for More Details
-                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
+                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200 text-[#7CB342]" />
                   </Link>
                 </div>
               </div>
@@ -609,20 +605,20 @@ export default function PackageOffers() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="mt-14 rounded-3xl bg-[#2E3A1E] relative overflow-hidden px-8 py-10"
+          className="mt-14 rounded-3xl bg-[#2B2C2E] relative overflow-hidden px-8 py-10 shadow-xl border border-[#7CB342]/20"
         >
           {/* Background decorative blobs */}
-          <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
-            <div className="absolute top-0 left-1/4 w-80 h-80 rounded-full bg-[#89B036] filter blur-3xl" />
-            <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full bg-[#89B036] filter blur-3xl" />
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
+            <div className="absolute top-0 left-1/4 w-80 h-80 rounded-full bg-[#7CB342] filter blur-3xl" />
+            <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full bg-[#7CB342] filter blur-3xl" />
           </div>
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
             {/* Heading */}
             <div className="flex-1 text-center lg:text-left">
-              <h3 className="text-2xl lg:text-3xl font-playfair font-bold text-white leading-tight">
+              <h3 className="text-2xl lg:text-3xl font-megalky font-normal text-white leading-tight">
                 Buy Direct from Us &amp;{" "}
-                <span className="text-[#89B036]">Save Up to 30%</span>
+                <span className="text-[#7CB342]">Save Up to 30%</span>
               </h3>
             </div>
 
@@ -642,10 +638,10 @@ export default function PackageOffers() {
                     transition={{ duration: 0.5, delay: 0.2 + i * 0.08 }}
                     className="flex flex-col items-center gap-2 group"
                   >
-                    <div className="w-11 h-11 rounded-full bg-[#89B036]/20 border border-[#89B036]/30 flex items-center justify-center group-hover:bg-[#89B036]/35 transition-colors duration-300">
-                      <Icon className="w-5 h-5 text-[#89B036]" />
+                    <div className="w-11 h-11 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/30 flex items-center justify-center group-hover:bg-[#7CB342] group-hover:text-white transition-colors duration-300 text-[#7CB342]">
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <span className="text-[11px] font-semibold text-[#A8B89A] text-center leading-snug max-w-[80px]">
+                    <span className="text-[11px] font-medium text-[#DCE8CC] text-center leading-snug max-w-[80px]">
                       {badge.label}
                     </span>
                   </motion.div>

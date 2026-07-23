@@ -125,33 +125,33 @@ Looking forward to consulting soon.`;
   };
 
   return (
-    <main className="min-h-screen pt-[140px] pb-20 lg:pt-[170px] bg-gradient-to-b from-[#F9F8F5] to-[#FFFFFF] text-[#3A3A3A]">
+    <main className="min-h-screen pt-[140px] pb-20 lg:pt-[170px] bg-[#F5F5F3] text-[#58595B] font-sans">
       {/* Progress Header */}
       <section className="max-w-3xl mx-auto px-4 py-8">
         <div className="text-center mb-8">
-          <span className="text-xs sm:text-sm font-semibold tracking-widest text-[#89B036] uppercase block mb-2">
+          <span className="text-xs font-semibold tracking-widest text-[#7CB342] uppercase block mb-2">
             Rexon Cost Estimator
           </span>
-          <h1 className="text-3xl sm:text-4xl font-serif text-[#3A3A3A] font-bold">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E]">
             Get an Interactive Quote
           </h1>
-          <p className="text-sm text-[#4A4A4A] mt-2">
+          <p className="text-sm text-[#58595B] mt-2 font-sans">
             Answer a few quick questions to estimate budgets and get connected with our experts.
           </p>
         </div>
 
         {/* Progress Bar Container */}
-        <div className="w-full bg-gray-100 rounded-full h-2 mb-10 overflow-hidden relative shadow-inner">
+        <div className="w-full bg-[#DCE8CC]/50 rounded-full h-2.5 mb-10 overflow-hidden relative shadow-inner">
           <motion.div
             initial={{ width: "0%" }}
             animate={{ width: `${getProgressPercentage()}%` }}
             transition={{ duration: 0.5 }}
-            className="bg-gradient-to-r from-[#89B036] to-[#546622] h-full rounded-full"
+            className="bg-[#7CB342] h-full rounded-full"
           />
         </div>
 
         {/* Main interactive Box */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 sm:p-10 border border-gray-100 min-h-[480px] flex flex-col justify-between overflow-hidden">
+        <div className="bg-white rounded-3xl shadow-xl p-8 sm:p-10 border border-[#DCE8CC] min-h-[480px] flex flex-col justify-between overflow-hidden">
           <AnimatePresence mode="wait">
             {currentStep === "details" && (
               <motion.div
@@ -162,18 +162,18 @@ Looking forward to consulting soon.`;
                 className="space-y-6 flex-1"
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#89B036]/10 flex items-center justify-center text-[#89B036]">
+                  <div className="w-10 h-10 rounded-2xl bg-[#DCE8CC]/50 border border-[#7CB342]/20 flex items-center justify-center text-[#7CB342]">
                     <User className="w-5 h-5" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-[#3A3A3A]">Tell Us About Yourself</h2>
-                    <p className="text-xs text-[#4A4A4A]">Please provide basic details to schedule a consultant call.</p>
+                    <h2 className="text-xl font-megalky font-bold text-[#2B2C2E]">Tell Us About Yourself</h2>
+                    <p className="text-xs text-[#58595B] font-sans">Please provide basic details to schedule a consultant call.</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                       Full Name *
                     </label>
                     <input
@@ -181,11 +181,11 @@ Looking forward to consulting soon.`;
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                      className="w-full px-5 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                       Phone Number *
                     </label>
                     <input
@@ -193,32 +193,32 @@ Looking forward to consulting soon.`;
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                      className="w-full px-5 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                       Email Address
                     </label>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                      className="w-full px-5 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                       Project Location / Area
                     </label>
                     <input
                       type="text"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                      className="w-full px-5 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                     />
                   </div>
                 </div>
@@ -234,18 +234,18 @@ Looking forward to consulting soon.`;
                 className="space-y-6 flex-1"
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#89B036]/10 flex items-center justify-center text-[#89B036]">
+                  <div className="w-10 h-10 rounded-2xl bg-[#DCE8CC]/50 border border-[#7CB342]/20 flex items-center justify-center text-[#7CB342]">
                     <Sliders className="w-5 h-5" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-[#3A3A3A]">Project Details</h2>
-                    <p className="text-xs text-[#4A4A4A]">Help us understand what type of service you are looking for.</p>
+                    <h2 className="text-xl font-megalky font-bold text-[#2B2C2E]">Project Details</h2>
+                    <p className="text-xs text-[#58595B] font-sans">Help us understand what type of service you are looking for.</p>
                   </div>
                 </div>
 
                 {/* Project type buttons */}
                 <div>
-                  <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-3">
+                  <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-3 font-sans">
                     What are you looking to design?
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -254,10 +254,10 @@ Looking forward to consulting soon.`;
                         key={type}
                         type="button"
                         onClick={() => setProjectType(type)}
-                        className={`py-3.5 sm:py-4 rounded-xl border text-sm font-semibold tracking-wide transition-all ${
+                        className={`py-3.5 sm:py-4 rounded-full border text-xs font-medium tracking-wide transition-all cursor-pointer ${
                           projectType === type
-                            ? "bg-[#89B036] text-white border-[#89B036] shadow-md"
-                            : "bg-gray-50 border-gray-200 text-[#3A3A3A] hover:bg-gray-100"
+                            ? "bg-[#7CB342] text-white border-[#7CB342] shadow-md"
+                            : "bg-[#F5F5F3] border-[#DCE8CC] text-[#2B2C2E] hover:bg-[#DCE8CC]/50"
                         }`}
                       >
                         {type === "Both" ? "Both (Integrated)" : type}
@@ -269,26 +269,26 @@ Looking forward to consulting soon.`;
                 {/* Area Input */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
                   <div>
-                    <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                       Property Size (Sq. Ft.)
                     </label>
                     <input
                       type="number"
                       value={sizeSqft}
                       onChange={(e) => setSizeSqft(Number(e.target.value))}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                      className="w-full px-5 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                     />
                   </div>
 
                   {(projectType === "Interior" || projectType === "Both") && (
                     <div>
-                      <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                      <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                         BHK Configuration
                       </label>
                       <select
                         value={bhkSize}
                         onChange={(e) => setBhkSize(e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                        className="w-full px-4 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                       >
                         <option value="1 BHK">1 BHK</option>
                         <option value="2 BHK">2 BHK</option>
@@ -312,20 +312,20 @@ Looking forward to consulting soon.`;
                 className="space-y-6 flex-1"
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#89B036]/10 flex items-center justify-center text-[#89B036]">
+                  <div className="w-10 h-10 rounded-2xl bg-[#DCE8CC]/50 border border-[#7CB342]/20 flex items-center justify-center text-[#7CB342]">
                     <DollarSign className="w-5 h-5" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-[#3A3A3A]">Target Budget</h2>
-                    <p className="text-xs text-[#4A4A4A]">Adjust the slider to match your estimated target investment.</p>
+                    <h2 className="text-xl font-megalky font-bold text-[#2B2C2E]">Target Budget</h2>
+                    <p className="text-xs text-[#58595B] font-sans">Adjust the slider to match your estimated target investment.</p>
                   </div>
                 </div>
 
                 {/* Budget Slider */}
                 <div className="space-y-6 py-4">
-                  <div className="flex justify-between items-center bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                    <span className="text-sm font-semibold text-[#4A4A4A]">Target Investment:</span>
-                    <span className="text-2xl font-bold text-[#89B036] font-serif">
+                  <div className="flex justify-between items-center bg-[#F5F5F3] rounded-2xl p-6 border border-[#DCE8CC]">
+                    <span className="text-sm font-medium text-[#58595B] font-sans">Target Investment:</span>
+                    <span className="text-2xl font-bold text-[#7CB342] font-serif">
                       INR {budget.toLocaleString()}
                     </span>
                   </div>
@@ -337,10 +337,10 @@ Looking forward to consulting soon.`;
                     step="50000"
                     value={budget}
                     onChange={(e) => setBudget(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-100 rounded-full appearance-none cursor-pointer accent-[#89B036]"
+                    className="w-full h-2.5 bg-[#DCE8CC] rounded-full appearance-none cursor-pointer accent-[#7CB342]"
                   />
 
-                  <div className="flex justify-between text-xs text-[#4A4A4A] font-semibold">
+                  <div className="flex justify-between text-xs text-[#58595B] font-medium font-sans">
                     <span>1 Lakh</span>
                     <span>10 Lakhs</span>
                     <span>25 Lakhs</span>
@@ -348,7 +348,7 @@ Looking forward to consulting soon.`;
                   </div>
                 </div>
 
-                <div className="bg-[#89B036]/5 rounded-2xl p-4 border border-[#89B036]/20 text-xs text-[#4A4A4A] leading-relaxed">
+                <div className="bg-[#DCE8CC]/50 rounded-2xl p-4 border border-[#7CB342]/20 text-xs text-[#58595B] leading-relaxed font-sans">
                   💡 <strong>Tip:</strong> The budget size impacts product finishes (e.g. premium laminates vs. acrylics, or exotic plants vs. native creepers). Our consultants will tailor recommendations accordingly.
                 </div>
               </motion.div>
@@ -363,12 +363,12 @@ Looking forward to consulting soon.`;
                 className="space-y-6 flex-1"
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#89B036]/10 flex items-center justify-center text-[#89B036]">
+                  <div className="w-10 h-10 rounded-2xl bg-[#DCE8CC]/50 border border-[#7CB342]/20 flex items-center justify-center text-[#7CB342]">
                     <Compass className="w-5 h-5" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-[#3A3A3A]">Style Preferences</h2>
-                    <p className="text-xs text-[#4A4A4A]">Select the aesthetic vibe that matches your preference.</p>
+                    <h2 className="text-xl font-megalky font-bold text-[#2B2C2E]">Style Preferences</h2>
+                    <p className="text-xs text-[#58595B] font-sans">Select the aesthetic vibe that matches your preference.</p>
                   </div>
                 </div>
 
@@ -376,13 +376,13 @@ Looking forward to consulting soon.`;
                   {/* Interior style dropdown */}
                   {(projectType === "Interior" || projectType === "Both") && (
                     <div>
-                      <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                      <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                         Preferred Interior Theme
                       </label>
                       <select
                         value={interiorStyle}
                         onChange={(e) => setInteriorStyle(e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                        className="w-full px-4 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                       >
                         <option value="Modern Minimalist">Modern Minimalist</option>
                         <option value="Luxurious Editorial">Luxurious Editorial</option>
@@ -396,13 +396,13 @@ Looking forward to consulting soon.`;
                   {/* Landscape style dropdown */}
                   {(projectType === "Landscaping" || projectType === "Both") && (
                     <div>
-                      <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                      <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                         Preferred Landscape Theme
                       </label>
                       <select
                         value={landscapeStyle}
                         onChange={(e) => setLandscapeStyle(e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                        className="w-full px-4 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-full focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                       >
                         <option value="Zen Garden">Zen Japanese Garden</option>
                         <option value="Lush Tropical">Lush Tropical Oasis</option>
@@ -416,14 +416,14 @@ Looking forward to consulting soon.`;
 
                 {/* Additional requirements */}
                 <div>
-                  <label className="block text-xs font-semibold text-[#3A3A3A] uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-[#2B2C2E] uppercase tracking-wider mb-2 font-sans">
                     Additional details / Special requirements
                   </label>
                   <textarea
                     rows={3}
                     value={specialRequirements}
                     onChange={(e) => setSpecialRequirements(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#89B036] text-sm text-[#3A3A3A]"
+                    className="w-full px-5 py-3.5 bg-[#F5F5F3] border border-[#DCE8CC] rounded-2xl focus:outline-none focus:border-[#7CB342] text-sm text-[#2B2C2E] font-sans"
                   />
                 </div>
               </motion.div>
@@ -436,21 +436,21 @@ Looking forward to consulting soon.`;
                 animate={{ opacity: 1, scale: 1 }}
                 className="space-y-6 text-center py-10 flex-1 flex flex-col justify-center items-center"
               >
-                <div className="w-20 h-20 bg-green-50 text-green-600 border border-green-200 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle2 className="w-12 h-12 animate-bounce" />
+                <div className="w-20 h-20 bg-[#DCE8CC]/60 text-[#7CB342] border border-[#7CB342]/30 rounded-full flex items-center justify-center mb-6">
+                  <CheckCircle2 className="w-12 h-12" />
                 </div>
 
-                <h2 className="text-3xl font-serif font-bold text-[#3A3A3A] mb-2">
+                <h2 className="text-3xl font-megalky font-bold text-[#2B2C2E] mb-2">
                   Quote Estimate Completed!
                 </h2>
-                <p className="text-sm text-[#4A4A4A] max-w-md mb-8 leading-relaxed">
+                <p className="text-sm text-[#58595B] max-w-md mb-8 leading-relaxed font-sans">
                   Thank you, <strong>{name}</strong>! Your customized estimate details have been saved in our system. A senior architect will prepare formal 3D layout briefs for you.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
                   <button
                     onClick={triggerWhatsAppRedirect}
-                    className="inline-flex items-center justify-center px-8 py-3.5 font-semibold text-sm text-white bg-[#25D366] hover:bg-[#1EBE57] rounded-xl transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none"
+                    className="inline-flex items-center justify-center px-8 py-3.5 font-medium text-sm text-white bg-[#7CB342] hover:bg-[#689F38] rounded-full transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none cursor-pointer"
                   >
                     <WhatsAppIcon className="w-5 h-5 mr-2 fill-current" />
                     Share on WhatsApp for Fast Estimate
@@ -469,9 +469,9 @@ Looking forward to consulting soon.`;
                       setSpecialRequirements("");
                       setCurrentStep("details");
                     }}
-                    className="inline-flex items-center justify-center px-8 py-3.5 font-semibold text-sm text-[#3A3A3A] bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300"
+                    className="inline-flex items-center justify-center px-8 py-3.5 font-medium text-sm text-[#2B2C2E] bg-[#F5F5F3] hover:bg-[#DCE8CC]/60 border border-[#DCE8CC] rounded-full transition-all duration-300 cursor-pointer"
                   >
-                    <Sparkles className="w-4 h-4 mr-2" />
+                    <Sparkles className="w-4 h-4 mr-2 text-[#7CB342]" />
                     Estimate Another Project
                   </button>
                 </div>
@@ -481,11 +481,11 @@ Looking forward to consulting soon.`;
 
           {/* Navigation Controls */}
           {currentStep !== "success" && (
-            <div className="flex justify-between items-center border-t border-gray-100 pt-6 mt-8">
+            <div className="flex justify-between items-center border-t border-[#DCE8CC] pt-6 mt-8">
               {currentStep !== "details" ? (
                 <button
                   onClick={handleBack}
-                  className="inline-flex items-center text-sm font-semibold text-[#4A4A4A] hover:text-[#89B036] transition-colors"
+                  className="inline-flex items-center text-xs font-semibold text-[#58595B] hover:text-[#7CB342] transition-colors cursor-pointer font-sans"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back
@@ -497,21 +497,21 @@ Looking forward to consulting soon.`;
               {currentStep !== "style" ? (
                 <button
                   onClick={handleNext}
-                  className="inline-flex items-center justify-center px-6 py-3 font-semibold text-sm text-white bg-[#89B036] rounded-xl hover:bg-[#546622] transition-all duration-300 shadow-md hover:shadow-lg"
+                  className="inline-flex items-center justify-center px-6 py-3 font-medium text-sm text-white bg-[#2B2C2E] hover:bg-[#1A1A1B] rounded-full transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
                 >
                   Next Step
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  <ArrowRight className="w-4 h-4 ml-2 text-[#7CB342]" />
                 </button>
               ) : (
                 <button
                   onClick={handleSubmit}
                   disabled={submitting}
-                  className="inline-flex items-center justify-center px-8 py-3.5 font-semibold text-sm text-white bg-[#89B036] rounded-xl hover:bg-[#546622] transition-all duration-300 shadow-md"
+                  className="inline-flex items-center justify-center px-8 py-3.5 font-medium text-sm text-white bg-[#2B2C2E] hover:bg-[#1A1A1B] rounded-full transition-all duration-300 shadow-md cursor-pointer disabled:opacity-50"
                 >
                   {submitting ? (
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
                   ) : (
-                    <Sparkles className="w-4 h-4 mr-2" />
+                    <Sparkles className="w-4 h-4 mr-2 text-[#7CB342]" />
                   )}
                   Calculate & Submit Quote Request
                 </button>

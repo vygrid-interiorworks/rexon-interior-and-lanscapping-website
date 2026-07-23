@@ -135,9 +135,11 @@ export default function RecentWork() {
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
 
-  const filtered = activeCategory === "All"
-    ? projects
-    : projects.filter((p) => p.category === activeCategory);
+  const filtered = (
+    activeCategory === "All"
+      ? projects
+      : projects.filter((p) => p.category === activeCategory)
+  ).slice(0, 3);
 
   const handleProjectClick = (project: typeof projects[0]) => {
     setSelectedProject(project);
@@ -145,7 +147,7 @@ export default function RecentWork() {
   };
 
   return (
-    <section className="py-24 bg-[#F9F8F5]" id="projects">
+    <section className="py-24 bg-[#F5F5F3] font-sans border-t border-[#DCE8CC]" id="projects">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -153,15 +155,15 @@ export default function RecentWork() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
-          className="text-center max-w-2xl mx-auto mb-12"
+          className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">
-            Portfolio
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
+            Portfolio Showcase
           </span>
-          <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-5">
+          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-5">
             Our Recent Work
           </h2>
-          <p className="text-[#4A4A4A] text-base leading-relaxed">
+          <p className="text-[#58595B] text-base leading-relaxed font-sans">
             A curated showcase of our finest interior and landscaping transformations across Kerala.
           </p>
         </motion.div>
@@ -172,10 +174,10 @@ export default function RecentWork() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
+              className={`px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 cursor-pointer ${
                 activeCategory === cat
-                  ? "bg-[#89B036] text-white shadow-lg"
-                  : "bg-white text-[#4A4A4A] border border-[#E8E8E8] hover:border-[#89B036] hover:text-[#89B036]"
+                  ? "bg-[#7CB342] text-white shadow-md"
+                  : "bg-white text-[#58595B] border border-[#DCE8CC] hover:border-[#7CB342] hover:text-[#7CB342]"
               }`}
             >
               {cat}
@@ -183,8 +185,8 @@ export default function RecentWork() {
           ))}
         </div>
 
-        {/* Masonry-style Grid */}
-        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Masonry-style Grid with Arch Cards */}
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence>
             {filtered.map((project) => (
               <motion.div
@@ -195,27 +197,27 @@ export default function RecentWork() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
                 onClick={() => handleProjectClick(project)}
-                className="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer bg-white"
+                className="group relative rounded-t-[100px] rounded-b-[20px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer bg-white border-2 border-white"
               >
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
                     src={project.img}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-end p-6">
-                  <span className="text-[10px] font-bold text-[#89B036] uppercase tracking-widest mb-1">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2B2C2E]/90 via-[#2B2C2E]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                  <span className="text-xs font-semibold text-[#7CB342] uppercase tracking-wider mb-1">
                     {project.category}
                   </span>
-                  <h3 className="text-lg font-bold text-white leading-tight">{project.title}</h3>
-                  <p className="text-xs text-white/70 mt-1">{project.location}</p>
+                  <h3 className="text-lg font-megalky font-bold text-white leading-tight">{project.title}</h3>
+                  <p className="text-xs text-white/80 mt-1 font-sans">{project.location}</p>
                 </div>
                 {/* Default bottom tag */}
-                <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm px-5 py-3 translate-y-0 group-hover:translate-y-full transition-transform duration-400 border-t border-[#F0F0F0]">
-                  <span className="text-[10px] font-bold text-[#89B036] uppercase tracking-widest">{project.category}</span>
-                  <h3 className="text-sm font-bold text-[#3A3A3A] leading-tight mt-0.5">{project.title}</h3>
+                <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm px-6 py-4 translate-y-0 group-hover:translate-y-full transition-transform duration-300 border-t border-[#DCE8CC]">
+                  <span className="text-[10px] font-semibold text-[#7CB342] uppercase tracking-widest">{project.category}</span>
+                  <h3 className="text-base font-megalky font-bold text-[#2B2C2E] leading-tight mt-0.5">{project.title}</h3>
                 </div>
               </motion.div>
             ))}
@@ -231,7 +233,7 @@ export default function RecentWork() {
         >
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 px-8 py-3.5 border-2 border-[#89B036] text-[#89B036] hover:bg-[#89B036] hover:text-white font-bold rounded-full text-sm uppercase tracking-wider transition-all duration-300 shadow-sm"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-sm tracking-wider transition-all duration-300 shadow-md hover:shadow-lg"
           >
             View All Projects →
           </Link>
@@ -245,7 +247,7 @@ export default function RecentWork() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
           >
             {/* Background click to close */}
             <div
@@ -259,19 +261,19 @@ export default function RecentWork() {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.95, y: 30, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 220 }}
-              className="relative bg-white w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col lg:flex-row max-h-[92vh] lg:max-h-[90vh]"
+              className="relative bg-white w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col lg:flex-row max-h-[92vh] lg:max-h-[90vh] border border-[#DCE8CC]"
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-5 right-5 z-20 p-2.5 bg-black/50 hover:bg-black/75 text-white rounded-full transition-colors backdrop-blur-sm shadow-md cursor-pointer"
+                className="absolute top-5 right-5 z-20 p-2.5 bg-[#2B2C2E]/70 hover:bg-[#2B2C2E] text-white rounded-full transition-colors backdrop-blur-sm shadow-md cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
 
               {/* Left Side: Image Gallery */}
-              <div className="w-full lg:w-1/2 bg-[#171717] relative flex flex-col justify-center p-4 sm:p-6 min-h-[220px] lg:min-h-0">
+              <div className="w-full lg:w-1/2 bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6 min-h-[220px] lg:min-h-0">
                 {/* Main Image View */}
                 <div className="relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl aspect-[16/9] lg:aspect-[4/3] max-h-[240px] lg:max-h-none">
                   <AnimatePresence mode="wait">
@@ -325,9 +327,9 @@ export default function RecentWork() {
                       <button
                         key={idx}
                         onClick={() => setActiveImgIndex(idx)}
-                        className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
+                        className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
                           activeImgIndex === idx
-                            ? "border-[#89B036] scale-105 shadow-md"
+                            ? "border-[#7CB342] scale-105 shadow-md"
                             : "border-transparent opacity-60 hover:opacity-100"
                         }`}
                       >
@@ -346,82 +348,82 @@ export default function RecentWork() {
               <div className="w-full lg:w-1/2 p-5 sm:p-8 lg:p-10 overflow-y-auto flex flex-col justify-between bg-white max-h-[50vh] lg:max-h-[90vh]">
                 <div>
                   {/* Category tag */}
-                  <span className="inline-block px-3 py-1 bg-[#89B036]/10 text-[#89B036] text-[10px] font-extrabold uppercase tracking-widest rounded-full mb-3">
+                  <span className="inline-block px-3 py-1 bg-[#DCE8CC] text-[#7CB342] text-[10px] font-semibold uppercase tracking-widest rounded-full mb-3 font-sans">
                     {selectedProject.category}
                   </span>
 
-                  <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mb-1.5 leading-tight">
+                  <h3 className="text-2xl lg:text-3xl font-megalky font-bold text-[#2B2C2E] mb-1.5 leading-tight">
                     {selectedProject.title}
                   </h3>
 
-                  <p className="text-xs text-[#89B036] font-bold mb-5 flex items-center">
-                    <span className="w-1.5 h-1.5 bg-[#89B036] rounded-full mr-2" />
+                  <p className="text-xs text-[#7CB342] font-semibold mb-5 flex items-center font-sans">
+                    <span className="w-1.5 h-1.5 bg-[#7CB342] rounded-full mr-2" />
                     {selectedProject.location}
                   </p>
 
-                  <div className="border-t border-[#F2F2F2] pt-5 mb-5">
-                    <h4 className="text-[10px] font-bold text-[#A0A0A0] uppercase tracking-wider mb-1.5">Project Overview</h4>
-                    <p className="text-[#4A4A4A] text-xs leading-relaxed">
+                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
+                    <h4 className="text-[10px] font-semibold text-[#58595B]/70 uppercase tracking-wider mb-1.5 font-sans">Project Overview</h4>
+                    <p className="text-[#58595B] text-xs leading-relaxed font-sans">
                       {selectedProject.description}
                     </p>
                   </div>
 
                   {/* Spec list */}
-                  <div className="border-t border-[#F2F2F2] pt-5 mb-5">
-                    <h4 className="text-[10px] font-bold text-[#A0A0A0] uppercase tracking-wider mb-3.5">Project Specifications</h4>
+                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
+                    <h4 className="text-[10px] font-semibold text-[#58595B]/70 uppercase tracking-wider mb-3.5 font-sans">Project Specifications</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex items-start gap-2.5">
-                        <User className="w-4 h-4 text-[#89B036] mt-0.5 flex-shrink-0" />
+                        <User className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-[9px] font-bold text-[#A0A0A0] uppercase tracking-wider">Client</p>
-                          <p className="text-xs text-[#3A3A3A] font-semibold">{selectedProject.details.client}</p>
+                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Client</p>
+                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.client}</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2.5">
-                        <Maximize2 className="w-4 h-4 text-[#89B036] mt-0.5 flex-shrink-0" />
+                        <Maximize2 className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-[9px] font-bold text-[#A0A0A0] uppercase tracking-wider">Area</p>
-                          <p className="text-xs text-[#3A3A3A] font-semibold">{selectedProject.details.area}</p>
+                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Area</p>
+                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.area}</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2.5">
-                        <Calendar className="w-4 h-4 text-[#89B036] mt-0.5 flex-shrink-0" />
+                        <Calendar className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-[9px] font-bold text-[#A0A0A0] uppercase tracking-wider">Duration</p>
-                          <p className="text-xs text-[#3A3A3A] font-semibold">{selectedProject.details.duration}</p>
+                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Duration</p>
+                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.duration}</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2.5">
-                        <Briefcase className="w-4 h-4 text-[#89B036] mt-0.5 flex-shrink-0" />
+                        <Briefcase className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-[9px] font-bold text-[#A0A0A0] uppercase tracking-wider">Scope</p>
-                          <p className="text-xs text-[#3A3A3A] font-semibold">{selectedProject.details.scope}</p>
+                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Scope</p>
+                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.scope}</p>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="border-t border-[#F2F2F2] pt-5 mb-5">
+                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
                     <div className="flex items-start gap-2.5">
-                      <Hammer className="w-4 h-4 text-[#89B036] mt-0.5 flex-shrink-0" />
+                      <Hammer className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-[9px] font-bold text-[#A0A0A0] uppercase tracking-wider">Key Materials</p>
-                        <p className="text-xs text-[#3A3A3A] font-medium leading-relaxed mt-0.5">{selectedProject.details.materials}</p>
+                        <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Key Materials</p>
+                        <p className="text-xs text-[#58595B] font-medium leading-relaxed mt-0.5 font-sans">{selectedProject.details.materials}</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-[#F2F2F2] flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto w-full">
+                <div className="pt-4 border-t border-[#DCE8CC] flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto w-full">
                   <Link
                     href="/get-quote"
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-[#89B036] hover:bg-[#546622] text-white font-bold rounded-full text-xs sm:text-2xs uppercase tracking-wider transition-colors duration-300 shadow-md text-center"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-xs tracking-wider transition-colors duration-300 shadow-md text-center"
                   >
                     Consult on this
                   </Link>
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="w-full sm:w-auto py-2 text-center text-xs sm:text-2xs font-bold text-[#A0A0A0] hover:text-[#3A3A3A] uppercase tracking-wider transition-colors cursor-pointer"
+                    className="w-full sm:w-auto py-2 text-center text-xs font-semibold text-[#58595B] hover:text-[#2B2C2E] tracking-wider transition-colors cursor-pointer font-sans"
                   >
                     Close
                   </button>

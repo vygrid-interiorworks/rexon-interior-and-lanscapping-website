@@ -28,19 +28,18 @@ export default function Navbar() {
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Services", path: "/services" },
+    { name: "Packages", path: "/#packages" },
     { name: "Projects", path: "/projects" },
-    { name: "Gallery", path: "/gallery" },
     { name: "Contact Us", path: "/contact" },
   ];
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-[#FFFFFF] shadow-md py-3"
-            : "bg-[#FFFFFF] py-4 border-b border-[#3A3A3A]/10"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+            ? "bg-[#F5F5F3]/95 backdrop-blur-md shadow-sm py-3"
+            : "bg-[#F5F5F3] py-4 border-b border-[#2B2C2E]/10"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -49,44 +48,44 @@ export default function Navbar() {
               <Image
                 src="/rexon-logob.png"
                 alt="Rexon Logo"
-                width={200}
-                height={66}
-                className="h-11 sm:h-16 w-auto object-contain"
+                width={260}
+                height={86}
+                className="h-14 sm:h-20 lg:h-22 w-auto object-contain transition-all duration-300"
                 priority
               />
             </Link>
 
             {/* Desktop Nav Links */}
-            <nav className="hidden lg:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-8 font-sans">
               {navLinks.map((link) => {
-                const isActive =
-                  pathname === link.path ||
+                const isActive = link.path.startsWith("/#")
+                  ? pathname === "/"
+                  : pathname === link.path ||
                   (link.path !== "/" && pathname.startsWith(link.path));
                 return (
                   <Link
                     key={link.name}
                     href={link.path}
-                    className={`relative text-sm font-semibold tracking-wide transition-colors hover:text-[#89B036] focus:outline-none ${
-                      isActive ? "text-[#89B036]" : "text-[#3A3A3A]"
-                    }`}
+                    className={`relative text-sm font-medium tracking-wide transition-colors hover:text-[#7CB342] focus:outline-none ${isActive ? "text-[#7CB342] font-semibold" : "text-[#2B2C2E]"
+                      }`}
                   >
                     {link.name}
                     {isActive && (
-                      <span className="absolute left-0 bottom-[-6px] w-full h-[2px] bg-[#89B036] rounded" />
+                      <span className="absolute left-0 bottom-[-6px] w-full h-[2px] bg-[#7CB342] rounded-full" />
                     )}
                   </Link>
                 );
               })}
             </nav>
 
-            {/* Desktop CTA */}
+            {/* Desktop CTA: Solid Dark Button per header pattern #1 */}
             <div className="hidden lg:flex items-center space-x-4">
               <Link
                 href="/get-quote"
-                className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold tracking-wider text-[#FFFFFF] bg-[#89B036] rounded-full hover:bg-[#546622] transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#89B036]"
+                className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium tracking-wider text-white bg-[#2B2C2E] rounded-full hover:bg-[#1A1A1B] transition-all duration-300 shadow-sm hover:shadow focus:outline-none"
               >
                 Get Free Quote
-                <ArrowRight className="ml-2 w-4 h-4" />
+                <ArrowRight className="ml-2 w-4 h-4 text-[#7CB342]" />
               </Link>
             </div>
 
@@ -94,7 +93,7 @@ export default function Navbar() {
             <div className="flex lg:hidden items-center">
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="p-2 text-[#3A3A3A] hover:text-[#89B036] focus:outline-none"
+                className="p-2 text-[#2B2C2E] hover:text-[#7CB342] focus:outline-none"
                 aria-label="Open Menu"
               >
                 <Menu className="w-6 h-6" />

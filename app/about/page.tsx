@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Award, Target, Eye, Users, Leaf, Star } from "lucide-react";
+import CompanyIntro from "@/components/home/CompanyIntro";
+import ProcessTimeline from "@/components/home/ProcessTimeline";
 
 export const metadata: Metadata = {
   title: "About Us | Rexon Interiors & Landscaping",
@@ -7,13 +9,6 @@ export const metadata: Metadata = {
     "Learn about Rexon Interiors and Landscaping — our story, our mission, our passionate team, and the values that drive every project we take on in Kerala.",
   alternates: { canonical: "/about" },
 };
-
-const team = [
-  { name: "Rexon P. Joseph", role: "Founder & Principal Designer", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80", bio: "12+ years shaping premium residential and commercial spaces across Kerala." },
-  { name: "Ananya Krishnan", role: "Senior Interior Architect", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80", bio: "Specialist in contemporary tropical design and biophilic interior concepts." },
-  { name: "Sujith Menon", role: "Head of Landscaping", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80", bio: "Certified horticulturalist with a passion for native Kerala flora and zen gardens." },
-  { name: "Divya Nair", role: "Project Manager", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80", bio: "Ensures every project is delivered on schedule, within budget, and beyond expectations." },
-];
 
 const values = [
   { icon: Star, title: "Excellence", desc: "We hold every detail to the highest standard, because average is never an option." },
@@ -24,80 +19,49 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <div className="bg-white">
+    <div className="bg-[#F5F5F3] font-sans">
       {/* ── Hero ── */}
-      <section className="relative bg-[#2E3A1E] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_#89B036_0%,_transparent_65%)]" />
+      <section className="relative bg-[#2B2C2E] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_#7CB342_0%,_transparent_65%)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#A8D65A]">Our Story</span>
-          <h1 className="text-5xl lg:text-6xl font-playfair font-bold text-white mt-4 mb-6">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">Our Story</span>
+          <h1 className="text-5xl lg:text-6xl font-megalky font-normal text-white mt-4 mb-6 leading-tight">
             Passion. Craft. Excellence.
           </h1>
-          <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-[#DCE8CC]/90 text-lg max-w-2xl mx-auto leading-relaxed font-sans">
             Since 2012, Rexon Interiors and Landscaping has been transforming homes, offices, and outdoor
             spaces across Kerala with uncompromising quality and a deeply personal approach to design.
           </p>
         </div>
       </section>
 
-      {/* ── Our Story ── */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">Who We Are</span>
-              <h2 className="text-4xl font-playfair font-bold text-[#3A3A3A] mt-3 mb-6 leading-tight">
-                Built on a Belief That Design Can Change Lives
-              </h2>
-              <p className="text-[#4A4A4A] leading-relaxed mb-5">
-                Rexon was born from a simple idea — that every person deserves a space they love coming home to.
-                Founded by Rexon P. Joseph in Kochi, we started as a small interior consultancy and grew into
-                one of Kerala&apos;s most trusted full-service design firms.
-              </p>
-              <p className="text-[#4A4A4A] leading-relaxed mb-5">
-                Today, our 30-member team handles everything from residential interiors and modular kitchens
-                to large-scale commercial fit-outs and luxury landscape gardens — all with the same care and
-                commitment that defined us from day one.
-              </p>
-              <p className="text-[#4A4A4A] leading-relaxed">
-                Our work spans over 1,200 completed projects across Kochi, Thrissur, Calicut, Trivandrum,
-                and Kannur. Every space we design carries a piece of our collective passion.
-              </p>
-            </div>
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
-                <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80" alt="Rexon Studio" className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute -bottom-6 -left-6 bg-[#89B036] text-white rounded-2xl p-6 shadow-xl">
-                <div className="text-4xl font-extrabold font-playfair">12+</div>
-                <div className="text-xs font-bold uppercase tracking-widest mt-1">Years of Excellence</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── Who We Are / Company Intro ── */}
+      <CompanyIntro />
+
+      {/* ── How We Work / Process Timeline ── */}
+      <ProcessTimeline />
 
       {/* ── Vision & Mission ── */}
-      <section className="py-20 bg-[#F9F8F5]">
+      <section className="py-20 bg-[#DCE8CC]/40 border-y border-[#DCE8CC]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-2xl p-10 border border-[#E8E8E8] shadow-sm">
-              <div className="w-14 h-14 rounded-xl bg-[#89B036]/15 flex items-center justify-center mb-6">
-                <Eye className="w-7 h-7 text-[#89B036]" />
+            <div className="bg-white rounded-3xl p-10 border border-[#DCE8CC] shadow-sm">
+              <div className="w-14 h-14 rounded-2xl bg-[#DCE8CC]/60 flex items-center justify-center mb-6 text-[#7CB342]">
+                <Eye className="w-7 h-7" />
               </div>
-              <h3 className="text-2xl font-playfair font-bold text-[#3A3A3A] mb-4">Our Vision</h3>
-              <p className="text-[#4A4A4A] leading-relaxed">
+              <h3 className="text-2xl font-megalky font-bold text-[#2B2C2E] mb-4">Our Vision</h3>
+              <p className="text-[#58595B] leading-relaxed font-sans">
                 To be the most trusted and celebrated interior and landscaping brand in South India —
                 recognised not just for beautiful spaces, but for the genuine relationships we build
                 with every client we serve.
               </p>
             </div>
-            <div className="bg-[#2E3A1E] rounded-2xl p-10 shadow-sm">
-              <div className="w-14 h-14 rounded-xl bg-white/15 flex items-center justify-center mb-6">
-                <Target className="w-7 h-7 text-[#A8D65A]" />
+            <div className="bg-[#2B2C2E] rounded-3xl p-10 shadow-xl border border-[#7CB342]/20">
+              <div className="w-14 h-14 rounded-2xl bg-[#7CB342]/20 flex items-center justify-center mb-6 text-[#7CB342]">
+                <Target className="w-7 h-7" />
               </div>
-              <h3 className="text-2xl font-playfair font-bold text-white mb-4">Our Mission</h3>
-              <p className="text-white/70 leading-relaxed">
+              <h3 className="text-2xl font-megalky font-bold text-white mb-4">Our Mission</h3>
+              <p className="text-[#DCE8CC]/90 leading-relaxed font-sans">
                 To deliver exceptional interior design and landscaping solutions that are rooted in
                 client needs, crafted with premium materials, executed with precision, and completed
                 without compromise — on time, every time.
@@ -108,29 +72,28 @@ export default function AboutPage() {
       </section>
 
       {/* ── Core Values ── */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-[#F5F5F3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#89B036]">What Drives Us</span>
-            <h2 className="text-4xl font-playfair font-bold text-[#3A3A3A] mt-3">Our Core Values</h2>
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">What Drives Us</span>
+            <h2 className="text-4xl font-megalky font-normal text-[#2B2C2E] mt-3">Our Core Values</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((v) => {
               const Icon = v.icon;
               return (
-                <div key={v.title} className="bg-[#F9F8F5] rounded-2xl p-7 border border-[#E8E8E8] hover:border-[#89B036]/40 hover:shadow-md transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-[#89B036]/15 flex items-center justify-center mb-5">
-                    <Icon className="w-6 h-6 text-[#89B036]" />
+                <div key={v.title} className="bg-white rounded-3xl p-7 border border-[#DCE8CC] hover:shadow-md transition-all duration-300">
+                  <div className="w-12 h-12 rounded-2xl bg-[#DCE8CC]/50 border border-[#7CB342]/20 flex items-center justify-center mb-5 text-[#7CB342]">
+                    <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-base font-bold text-[#3A3A3A] mb-2">{v.title}</h3>
-                  <p className="text-xs text-[#4A4A4A] leading-relaxed">{v.desc}</p>
+                  <h3 className="text-lg font-megalky font-bold text-[#2B2C2E] mb-2">{v.title}</h3>
+                  <p className="text-xs text-[#58595B] leading-relaxed font-sans">{v.desc}</p>
                 </div>
               );
             })}
           </div>
         </div>
       </section>
-
     </div>
   );
 }

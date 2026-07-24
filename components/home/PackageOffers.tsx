@@ -15,6 +15,8 @@ import {
   Gem,
   Clock3,
   Headphones,
+  MessageSquare,
+  ArrowRight,
 } from "lucide-react";
 
 // ─── Data ──────────────────────────────────────────────────────────────────
@@ -25,8 +27,6 @@ type Package = {
   id: string;
   name: string;
   tagline: string;
-  originalPrice: string;
-  offerPrice: string;
   image: string;
   rooms: Room[];
 };
@@ -36,8 +36,6 @@ const staticPackages: Package[] = [
     id: "harmony",
     name: "HARMONY",
     tagline: "Smart interiors for a comfortable 2BHK home",
-    originalPrice: "₹9.50 Lac",
-    offerPrice: "₹6.85 Lac*",
     image: "/images/package-interior-hero.jpg",
     rooms: [
       {
@@ -86,8 +84,6 @@ const staticPackages: Package[] = [
     id: "signature",
     name: "SIGNATURE",
     tagline: "Refined design & full woodwork for a 3BHK",
-    originalPrice: "₹17.20 Lac",
-    offerPrice: "₹12.35 Lac*",
     image: "/images/package-interior-hero.jpg",
     rooms: [
       {
@@ -152,8 +148,6 @@ const staticPackages: Package[] = [
     id: "grandeur",
     name: "GRANDEUR",
     tagline: "Luxury turnkey interiors for a premium 3BHK",
-    originalPrice: "₹26.50 Lac",
-    offerPrice: "₹18.55 Lac*",
     image: "/images/package-interior-hero.jpg",
     rooms: [
       {
@@ -247,39 +241,20 @@ const trustBadges = [
 
 // ─── Sub-components ─────────────────────────────────────────────────────────
 
-function PriceDisplay({
-  original,
-  offer,
-  size = "md",
-}: {
-  original: string;
-  offer: string;
-  size?: "sm" | "md" | "lg";
-}) {
-  const originalSize =
-    size === "lg"
-      ? "text-base"
-      : size === "md"
-      ? "text-sm"
-      : "text-xs";
-  const offerSize =
-    size === "lg"
-      ? "text-3xl lg:text-4xl"
-      : size === "md"
-      ? "text-xl"
-      : "text-base";
-
+function EnquiryBadge({ isActive }: { isActive: boolean }) {
   return (
-    <div className="flex flex-col gap-0.5">
-      <span
-        className={`${originalSize} text-[#6B6B6B] line-through leading-none`}
-      >
-        {original}
+    <div className="flex items-center justify-between mt-3 pt-3 border-t border-current/10">
+      <span className={`text-xs font-medium ${isActive ? "text-[#DCE8CC]" : "text-[#58595B]"}`}>
+        Tailored Solution
       </span>
       <span
-        className={`${offerSize} font-extrabold text-[#89B036] leading-none font-playfair`}
+        className={`text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 transition-all ${isActive
+            ? "bg-[#7CB342] text-white"
+            : "bg-[#7CB342]/15 text-[#7CB342] group-hover:bg-[#7CB342] group-hover:text-white"
+          }`}
       >
-        {offer}
+        Enquire
+        <ChevronRight className="w-3 h-3" />
       </span>
     </div>
   );
@@ -319,13 +294,10 @@ export default function PackageOffers() {
       try {
         const remote = await apiService.getPackages();
         if (remote && remote.length > 0) {
-          // Normalize rooms: Firestore stores items as string[], textarea uses string
           const normalized: Package[] = remote.map((p: any) => ({
             id: p._id,
             name: p.name || "",
             tagline: p.tagline || "",
-            originalPrice: p.originalPrice || "",
-            offerPrice: p.offerPrice || "",
             image: p.image || "/images/package-interior-hero.jpg",
             rooms: (p.rooms || []).map((r: any) => ({
               room: r.room || "",
@@ -333,7 +305,6 @@ export default function PackageOffers() {
             })),
           }));
           setPackages(normalized);
-          // Set first package as active if current active not found
           setActiveId((prev) =>
             normalized.some((p) => p.id === prev) ? prev : normalized[0]?.id || prev
           );
@@ -350,7 +321,7 @@ export default function PackageOffers() {
   return (
     <section
       id="packages"
-      className="py-24 bg-[#F5F5F3] relative overflow-hidden font-sans border-t border-[#DCE8CC]"
+      className="py-14 sm:py-16 bg-[#F5F5F3] relative overflow-hidden font-sans border-t border-[#DCE8CC]"
       aria-label="Package Offers"
     >
       {/* Subtle background shape */}
@@ -366,17 +337,17 @@ export default function PackageOffers() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
-          className="text-center max-w-2xl mx-auto mb-14"
+          className="text-center max-w-2xl mx-auto mb-8"
         >
           <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
-            Package Offers
+            Package Solutions
           </span>
           <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-5">
             Choose Your Perfect Package
           </h2>
           <p className="text-[#58595B] text-base leading-relaxed font-sans">
-            Choose a package tailored to your space and vision. All packages are
-            fully customisable.
+            Explore curated design solutions tailored to your space. Every package is
+            fully customisable to match your budget and specific requirements.
           </p>
         </motion.div>
 
@@ -406,11 +377,10 @@ export default function PackageOffers() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 whileHover={{ y: isActive ? 0 : -3 }}
                 className={`
-                  group flex-1 relative rounded-2xl border-2 p-5 text-left transition-all duration-300 cursor-pointer focus:outline-none
-                  ${
-                    isActive
-                      ? "bg-[#2B2C2E] border-[#7CB342] shadow-xl"
-                      : "bg-white border-[#DCE8CC] hover:border-[#7CB342]/60 hover:shadow-md"
+                  group flex-1 relative rounded-2xl border-2 p-5 text-left transition-all duration-300 cursor-pointer focus:outline-none flex flex-col justify-between
+                  ${isActive
+                    ? "bg-[#2B2C2E] border-[#7CB342] shadow-xl"
+                    : "bg-white border-[#DCE8CC] hover:border-[#7CB342]/60 hover:shadow-md"
                   }
                 `}
               >
@@ -422,57 +392,44 @@ export default function PackageOffers() {
                 {/* "Most Popular" badge on middle package */}
                 {i === 1 && packages.length === 3 && (
                   <span
-                    className={`absolute -top-3 right-4 text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full shadow ${
-                      isActive
+                    className={`absolute -top-3 right-4 text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full shadow ${isActive
                         ? "bg-[#7CB342] text-white"
                         : "bg-[#DCE8CC] text-[#2B2C2E]"
-                    }`}
+                      }`}
                   >
                     Most Popular
                   </span>
                 )}
 
-                <p
-                  className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${
-                    isActive ? "text-[#7CB342]" : "text-[#58595B]/70"
-                  }`}
-                >
-                  {i === 0 ? "Starter" : i === 1 ? "Best Value" : "Premium"}
-                </p>
-                <h3
-                  className={`text-lg font-megalky font-bold mb-1 ${
-                    isActive ? "text-white" : "text-[#2B2C2E]"
-                  }`}
-                >
-                  {pkg.name}
-                </h3>
-                <p
-                  className={`text-xs mb-4 leading-snug font-sans ${
-                    isActive ? "text-[#DCE8CC]" : "text-[#58595B]"
-                  }`}
-                >
-                  {pkg.tagline}
-                </p>
-
-                {/* Prices */}
-                <div className="flex flex-col gap-0.5">
-                  <span
-                    className={`text-xs line-through ${
-                      isActive ? "text-[#DCE8CC]/60" : "text-[#58595B]/60"
-                    }`}
+                <div>
+                  <p
+                    className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${isActive ? "text-[#7CB342]" : "text-[#58595B]/70"
+                      }`}
                   >
-                    {pkg.originalPrice}
-                  </span>
-                  <span className="text-xl font-serif font-bold leading-none text-[#7CB342]">
-                    {pkg.offerPrice}
-                  </span>
+                    {i === 0 ? "Starter" : i === 1 ? "Best Value" : "Premium"}
+                  </p>
+                  <h3
+                    className={`text-lg font-megalky font-bold mb-1 ${isActive ? "text-white" : "text-[#2B2C2E]"
+                      }`}
+                  >
+                    {pkg.name}
+                  </h3>
+                  <p
+                    className={`text-xs mb-3 leading-snug font-sans ${isActive ? "text-[#DCE8CC]" : "text-[#58595B]"
+                      }`}
+                  >
+                    {pkg.tagline}
+                  </p>
                 </div>
+
+                {/* Enquiry Action Badge */}
+                <EnquiryBadge isActive={isActive} />
               </motion.button>
             );
           })}
         </motion.div>
 
-        {/* ── Detail Panel in #DCE8CC Tinted Background (Pattern 10) ── */}
+        {/* ── Detail Panel in #DCE8CC Tinted Background ── */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeId}
@@ -497,27 +454,29 @@ export default function PackageOffers() {
                   priority
                 />
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black/50 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black/60 via-transparent to-transparent" />
 
-                {/* Price overlay on image (mobile only) */}
-                <div className="absolute bottom-6 left-6 lg:hidden">
-                  <PriceDisplay
-                    original={activePackage.originalPrice}
-                    offer={activePackage.offerPrice}
-                    size="lg"
-                  />
+                {/* Action button on image (mobile only) */}
+                <div className="absolute bottom-6 left-6 right-6 lg:hidden">
+                  <Link
+                    href="/contact"
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#7CB342] hover:bg-[#689F38] text-white text-sm font-semibold rounded-xl shadow-lg transition-colors"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    Enquire for {activePackage.name}
+                  </Link>
                 </div>
 
-                {/* Savings badge */}
+                {/* Customized solution badge */}
                 <div className="absolute top-6 left-6 bg-[#7CB342] text-white text-xs font-semibold uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
-                  Save Up to 30%
+                  100% Customized Solutions
                 </div>
               </div>
 
               {/* Right: Content overlay panel */}
               <div className="lg:col-span-3 p-7 lg:p-10 flex flex-col bg-white/90 backdrop-blur-sm">
-                {/* Package name + pricing (desktop) */}
-                <div className="flex flex-wrap items-start justify-between gap-4 mb-8">
+                {/* Package name + Enquire button (desktop) */}
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
                   <div>
                     <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
                       Package Details
@@ -530,13 +489,19 @@ export default function PackageOffers() {
                     </p>
                   </div>
 
-                  {/* Desktop pricing */}
-                  <div className="hidden lg:block">
-                    <PriceDisplay
-                      original={activePackage.originalPrice}
-                      offer={activePackage.offerPrice}
-                      size="lg"
-                    />
+                  {/* Desktop Enquiry Action */}
+                  <div className="hidden lg:flex flex-col items-end gap-1.5">
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#7CB342] hover:bg-[#689F38] text-white text-sm font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+                    >
+                      <MessageSquare className="w-4 h-4" />
+                      Enquire Now
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                    <span className="text-[11px] text-[#58595B] font-medium">
+                      Tailored to your requirements
+                    </span>
                   </div>
                 </div>
 
@@ -553,8 +518,7 @@ export default function PackageOffers() {
 
                 {/* Footnote */}
                 <p className="text-[10px] text-[#9B9B9B] mt-6 italic">
-                  *Prices are indicative and subject to site conditions. Final
-                  pricing may vary.
+                  *Package specifications are customized to your exact floor plan, materials preference, and design vision.
                 </p>
 
                 {/* Divider */}
@@ -617,8 +581,8 @@ export default function PackageOffers() {
             {/* Heading */}
             <div className="flex-1 text-center lg:text-left">
               <h3 className="text-2xl lg:text-3xl font-megalky font-normal text-white leading-tight">
-                Buy Direct from Us &amp;{" "}
-                <span className="text-[#7CB342]">Save Up to 30%</span>
+                Tailored Interior Designs &amp;{" "}
+                <span className="text-[#7CB342]">Custom Quotes for Every Budget</span>
               </h3>
             </div>
 
@@ -654,3 +618,4 @@ export default function PackageOffers() {
     </section>
   );
 }
+

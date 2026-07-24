@@ -15,6 +15,7 @@ import {
   Compass,
   MessageSquare,
   Sparkles,
+  Leaf,
 } from "lucide-react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { apiService } from "@/lib/api";
@@ -125,20 +126,41 @@ Looking forward to consulting soon.`;
   };
 
   return (
-    <main className="min-h-screen pt-[140px] pb-20 lg:pt-[170px] bg-[#F5F5F3] text-[#58595B] font-sans">
-      {/* Progress Header */}
-      <section className="max-w-3xl mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <span className="text-xs font-semibold tracking-widest text-[#7CB342] uppercase block mb-2">
-            Rexon Cost Estimator
-          </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E]">
-            Get an Interactive Quote
+    <main className="min-h-screen bg-[#F5F5F3] text-[#58595B] font-sans">
+      {/* ── Luxury Hero Banner ── */}
+      <section className="bg-gradient-to-b from-[#18191B] via-[#1E2023] to-[#212224] pt-[125px] pb-14 lg:pt-[150px] lg:pb-16 relative overflow-hidden border-b border-[#7CB342]/15 mb-10">
+        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#7CB342_1px,transparent_1px),linear-gradient(to_bottom,#7CB342_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[#7CB342]/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-[#7CB342]/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#7CB342]/10 border border-[#7CB342]/30 mb-5">
+            <Sparkles className="w-3.5 h-3.5 text-[#7CB342]" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#7CB342] font-sans">
+              REXON COST ESTIMATOR
+            </span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-megalky font-normal text-white leading-[1.15] tracking-wide mb-4">
+            Get an Interactive <span className="italic text-[#DCE8CC] font-light">Quote</span>
           </h1>
-          <p className="text-sm text-[#58595B] mt-2 font-sans">
-            Answer a few quick questions to estimate budgets and get connected with our experts.
+
+          <div className="flex items-center justify-center gap-4 my-5">
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+            <div className="w-6 h-6 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/40 flex items-center justify-center text-[#7CB342]">
+              <Leaf className="w-3 h-3" />
+            </div>
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+          </div>
+
+          <p className="text-[#DCE8CC]/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-sans font-light">
+            Answer a few quick questions to estimate budgets and get connected with our lead design experts.
           </p>
         </div>
+      </section>
+
+      {/* Progress Header Container */}
+      <section className="max-w-3xl mx-auto px-4">
 
         {/* Progress Bar Container */}
         <div className="w-full bg-[#DCE8CC]/50 rounded-full h-2.5 mb-10 overflow-hidden relative shadow-inner">

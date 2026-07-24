@@ -12,6 +12,8 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  const [activeHash, setActiveHash] = useState("");
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 20) {
@@ -24,14 +26,38 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const updateHash = () => {
+      setActiveHash(window.location.hash);
+    };
+    updateHash();
+    window.addEventListener("hashchange", updateHash);
+    window.addEventListener("popstate", updateHash);
+    return () => {
+      window.removeEventListener("hashchange", updateHash);
+      window.removeEventListener("popstate", updateHash);
+    };
+  }, []);
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Services", path: "/services" },
-    { name: "Packages", path: "/#packages" },
+    { name: "Packages", path: "/packages" },
     { name: "Projects", path: "/projects" },
     { name: "Contact Us", path: "/contact" },
   ];
+
+  const checkIsActive = (linkPath: string) => {
+    if (linkPath.includes("#")) {
+      const hashPart = linkPath.substring(linkPath.indexOf("#"));
+      return pathname === "/" && activeHash === hashPart;
+    }
+    if (linkPath === "/") {
+      return pathname === "/" && (!activeHash || activeHash === "" || activeHash === "#");
+    }
+    return pathname === linkPath || (linkPath !== "/" && pathname.startsWith(linkPath));
+  };
 
   return (
     <>
@@ -58,14 +84,18 @@ export default function Navbar() {
             {/* Desktop Nav Links */}
             <nav className="hidden lg:flex items-center space-x-8 font-sans">
               {navLinks.map((link) => {
-                const isActive = link.path.startsWith("/#")
-                  ? pathname === "/"
-                  : pathname === link.path ||
-                  (link.path !== "/" && pathname.startsWith(link.path));
+                const isActive = checkIsActive(link.path);
                 return (
                   <Link
                     key={link.name}
                     href={link.path}
+                    onClick={() => {
+                      if (link.path.includes("#")) {
+                        setActiveHash(link.path.substring(link.path.indexOf("#")));
+                      } else {
+                        setActiveHash("");
+                      }
+                    }}
                     className={`relative text-sm font-medium tracking-wide transition-colors hover:text-[#7CB342] focus:outline-none ${isActive ? "text-[#7CB342] font-semibold" : "text-[#2B2C2E]"
                       }`}
                   >

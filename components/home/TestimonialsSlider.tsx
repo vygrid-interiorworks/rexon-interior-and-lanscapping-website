@@ -12,7 +12,6 @@ const testimonials = [
     rating: 5,
     text: "Rexon completely transformed our 3BHK into a luxury haven. The attention to detail, quality of materials, and the team's professionalism exceeded every expectation. Our home now looks like something out of a magazine!",
     category: "Interior Design",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
   },
   {
     name: "Arun Krishnan",
@@ -20,7 +19,6 @@ const testimonials = [
     rating: 5,
     text: "Our garden went from barren land to an absolute tropical paradise. The landscaping team understood our vision perfectly. The water feature they built is the highlight of our entire property. Highly recommend!",
     category: "Landscaping",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
   },
   {
     name: "Sujatha Nair",
@@ -28,7 +26,6 @@ const testimonials = [
     rating: 5,
     text: "We commissioned Rexon for our restaurant's complete interior redesign. The result? Footfall doubled in the first month. Guests constantly compliment the ambience. Worth every penny invested.",
     category: "Commercial Interior",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
   },
   {
     name: "Rajesh Kumar",
@@ -36,7 +33,6 @@ const testimonials = [
     rating: 5,
     text: "The modular kitchen they designed for us is absolutely stunning. Smart storage solutions, premium finishes, and delivered on time — exactly as promised. The after-sales service is excellent too.",
     category: "Modular Kitchen",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80",
   },
   {
     name: "Divya Thomas",
@@ -44,7 +40,6 @@ const testimonials = [
     rating: 5,
     text: "From the very first consultation to the final handover, Rexon was an absolute pleasure to work with. Zero compromises on quality. Our courtyard garden is now our family's favourite spot.",
     category: "Garden Design",
-    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
   },
 ];
 
@@ -59,7 +54,6 @@ export default function TestimonialsSlider() {
     rating: 5,
     category: "Interior Design",
     text: "",
-    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80"
   });
 
   const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
@@ -78,7 +72,6 @@ export default function TestimonialsSlider() {
         rating: Number(form.rating),
         category: form.category,
         text: form.text,
-        avatar: form.avatar,
         projectType: form.category === "Landscaping" || form.category === "Garden Design" ? "Landscaping" : "Interior",
       });
       setSubmitted(true);
@@ -91,7 +84,6 @@ export default function TestimonialsSlider() {
           rating: 5,
           category: "Interior Design",
           text: "",
-          avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80"
         });
       }, 3000);
     } catch (error) {
@@ -102,7 +94,7 @@ export default function TestimonialsSlider() {
   };
 
   return (
-    <section className="py-24 bg-[#F5F5F3] overflow-hidden font-sans border-t border-[#DCE8CC]">
+    <section className="py-14 sm:py-16 bg-[#F5F5F3] overflow-hidden font-sans border-t border-[#DCE8CC]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -110,7 +102,7 @@ export default function TestimonialsSlider() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="text-center max-w-2xl mx-auto mb-8 sm:mb-10"
         >
           <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
             Client Stories
@@ -150,20 +142,12 @@ export default function TestimonialsSlider() {
                   &ldquo;{testimonials[current].text}&rdquo;
                 </p>
 
-                <div className="flex items-center gap-4 relative z-10">
-                  {/* Testimonial avatar in rounded-arch frame */}
-                  <img
-                    src={testimonials[current].avatar}
-                    alt={testimonials[current].name}
-                    className="w-14 h-16 rounded-t-full rounded-b-xl object-cover ring-2 ring-[#7CB342]"
-                  />
-                  <div>
-                    <div className="font-megalky font-bold text-[#2B2C2E] text-lg">{testimonials[current].name}</div>
-                    <div className="text-xs text-[#58595B] font-sans">{testimonials[current].role}</div>
-                    <span className="inline-block mt-1 text-[10px] font-semibold uppercase tracking-widest text-[#7CB342] font-sans">
-                      {testimonials[current].category}
-                    </span>
-                  </div>
+                <div className="relative z-10">
+                  <div className="font-megalky font-bold text-[#2B2C2E] text-lg">{testimonials[current].name}</div>
+                  <div className="text-xs text-[#58595B] font-sans">{testimonials[current].role}</div>
+                  <span className="inline-block mt-1 text-[10px] font-semibold uppercase tracking-widest text-[#7CB342] font-sans">
+                    {testimonials[current].category}
+                  </span>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -211,17 +195,10 @@ export default function TestimonialsSlider() {
                   key={idx}
                   onClick={() => setCurrent(idx)}
                   whileHover={{ scale: 1.04 }}
-                  className="w-44 bg-white rounded-2xl p-4 border border-[#DCE8CC] cursor-pointer opacity-60 hover:opacity-100 transition-all duration-300 flex items-center gap-3 shadow-sm"
+                  className="px-5 py-3 bg-white rounded-2xl border border-[#DCE8CC] cursor-pointer opacity-60 hover:opacity-100 transition-all duration-300 text-center shadow-sm"
                 >
-                  <img
-                    src={testimonials[idx].avatar}
-                    alt={testimonials[idx].name}
-                    className="w-10 h-12 rounded-t-full rounded-b-md object-cover"
-                  />
-                  <div>
-                    <div className="text-xs font-megalky font-bold text-[#2B2C2E] leading-tight">{testimonials[idx].name}</div>
-                    <div className="text-[10px] text-[#58595B] font-sans">{testimonials[idx].category}</div>
-                  </div>
+                  <div className="text-xs font-megalky font-bold text-[#2B2C2E] leading-tight">{testimonials[idx].name}</div>
+                  <div className="text-[10px] text-[#58595B] font-sans mt-0.5">{testimonials[idx].category}</div>
                 </motion.div>
               );
             })}

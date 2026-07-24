@@ -63,8 +63,11 @@ export default function MobileMenu({
             {/* Nav Links */}
             <nav className="flex flex-col space-y-4 flex-grow overflow-y-auto pr-2">
               {navLinks.map((link) => {
-                const isActive = link.path.startsWith("/#")
-                  ? pathname === "/"
+                const currentHash = typeof window !== "undefined" ? window.location.hash : "";
+                const isActive = link.path.includes("#")
+                  ? pathname === "/" && currentHash === link.path.substring(link.path.indexOf("#"))
+                  : link.path === "/"
+                  ? pathname === "/" && (!currentHash || currentHash === "")
                   : pathname === link.path ||
                     (link.path !== "/" && pathname.startsWith(link.path));
                 return (

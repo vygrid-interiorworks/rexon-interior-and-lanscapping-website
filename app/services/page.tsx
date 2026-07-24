@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Sofa, ChefHat, TreePine, Paintbrush, Layers,
   Flower2, Lightbulb, Hammer, BrickWall, Droplets,
-  ArrowRight, CheckCircle2,
+  ArrowRight, CheckCircle2, Sparkles,
 } from "lucide-react";
 import { apiService } from "@/lib/api";
 
@@ -293,15 +293,34 @@ function ServicesPageContent() {
 
   return (
     <div className="bg-[#F5F5F3] font-sans">
-      {/* Hero */}
-      <section className="bg-[#2B2C2E] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_left,_#7CB342_0%,_transparent_60%)]" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">What We Offer</span>
-          <h1 className="text-5xl lg:text-6xl font-megalky font-normal text-white mt-4 mb-6 leading-tight">Our Services</h1>
-          <p className="text-[#DCE8CC]/90 text-lg max-w-2xl mx-auto leading-relaxed font-sans">
-            A complete suite of interior and landscaping solutions — designed, managed, and delivered
-            by specialists who care as much as you do.
+      {/* ── Luxury Hero Banner ── */}
+      <section className="bg-gradient-to-b from-[#18191B] via-[#1E2023] to-[#212224] pt-[125px] pb-14 lg:pt-[150px] lg:pb-16 relative overflow-hidden border-b border-[#7CB342]/15">
+        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#7CB342_1px,transparent_1px),linear-gradient(to_bottom,#7CB342_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[#7CB342]/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-[#7CB342]/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#7CB342]/10 border border-[#7CB342]/30 mb-5">
+            <Sparkles className="w-3.5 h-3.5 text-[#7CB342]" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#7CB342] font-sans">
+              WHAT WE OFFER
+            </span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-megalky font-normal text-white leading-[1.15] tracking-wide mb-4">
+            Our Premium <span className="italic text-[#DCE8CC] font-light">Services</span>
+          </h1>
+
+          <div className="flex items-center justify-center gap-4 my-5">
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+            <div className="w-6 h-6 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/40 flex items-center justify-center text-[#7CB342]">
+              <Flower2 className="w-3 h-3" />
+            </div>
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+          </div>
+
+          <p className="text-[#DCE8CC]/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-sans font-light">
+            From comprehensive residential interiors to lush tropical landscapes, explore our full suite of design and build solutions.
           </p>
         </div>
       </section>

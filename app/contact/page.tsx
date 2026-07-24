@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, MessageSquare } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, MessageSquare, Sparkles, Leaf } from "lucide-react";
 import { apiService } from "@/lib/api";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 
@@ -109,33 +109,37 @@ export default function ContactPage() {
   ];
 
   return (
-    <main className="min-h-screen pt-[140px] pb-20 lg:pt-[170px] bg-[#F5F5F3] text-[#58595B] font-sans">
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-        <motion.span
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-xs font-semibold tracking-widest text-[#7CB342] uppercase block mb-3"
-        >
-          Get In Touch
-        </motion.span>
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-megalky font-normal text-[#2B2C2E] mb-6 leading-tight"
-        >
-          Let's Plan Your Dream Project
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mx-auto text-[#58595B] text-base sm:text-lg leading-relaxed font-sans"
-        >
-          Have questions about our modular interiors, turnkey execution, or landscaping services? Our award-winning design consultants are here to help.
-        </motion.p>
+    <main className="min-h-screen bg-[#F5F5F3] text-[#58595B] font-sans">
+      {/* ── Luxury Hero Banner ── */}
+      <section className="bg-gradient-to-b from-[#18191B] via-[#1E2023] to-[#212224] pt-[125px] pb-14 lg:pt-[150px] lg:pb-16 relative overflow-hidden border-b border-[#7CB342]/15 mb-12">
+        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#7CB342_1px,transparent_1px),linear-gradient(to_bottom,#7CB342_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[#7CB342]/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-[#7CB342]/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#7CB342]/10 border border-[#7CB342]/30 mb-5">
+            <Sparkles className="w-3.5 h-3.5 text-[#7CB342]" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#7CB342] font-sans">
+              GET IN TOUCH
+            </span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-megalky font-normal text-white leading-[1.15] tracking-wide mb-4">
+            Let&apos;s Plan Your <span className="italic text-[#DCE8CC] font-light">Dream Project</span>
+          </h1>
+
+          <div className="flex items-center justify-center gap-4 my-5">
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+            <div className="w-6 h-6 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/40 flex items-center justify-center text-[#7CB342]">
+              <Leaf className="w-3 h-3" />
+            </div>
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+          </div>
+
+          <p className="text-[#DCE8CC]/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-sans font-light">
+            Have questions about our modular interiors, turnkey execution, or landscaping services? Our design consultants are here to guide you.
+          </p>
+        </div>
       </section>
 
       {/* Info Cards Grid */}

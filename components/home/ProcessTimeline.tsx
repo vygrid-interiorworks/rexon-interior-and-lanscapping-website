@@ -38,7 +38,7 @@ const steps = [
 
 export default function ProcessTimeline() {
   return (
-    <section className="py-24 bg-[#F5F5F3] overflow-hidden font-sans border-t border-[#DCE8CC]">
+    <section className="py-14 sm:py-16 bg-[#F5F5F3] overflow-hidden font-sans border-t border-[#DCE8CC]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -46,7 +46,7 @@ export default function ProcessTimeline() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
-          className="text-center max-w-2xl mx-auto mb-20"
+          className="text-center max-w-2xl mx-auto mb-8 sm:mb-10"
         >
           <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
             How We Work

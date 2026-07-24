@@ -128,6 +128,7 @@ export default function Footer() {
                   { name: "Home", path: "/" },
                   { name: "About Us", path: "/about" },
                   { name: "Services", path: "/services" },
+                  { name: "Packages", path: "/packages" },
                   { name: "Projects / Portfolio", path: "/projects" },
                   { name: "Contact Us", path: "/contact" },
                 ].map((link) => (

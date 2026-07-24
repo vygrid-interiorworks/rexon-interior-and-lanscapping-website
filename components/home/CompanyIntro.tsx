@@ -103,9 +103,9 @@ export default function CompanyIntro() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <section className="py-24 bg-[#F5F5F3] relative overflow-hidden font-sans">
+    <section className="py-12 sm:py-14 bg-[#F5F5F3] relative overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
           {/* Left: Dual Overlapping Images + Accent Blob */}
           <motion.div

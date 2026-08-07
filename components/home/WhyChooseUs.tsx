@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import {
   BadgeCheck, Clock3, Leaf, HeartHandshake,
-  Gem, ArrowRight
+  Gem
 } from "lucide-react";
 
 const reasons = [
@@ -137,12 +137,6 @@ export default function WhyChooseUs() {
                   </p>
                 </div>
 
-                {/* Bottom Micro-CTA Link */}
-                <div className="pt-4 mt-6 border-t border-[#DCE8CC]/50 flex items-center justify-between text-xs font-semibold text-[#7CB342] font-sans">
-                  <span className="group-hover:translate-x-1 transition-transform duration-300 flex items-center gap-1.5">
-                    Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
-                  </span>
-                </div>
               </motion.div>
             );
           })}

@@ -223,20 +223,21 @@ export default function TestimonialsSlider() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto"
           >
-            <div className="absolute inset-0 cursor-pointer" onClick={() => setFormOpen(false)} />
+            <div className="fixed inset-0 cursor-pointer" onClick={() => setFormOpen(false)} />
             
             <motion.div
-              initial={{ scale: 0.9, y: 30 }}
+              initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 30 }}
+              exit={{ scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25 }}
-              className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 z-10 border border-gray-100 max-h-[92vh] overflow-y-auto"
+              className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 sm:p-8 z-10 border border-gray-100 max-h-[85vh] overflow-y-auto my-auto"
             >
               <button 
                 onClick={() => setFormOpen(false)} 
-                className="absolute top-5 right-5 text-[#4A4A4A] hover:text-[#3A3A3A] transition-colors p-1.5 hover:bg-gray-100 rounded-full cursor-pointer"
+                className="absolute top-5 right-5 text-[#4A4A4A] hover:text-[#3A3A3A] transition-colors p-2 hover:bg-gray-100 rounded-full cursor-pointer z-20"
+                aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>

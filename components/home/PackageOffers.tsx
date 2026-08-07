@@ -247,15 +247,6 @@ function EnquiryBadge({ isActive }: { isActive: boolean }) {
       <span className={`text-xs font-medium ${isActive ? "text-[#DCE8CC]" : "text-[#58595B]"}`}>
         Tailored Solution
       </span>
-      <span
-        className={`text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 transition-all ${isActive
-            ? "bg-[#7CB342] text-white"
-            : "bg-[#7CB342]/15 text-[#7CB342] group-hover:bg-[#7CB342] group-hover:text-white"
-          }`}
-      >
-        Enquire
-        <ChevronRight className="w-3 h-3" />
-      </span>
     </div>
   );
 }
@@ -562,58 +553,6 @@ export default function PackageOffers() {
             </div>
           </motion.div>
         </AnimatePresence>
-
-        {/* ── Trust Banner ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="mt-14 rounded-3xl bg-[#2B2C2E] relative overflow-hidden px-8 py-10 shadow-xl border border-[#7CB342]/20"
-        >
-          {/* Background decorative blobs */}
-          <div className="absolute inset-0 opacity-10 pointer-events-none">
-            <div className="absolute top-0 left-1/4 w-80 h-80 rounded-full bg-[#7CB342] filter blur-3xl" />
-            <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full bg-[#7CB342] filter blur-3xl" />
-          </div>
-
-          <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
-            {/* Heading */}
-            <div className="flex-1 text-center lg:text-left">
-              <h3 className="text-2xl lg:text-3xl font-megalky font-normal text-white leading-tight">
-                Tailored Interior Designs &amp;{" "}
-                <span className="text-[#7CB342]">Custom Quotes for Every Budget</span>
-              </h3>
-            </div>
-
-            {/* Divider (desktop) */}
-            <div className="hidden lg:block w-px h-14 bg-white/20 mx-10 flex-shrink-0" />
-
-            {/* Trust badges */}
-            <div className="flex flex-wrap justify-center lg:justify-end gap-6 lg:gap-8">
-              {trustBadges.map((badge, i) => {
-                const Icon = badge.icon;
-                return (
-                  <motion.div
-                    key={badge.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 + i * 0.08 }}
-                    className="flex flex-col items-center gap-2 group"
-                  >
-                    <div className="w-11 h-11 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/30 flex items-center justify-center group-hover:bg-[#7CB342] group-hover:text-white transition-colors duration-300 text-[#7CB342]">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className="text-[11px] font-medium text-[#DCE8CC] text-center leading-snug max-w-[80px]">
-                      {badge.label}
-                    </span>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

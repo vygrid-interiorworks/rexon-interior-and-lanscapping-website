@@ -1,13 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, User, Maximize2, Calendar, Briefcase, Hammer } from "lucide-react";
+import { apiService } from "@/lib/api";
 
-const categories = ["All", "Interior", "Landscaping", "Kitchen", "Garden"];
+type Project = {
+  id: string | number;
+  title: string;
+  category: string;
+  location: string;
+  img: string;
+  description: string;
+  images: string[];
+  details: {
+    client: string;
+    area: string;
+    duration: string;
+    scope: string;
+    materials: string;
+  };
+};
 
-const projects = [
+const staticProjects: Project[] = [
   {
     id: 1,
     title: "Luxury Villa Interior",
@@ -131,17 +147,56 @@ const projects = [
 ];
 
 export default function RecentWork() {
+  const [projectList, setProjectList] = useState<Project[]>(staticProjects);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const remote = await apiService.getProjects();
+        if (remote && remote.length > 0) {
+          const normalized: Project[] = remote.map((p: any, idx: number) => ({
+            id: p._id || idx + 1,
+            title: p.title || "Project",
+            category: p.category || "Interior",
+            location: p.location || "Kerala, India",
+            img: p.img || p.image || (Array.isArray(p.images) && p.images[0]) || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
+            description: p.description || "",
+            images: Array.isArray(p.images) && p.images.length > 0
+              ? p.images
+              : [p.img || p.image || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80"],
+            details: {
+              client: p.details?.client || p.client || "Rexon Client",
+              area: p.details?.area || p.area || "Custom Area",
+              duration: p.details?.duration || p.duration || "Custom Duration",
+              scope: p.details?.scope || p.scope || p.category || "Turnkey Project",
+              materials: p.details?.materials || p.materials || "Premium finishes",
+            },
+          }));
+          setProjectList(normalized);
+        }
+      } catch (err) {
+        // Fallback to static
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  // Dynamically derive category filters from projects present in admin panel / DB
+  const categories = [
+    "All",
+    ...Array.from(new Set(projectList.map((p) => p.category).filter(Boolean))),
+  ];
 
   const filtered = (
     activeCategory === "All"
-      ? projects
-      : projects.filter((p) => p.category === activeCategory)
-  ).slice(0, 3);
+      ? projectList
+      : projectList.filter((p) => p.category === activeCategory)
+  ).slice(0, 6);
 
-  const handleProjectClick = (project: typeof projects[0]) => {
+  const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
     setActiveImgIndex(0);
   };
@@ -247,7 +302,7 @@ export default function RecentWork() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
           >
             {/* Background click to close */}
             <div

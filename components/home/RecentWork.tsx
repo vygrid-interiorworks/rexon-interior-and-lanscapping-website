@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, User, Maximize2, Calendar, Briefcase, Hammer } from "lucide-react";
 import { apiService } from "@/lib/api";
+import ImageLightbox from "@/components/ui/ImageLightbox";
 
 type Project = {
   id: string | number;
@@ -217,6 +218,8 @@ export default function RecentWork() {
     setLightboxIndex((prev) => (prev !== null ? (prev === 0 ? filtered.length - 1 : prev - 1) : 0));
   };
 
+  const activeThumbRef = useRef<HTMLButtonElement | null>(null);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (lightboxIndex === null) return;
@@ -227,6 +230,16 @@ export default function RecentWork() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxIndex, filtered.length]);
+
+  useEffect(() => {
+    if (lightboxIndex !== null && activeThumbRef.current) {
+      activeThumbRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  }, [lightboxIndex]);
 
   return (
     <section className="py-14 sm:py-16 bg-[#F5F5F3] font-sans border-t border-[#DCE8CC]" id="projects">
@@ -316,87 +329,14 @@ export default function RecentWork() {
         </motion.div>
       </div>
 
-      {/* Lightbox Overlay with Arrow & Scroll Navigation */}
-      <AnimatePresence>
-        {lightboxIndex !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6"
-          >
-            {/* Top Bar */}
-            <div className="flex items-center justify-between z-20">
-              <span className="text-xs font-semibold text-white/80 bg-white/10 px-4 py-1.5 rounded-full border border-white/20">
-                Photo {lightboxIndex + 1} of {filtered.length}
-              </span>
-              <button
-                onClick={() => setLightboxIndex(null)}
-                className="p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors backdrop-blur-sm shadow-md cursor-pointer"
-                aria-label="Close modal"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Center Area: Image & Nav Arrows */}
-            <div className="relative flex-1 flex items-center justify-center my-4 overflow-hidden">
-              {/* Prev Arrow */}
-              <button
-                onClick={handlePrev}
-                className="absolute left-2 sm:left-6 z-30 p-3 bg-white/15 hover:bg-[#7CB342] text-white rounded-full transition-all duration-300 backdrop-blur-md border border-white/20 cursor-pointer shadow-lg hover:scale-110"
-                aria-label="Previous photo"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-
-              {/* Main Image */}
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={lightboxIndex}
-                  src={filtered[lightboxIndex].img}
-                  alt={`Photo ${lightboxIndex + 1}`}
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.3 }}
-                  className="max-h-[70vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl border border-white/10"
-                />
-              </AnimatePresence>
-
-              {/* Next Arrow */}
-              <button
-                onClick={handleNext}
-                className="absolute right-2 sm:right-6 z-30 p-3 bg-white/15 hover:bg-[#7CB342] text-white rounded-full transition-all duration-300 backdrop-blur-md border border-white/20 cursor-pointer shadow-lg hover:scale-110"
-                aria-label="Next photo"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Bottom Scrollable Thumbnails Bar */}
-            <div className="w-full max-w-5xl mx-auto overflow-x-auto pb-2 flex justify-start sm:justify-center gap-2.5 scrollbar-thin scrollbar-thumb-white/20">
-              {filtered.map((proj, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setLightboxIndex(idx)}
-                  className={`relative w-14 h-11 sm:w-18 sm:h-14 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
-                    lightboxIndex === idx
-                      ? "border-[#7CB342] scale-105 shadow-lg"
-                      : "border-transparent opacity-50 hover:opacity-100"
-                  }`}
-                >
-                  <img
-                    src={proj.img}
-                    alt={`Thumbnail ${idx + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Reusable Portal Lightbox */}
+      <ImageLightbox
+        isOpen={lightboxIndex !== null}
+        currentIndex={lightboxIndex ?? 0}
+        items={filtered}
+        onClose={() => setLightboxIndex(null)}
+        onNavigate={(idx) => setLightboxIndex(idx)}
+      />
     </section>
   );
 }

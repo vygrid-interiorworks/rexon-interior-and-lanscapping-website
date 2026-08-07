@@ -201,8 +201,8 @@ function ServicesPageContent() {
   const searchParams = useSearchParams();
   const queryId = searchParams.get("id");
 
-  const [servicesList, setServicesList] = useState<any[]>(defaultServices);
-  const [active, setActive] = useState<string>(defaultServices[0].id);
+  const [servicesList, setServicesList] = useState<any[]>([]);
+  const [active, setActive] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -212,71 +212,69 @@ function ServicesPageContent() {
         const fetched = await apiService.getServices();
         const targetId = queryId || (typeof window !== "undefined" ? window.location.hash.replace("#", "") : "");
 
-        const rawList = (fetched && fetched.length > 0) ? fetched : defaultServices;
-        const normalized = rawList.map((s: any) => {
-          const IconComp = iconMap[s.icon] || Sofa;
-          let featArr: string[] = [];
-          if (Array.isArray(s.features)) {
-            featArr = s.features;
-          } else if (typeof s.features === "string") {
-            featArr = s.features.split("\n").map((f: string) => f.trim()).filter(Boolean);
-          } else {
-            featArr = [
-              "Personalised 3D concept renders",
-              "Material and colour palette curation",
-              "Furniture layout planning",
-              "End-to-end project management"
-            ];
-          }
+        if (fetched && Array.isArray(fetched) && fetched.length > 0) {
+          const normalized = fetched.map((s: any) => {
+            const IconComp = iconMap[s.icon] || Sofa;
+            let featArr: string[] = [];
+            if (Array.isArray(s.features)) {
+              featArr = s.features;
+            } else if (typeof s.features === "string") {
+              featArr = s.features.split("\n").map((f: string) => f.trim()).filter(Boolean);
+            } else {
+              featArr = [];
+            }
 
-          const rawTitle = s.title || s.name || "Custom Service";
-          const rawSlug = s.slug || rawTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+            const rawTitle = s.title || s.name || "Custom Service";
+            const rawSlug = s.slug || rawTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-          return {
-            id: s._id || s.id || rawSlug,
-            slug: rawSlug,
-            title: rawTitle,
-            icon: IconComp,
-            tag: s.tag || "Interiors",
-            tagline: s.tagline || "Spaces crafted for how you live.",
-            desc: s.desc || s.description || "Our design service covers every corner of your home or office.",
-            features: featArr,
-            img: s.img || s.image || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
-          };
-        });
-
-        setServicesList(normalized);
-
-        if (targetId) {
-          const cleanTarget = decodeURIComponent(targetId).toLowerCase().replace(/[^a-z0-9]/g, "");
-          const matched = normalized.find((item: any) => {
-            const cleanTitle = item.title.toLowerCase().replace(/[^a-z0-9]/g, "");
-            const cleanId = (item.id || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-            const cleanSlug = (item.slug || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-
-            return (
-              cleanTitle.includes(cleanTarget) ||
-              cleanTarget.includes(cleanTitle) ||
-              cleanId === cleanTarget ||
-              cleanSlug === cleanTarget ||
-              cleanId.includes(cleanTarget) ||
-              cleanSlug.includes(cleanTarget)
-            );
+            return {
+              id: s._id || s.id || rawSlug,
+              slug: rawSlug,
+              title: rawTitle,
+              icon: IconComp,
+              tag: s.tag || "Interiors",
+              tagline: s.tagline || "",
+              desc: s.desc || s.description || "",
+              features: featArr,
+              img: s.img || s.image || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
+            };
           });
 
-          if (matched) {
-            setActive(matched.id);
-            setTimeout(() => {
-              const el = document.getElementById("service-details");
-              if (el) {
-                el.scrollIntoView({ behavior: "smooth" });
-              }
-            }, 300);
+          setServicesList(normalized);
+
+          if (targetId) {
+            const cleanTarget = decodeURIComponent(targetId).toLowerCase().replace(/[^a-z0-9]/g, "");
+            const matched = normalized.find((item: any) => {
+              const cleanTitle = item.title.toLowerCase().replace(/[^a-z0-9]/g, "");
+              const cleanId = (item.id || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+              const cleanSlug = (item.slug || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+
+              return (
+                cleanTitle.includes(cleanTarget) ||
+                cleanTarget.includes(cleanTitle) ||
+                cleanId === cleanTarget ||
+                cleanSlug === cleanTarget ||
+                cleanId.includes(cleanTarget) ||
+                cleanSlug.includes(cleanTarget)
+              );
+            });
+
+            if (matched) {
+              setActive(matched.id);
+              setTimeout(() => {
+                const el = document.getElementById("service-details");
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth" });
+                }
+              }, 300);
+            } else if (normalized.length > 0) {
+              setActive(normalized[0].id);
+            }
           } else if (normalized.length > 0) {
             setActive(normalized[0].id);
           }
-        } else if (normalized.length > 0) {
-          setActive(normalized[0].id);
+        } else {
+          setServicesList([]);
         }
       } catch (err) {
         console.error("Failed loading dynamic services for services page:", err);
@@ -294,24 +292,17 @@ function ServicesPageContent() {
   return (
     <div className="bg-[#F5F5F3] font-sans">
       {/* ── Luxury Hero Banner ── */}
-      <section className="bg-gradient-to-b from-[#18191B] via-[#1E2023] to-[#212224] pt-[125px] pb-14 lg:pt-[150px] lg:pb-16 relative overflow-hidden border-b border-[#7CB342]/15">
+      <section className="bg-gradient-to-b from-[#18191B] via-[#1E2023] to-[#212224] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 relative overflow-hidden border-b border-[#7CB342]/25 mb-6">
         <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#7CB342_1px,transparent_1px),linear-gradient(to_bottom,#7CB342_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] pointer-events-none" />
         <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[#7CB342]/10 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-[#7CB342]/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#7CB342]/10 border border-[#7CB342]/30 mb-5">
-            <Sparkles className="w-3.5 h-3.5 text-[#7CB342]" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#7CB342] font-sans">
-              WHAT WE OFFER
-            </span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-megalky font-normal text-white leading-[1.15] tracking-wide mb-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-megalky font-normal text-white leading-[1.15] tracking-wide mb-6">
             Our Premium <span className="italic text-[#DCE8CC] font-light">Services</span>
           </h1>
 
-          <div className="flex items-center justify-center gap-4 my-5">
+          <div className="flex items-center justify-center gap-4 my-8">
             <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#7CB342]/60 to-[#7CB342]" />
             <div className="w-6 h-6 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/40 flex items-center justify-center text-[#7CB342]">
               <Flower2 className="w-3 h-3" />
@@ -319,7 +310,7 @@ function ServicesPageContent() {
             <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
           </div>
 
-          <p className="text-[#DCE8CC]/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-sans font-light">
+          <p className="text-[#DCE8CC]/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-sans font-light mb-4">
             From comprehensive residential interiors to lush tropical landscapes, explore our full suite of design and build solutions.
           </p>
         </div>

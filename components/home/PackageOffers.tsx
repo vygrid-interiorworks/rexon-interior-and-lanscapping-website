@@ -515,30 +515,8 @@ export default function PackageOffers() {
                 {/* Divider */}
                 <div className="w-full h-px bg-[#E0E0E0] my-6" />
 
-                {/* CTA Links */}
+                {/* CTA Link */}
                 <div className="flex flex-wrap gap-5">
-                  <Link
-                    href="/#faq"
-                    className="group flex items-center gap-2 text-sm font-medium text-[#2B2C2E] hover:text-[#7CB342] transition-colors duration-200"
-                    aria-label="Frequently Asked Questions"
-                  >
-                    <HelpCircle className="w-4 h-4 text-[#7CB342] flex-shrink-0" />
-                    Frequently Asked Questions
-                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200 text-[#7CB342]" />
-                  </Link>
-
-                  <Link
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-2 text-sm font-medium text-[#2B2C2E] hover:text-[#7CB342] transition-colors duration-200"
-                    aria-label="View Package Video on YouTube"
-                  >
-                    <PlayCircle className="w-4 h-4 text-[#7CB342] flex-shrink-0" />
-                    View Package Video
-                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200 text-[#7CB342]" />
-                  </Link>
-
                   <Link
                     href="/contact"
                     className="group flex items-center gap-2 text-sm font-medium text-[#2B2C2E] hover:text-[#7CB342] transition-colors duration-200"

@@ -96,10 +96,14 @@ export const apiService = {
   // ─── Services ────────────────────────────────────────────────────────────
   getServices: async () => {
     try {
-      const q = query(collection(db, "services"), orderBy("createdAt", "desc"));
-      const snap = await getDocs(q);
+      const snap = await getDocs(collection(db, "services"));
       if (!snap.empty) {
-        return snap.docs.map((d) => serializeDoc(d.id, d.data()));
+        const list = snap.docs.map((d) => serializeDoc(d.id, d.data()));
+        return list.sort((a: any, b: any) => {
+          const tA = a.createdAt?.seconds || (typeof a.createdAt === 'number' ? a.createdAt : 0);
+          const tB = b.createdAt?.seconds || (typeof b.createdAt === 'number' ? b.createdAt : 0);
+          return tB - tA;
+        });
       }
 
       // Auto-seed default services if Firestore table is empty
@@ -303,7 +307,7 @@ export const apiService = {
         });
       }
 
-      const freshSnap = await getDocs(q);
+      const freshSnap = await getDocs(collection(db, "services"));
       return freshSnap.docs.map((d) => serializeDoc(d.id, d.data()));
     } catch (err) {
       console.error("Error in getServices:", err);
@@ -533,6 +537,7 @@ export const apiService = {
       ctaBgImage: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=80",
       ctaBtnLabel: "Request Free Callback",
       ctaBtnLink: "",
+      hideAllProjectContent: false,
 
       // Hero Banner Slides
       heroSlides: [

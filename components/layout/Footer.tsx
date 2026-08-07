@@ -29,8 +29,10 @@ export default function Footer() {
     youtube: "https://youtube.com",
   });
 
+  const [dbServices, setDbServices] = useState<any[]>([]);
+
   useEffect(() => {
-    const fetchFooterSettings = async () => {
+    const fetchFooterData = async () => {
       try {
         const data = await apiService.getSettings();
         if (data) {
@@ -47,8 +49,17 @@ export default function Footer() {
       } catch (err) {
         console.error("Failed to load footer settings:", err);
       }
+
+      try {
+        const fetchedServices = await apiService.getServices();
+        if (fetchedServices && Array.isArray(fetchedServices)) {
+          setDbServices(fetchedServices);
+        }
+      } catch (err) {
+        console.error("Failed to load services for footer:", err);
+      }
     };
-    fetchFooterSettings();
+    fetchFooterData();
   }, []);
 
   const handleWhatsAppClick = () => {
@@ -110,7 +121,7 @@ export default function Footer() {
                 </a>
                 <button
                   onClick={handleWhatsAppClick}
-                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#25D366] flex items-center justify-center text-white hover:text-white transition-all duration-300 focus:outline-none"
+                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#25D366] flex items-center justify-center text-white hover:text-white transition-all duration-300 focus:outline-none cursor-pointer"
                   aria-label="WhatsApp"
                 >
                   <WhatsAppIcon className="w-5 h-5" />
@@ -145,31 +156,39 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Column 3: Services */}
+            {/* Column 3: Dynamic Services from DB */}
             <div>
               <h3 className="text-xl font-megalky font-bold text-white mb-6 border-b-2 border-[#7CB342] pb-2 inline-block">
                 Our Services
               </h3>
               <ul className="space-y-3">
-                {[
-                  "Interior Design",
-                  "Landscaping",
-                  "Modular Kitchen",
-                  "Living Room Design",
-                  "Bedroom Design",
-                  "Terrace Landscaping",
-                  "Garden Design",
-                ].map((service) => (
-                  <li key={service}>
+                {dbServices.length > 0 ? (
+                  dbServices.map((service) => {
+                    const title = service.title || service.name || "Service";
+                    const slug = service.slug || title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+                    return (
+                      <li key={service._id || slug}>
+                        <Link
+                          href={`/services?id=${encodeURIComponent(slug)}`}
+                          className="text-sm text-[#DCE8CC]/90 hover:text-[#7CB342] transition-colors flex items-center"
+                        >
+                          <span className="mr-2 text-[#7CB342]">›</span>
+                          {title}
+                        </Link>
+                      </li>
+                    );
+                  })
+                ) : (
+                  <li>
                     <Link
                       href="/services"
                       className="text-sm text-[#DCE8CC]/90 hover:text-[#7CB342] transition-colors flex items-center"
                     >
                       <span className="mr-2 text-[#7CB342]">›</span>
-                      {service}
+                      Browse All Services
                     </Link>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
 
@@ -210,12 +229,12 @@ export default function Footer() {
             <p className="mt-4 md:mt-0">
               Designed by{" "}
               <a
-                href="https://github.com/vygrid-interiorworks"
+                href="https://vygrid.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#7CB342] hover:underline font-semibold"
               >
-                Vygrid Interiorworks
+                Vygrid Digital Studio
               </a>
             </p>
           </div>

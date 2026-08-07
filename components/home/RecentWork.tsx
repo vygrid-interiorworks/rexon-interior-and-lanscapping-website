@@ -13,6 +13,7 @@ type Project = {
   location: string;
   img: string;
   description: string;
+  showContent?: boolean;
   images: string[];
   details: {
     client: string;
@@ -152,9 +153,16 @@ export default function RecentWork() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
 
+  const [hideAllContent, setHideAllContent] = useState(false);
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
+        const settingsData = await apiService.getSettings();
+        if (settingsData && settingsData.hideAllProjectContent !== undefined) {
+          setHideAllContent(settingsData.hideAllProjectContent);
+        }
+
         const remote = await apiService.getProjects();
         if (remote && remote.length > 0) {
           const normalized: Project[] = remote.map((p: any, idx: number) => ({
@@ -164,6 +172,7 @@ export default function RecentWork() {
             location: p.location || "Kerala, India",
             img: p.img || p.image || (Array.isArray(p.images) && p.images[0]) || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
             description: p.description || "",
+            showContent: p.showContent !== false,
             images: Array.isArray(p.images) && p.images.length > 0
               ? p.images
               : [p.img || p.image || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80"],
@@ -328,79 +337,84 @@ export default function RecentWork() {
               </button>
 
               {/* Left Side: Image Gallery */}
-              <div className="w-full lg:w-1/2 bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6 min-h-[220px] lg:min-h-0">
-                {/* Main Image View */}
-                <div className="relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl aspect-[16/9] lg:aspect-[4/3] max-h-[240px] lg:max-h-none">
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={activeImgIndex}
-                      src={selectedProject.images[activeImgIndex]}
-                      alt={`${selectedProject.title} ${activeImgIndex + 1}`}
-                      initial={{ opacity: 0, scale: 1.05 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.35 }}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  </AnimatePresence>
+              {(() => {
+                const isContentDisabled = hideAllContent || selectedProject.showContent === false;
+                return (
+                  <>
+                    <div className={`w-full ${isContentDisabled ? 'lg:w-full min-h-[400px] lg:min-h-[550px]' : 'lg:w-1/2 min-h-[220px] lg:min-h-0'} bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6`}>
+                      {/* Main Image View */}
+                      <div className={`relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl ${isContentDisabled ? 'aspect-[16/10] max-h-[75vh]' : 'aspect-[16/9] lg:aspect-[4/3] max-h-[240px] lg:max-h-none'}`}>
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={activeImgIndex}
+                            src={selectedProject.images[activeImgIndex]}
+                            alt={`${selectedProject.title} ${activeImgIndex + 1}`}
+                            initial={{ opacity: 0, scale: 1.05 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.35 }}
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        </AnimatePresence>
 
-                  {/* Navigation Arrows */}
-                  {selectedProject.images.length > 1 && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveImgIndex((prev) =>
-                            prev === 0 ? selectedProject.images.length - 1 : prev - 1
-                          );
-                        }}
-                        className="absolute left-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors backdrop-blur-sm cursor-pointer"
-                        aria-label="Previous image"
-                      >
-                        <ChevronLeft className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveImgIndex((prev) =>
-                            prev === selectedProject.images.length - 1 ? 0 : prev + 1
-                          );
-                        }}
-                        className="absolute right-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors backdrop-blur-sm cursor-pointer"
-                        aria-label="Next image"
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
-                    </>
-                  )}
-                </div>
+                        {/* Navigation Arrows */}
+                        {selectedProject.images.length > 1 && (
+                          <>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveImgIndex((prev) =>
+                                  prev === 0 ? selectedProject.images.length - 1 : prev - 1
+                                );
+                              }}
+                              className="absolute left-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors backdrop-blur-sm cursor-pointer"
+                              aria-label="Previous image"
+                            >
+                              <ChevronLeft className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveImgIndex((prev) =>
+                                  prev === selectedProject.images.length - 1 ? 0 : prev + 1
+                                );
+                              }}
+                              className="absolute right-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors backdrop-blur-sm cursor-pointer"
+                              aria-label="Next image"
+                            >
+                              <ChevronRight className="w-5 h-5" />
+                            </button>
+                          </>
+                        )}
+                      </div>
 
-                {/* Thumbnails list */}
-                {selectedProject.images.length > 1 && (
-                  <div className="flex justify-center gap-2 mt-3 overflow-x-auto pb-1 max-h-[48px] lg:max-h-none">
-                    {selectedProject.images.map((img, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setActiveImgIndex(idx)}
-                        className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
-                          activeImgIndex === idx
-                            ? "border-[#7CB342] scale-105 shadow-md"
-                            : "border-transparent opacity-60 hover:opacity-100"
-                        }`}
-                      >
-                        <img
-                          src={img}
-                          alt={`Thumbnail ${idx + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+                      {/* Thumbnails list */}
+                      {selectedProject.images.length > 1 && (
+                        <div className="flex justify-center gap-2 mt-3 overflow-x-auto pb-1 max-h-[48px] lg:max-h-none">
+                          {selectedProject.images.map((img, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => setActiveImgIndex(idx)}
+                              className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
+                                activeImgIndex === idx
+                                  ? "border-[#7CB342] scale-105 shadow-md"
+                                  : "border-transparent opacity-60 hover:opacity-100"
+                              }`}
+                            >
+                              <img
+                                src={img}
+                                alt={`Thumbnail ${idx + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
 
-              {/* Right Side: Details Content */}
-              <div className="w-full lg:w-1/2 p-5 sm:p-8 lg:p-10 overflow-y-auto flex flex-col justify-between bg-white max-h-[50vh] lg:max-h-[90vh]">
+                    {/* Right Side: Details Content (Rendered only if text content is enabled) */}
+                    {!isContentDisabled && (
+                      <div className="w-full lg:w-1/2 p-5 sm:p-8 lg:p-10 overflow-y-auto flex flex-col justify-between bg-white max-h-[50vh] lg:max-h-[90vh]">
                 <div>
                   {/* Category tag */}
                   <span className="inline-block px-3 py-1 bg-[#DCE8CC] text-[#7CB342] text-[10px] font-semibold uppercase tracking-widest rounded-full mb-3 font-sans">
@@ -484,7 +498,11 @@ export default function RecentWork() {
                   </button>
                 </div>
               </div>
-            </motion.div>
+            )}
+          </>
+        );
+      })()}
+    </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -48,6 +48,13 @@ export default function TestimonialsSlider() {
   const [formOpen, setFormOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [categories, setCategories] = useState<string[]>([
+    "Interior Design",
+    "Landscaping",
+    "Modular Kitchen",
+    "Garden Design",
+    "Commercial Interior",
+  ]);
   const [form, setForm] = useState({
     name: "",
     role: "",
@@ -223,7 +230,7 @@ export default function TestimonialsSlider() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 pt-24 sm:pt-28 pb-8 bg-black/70 backdrop-blur-md overflow-y-auto"
           >
             <div className="fixed inset-0 cursor-pointer" onClick={() => setFormOpen(false)} />
             
@@ -232,11 +239,11 @@ export default function TestimonialsSlider() {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25 }}
-              className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 sm:p-8 z-10 border border-gray-100 max-h-[85vh] overflow-y-auto my-auto"
+              className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 sm:p-8 z-10 border border-gray-100 max-h-[78vh] overflow-y-auto my-auto"
             >
               <button 
                 onClick={() => setFormOpen(false)} 
-                className="absolute top-5 right-5 text-[#4A4A4A] hover:text-[#3A3A3A] transition-colors p-2 hover:bg-gray-100 rounded-full cursor-pointer z-20"
+                className="absolute top-4 right-4 text-[#4A4A4A] hover:text-[#3A3A3A] transition-colors p-2 hover:bg-gray-100 rounded-full cursor-pointer z-20"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -254,9 +261,8 @@ export default function TestimonialsSlider() {
                 </div>
               ) : (
                 <>
-                  <div className="mb-6">
-                    <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">Share Your Story</span>
-                    <h3 className="text-2xl font-megalky font-bold text-[#2B2C2E] mt-1">Add Your Experience</h3>
+                  <div className="mb-6 pr-6">
+                    <h3 className="text-2xl font-megalky font-bold text-[#2B2C2E]">Add Your Experience</h3>
                     <p className="text-xs text-[#58595B] mt-1">We value your honest feedback and design experience.</p>
                   </div>
 
@@ -298,11 +304,17 @@ export default function TestimonialsSlider() {
                           onChange={(e) => setForm({ ...form, category: e.target.value })}
                           className="w-full border border-[#DCE8CC] rounded-full px-4 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors text-[#2B2C2E] font-sans"
                         >
-                          <option>Interior Design</option>
-                          <option>Landscaping</option>
-                          <option>Modular Kitchen</option>
-                          <option>Garden Design</option>
-                          <option>Commercial Interior</option>
+                          {categories.length > 1 ? (
+                            categories.filter(c => c !== "All").map((c) => (
+                              <option key={c} value={c}>{c}</option>
+                            ))
+                          ) : (
+                            <>
+                              <option>Interior Design</option>
+                              <option>Landscaping</option>
+                              <option>Modular Kitchen</option>
+                            </>
+                          )}
                         </select>
                       </div>
 

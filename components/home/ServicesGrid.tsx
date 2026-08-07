@@ -78,7 +78,7 @@ const cardVariants = {
 };
 
 export default function ServicesGrid() {
-  const [services, setServices] = useState<any[]>(defaultServices);
+  const [services, setServices] = useState<any[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -94,11 +94,11 @@ export default function ServicesGrid() {
     const loadServicesData = async () => {
       try {
         const fetched = await apiService.getServices();
-        if (fetched && fetched.length > 0) {
+        if (fetched && Array.isArray(fetched)) {
           const normalized = fetched.map((s: any) => ({
             ...s,
-            title: s.title || s.name,
-            desc: s.desc || s.description,
+            title: s.title || s.name || "Service",
+            desc: s.desc || s.description || "",
             icon: s.icon || "Sofa",
             slug: s.slug || (s.title || s.name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-"),
             color: s.color || "#7CB342",
@@ -107,14 +107,14 @@ export default function ServicesGrid() {
             showOnHome: s.showOnHome !== false,
           }));
           
-          const homeEnabled = normalized.filter((s: any) => s.showOnHome);
+          const homeEnabled = normalized.filter((s: any) => s.showOnHome !== false);
           setServices(homeEnabled.length > 0 ? homeEnabled : normalized);
         } else {
-          setServices(defaultServices);
+          setServices([]);
         }
       } catch (err) {
         console.error("Failed to load services for grid:", err);
-        setServices(defaultServices);
+        setServices([]);
       }
     };
     loadServicesData();
@@ -143,10 +143,7 @@ export default function ServicesGrid() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-8 sm:mb-10"
         >
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
-            What We Offer
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-5">
+          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mb-5">
             Our Premium Services
           </h2>
           <p className="text-[#58595B] text-base leading-relaxed font-sans">

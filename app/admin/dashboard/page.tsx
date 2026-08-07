@@ -1670,14 +1670,13 @@ export default function AdminDashboardPage() {
 
                       <div>
                         <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                          Description
+                          Description (Optional)
                         </label>
                         <textarea
                           rows={3}
-                          required
                           value={newProject.description}
                           onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
-                          placeholder="Detailed requirements, teakwood carpentry, finishes, color vibe..."
+                          placeholder="Optional project details, carpentry, finishes..."
                           className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                         />
                       </div>

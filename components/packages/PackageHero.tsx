@@ -5,7 +5,7 @@ import { Sparkles, Leaf } from "lucide-react";
 
 export default function PackageHero() {
   return (
-    <section className="bg-gradient-to-b from-[#18191B] via-[#1E2023] to-[#212224] pt-[125px] pb-16 lg:pt-[150px] lg:pb-20 relative overflow-hidden border-b border-[#7CB342]/15">
+    <section className="bg-gradient-to-b from-[#18191B] via-[#1E2023] to-[#212224] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 relative overflow-hidden border-b border-[#7CB342]/25 mb-6">
       {/* Architectural Grid Lines & Ambient Lighting Overlays */}
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#7CB342_1px,transparent_1px),linear-gradient(to_bottom,#7CB342_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[#7CB342]/10 rounded-full blur-[140px] pointer-events-none" />
@@ -13,19 +13,6 @@ export default function PackageHero() {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         
-        {/* Eyebrow Label in Brand Green with Wide Letter Spacing */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#7CB342]/10 border border-[#7CB342]/30 mb-5"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-[#7CB342]" />
-          <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#7CB342] font-sans">
-            PREMIUM INTERIOR SOLUTIONS
-          </span>
-        </motion.div>
-
         {/* Refined Display Serif Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}

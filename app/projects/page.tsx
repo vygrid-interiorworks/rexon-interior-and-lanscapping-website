@@ -13,6 +13,7 @@ type Project = {
   location: string;
   img: string;
   description: string;
+  showContent?: boolean;
   images: string[];
   details: {
     client: string;
@@ -152,9 +153,16 @@ export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
 
+  const [hideAllContent, setHideAllContent] = useState(false);
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
+        const settingsData = await apiService.getSettings();
+        if (settingsData && settingsData.hideAllProjectContent !== undefined) {
+          setHideAllContent(settingsData.hideAllProjectContent);
+        }
+
         const remote = await apiService.getProjects();
         if (remote && remote.length > 0) {
           const normalized: Project[] = remote.map((p: any, idx: number) => ({
@@ -164,6 +172,7 @@ export default function ProjectsPage() {
             location: p.location || "Kerala, India",
             img: p.img || p.image || (Array.isArray(p.images) && p.images[0]) || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
             description: p.description || "",
+            showContent: p.showContent !== false,
             images: Array.isArray(p.images) && p.images.length > 0
               ? p.images
               : [p.img || p.image || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80"],
@@ -201,20 +210,13 @@ export default function ProjectsPage() {
   return (
     <div className="bg-[#F5F5F3] font-sans">
       {/* ── Luxury Hero Banner ── */}
-      <section className="bg-gradient-to-b from-[#18191B] via-[#1E2023] to-[#212224] pt-[125px] pb-14 lg:pt-[150px] lg:pb-16 relative overflow-hidden border-b border-[#7CB342]/15">
+      <section className="bg-gradient-to-b from-[#18191B] via-[#1E2023] to-[#212224] pt-[140px] pb-24 lg:pt-[170px] lg:pb-28 relative overflow-hidden border-b border-[#7CB342]/25 mb-6">
         <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#7CB342_1px,transparent_1px),linear-gradient(to_bottom,#7CB342_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] pointer-events-none" />
         <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[#7CB342]/10 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-[#7CB342]/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#7CB342]/10 border border-[#7CB342]/30 mb-5">
-            <Sparkles className="w-3.5 h-3.5 text-[#7CB342]" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#7CB342] font-sans">
-              OUR PORTFOLIO
-            </span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-megalky font-normal text-white leading-[1.15] tracking-wide mb-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-megalky font-normal text-white leading-[1.15] tracking-wide mb-6">
             Our Featured <span className="italic text-[#DCE8CC] font-light">Projects</span>
           </h1>
 
@@ -327,162 +329,171 @@ export default function ProjectsPage() {
               </button>
 
               {/* Left Side: Image Gallery */}
-              <div className="w-full lg:w-1/2 bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6 min-h-[220px] lg:min-h-0">
-                {/* Main Image View */}
-                <div className="relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl aspect-[16/9] lg:aspect-[4/3] max-h-[240px] lg:max-h-none">
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={activeImgIndex}
-                      src={selectedProject.images[activeImgIndex]}
-                      alt={`${selectedProject.title} ${activeImgIndex + 1}`}
-                      initial={{ opacity: 0, scale: 1.05 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.35 }}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  </AnimatePresence>
+              {(() => {
+                const isContentDisabled = hideAllContent || selectedProject.showContent === false;
+                return (
+                  <>
+                    <div className={`w-full ${isContentDisabled ? 'lg:w-full min-h-[400px] lg:min-h-[550px]' : 'lg:w-1/2 min-h-[220px] lg:min-h-0'} bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6`}>
+                      {/* Main Image View */}
+                      <div className={`relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl ${isContentDisabled ? 'aspect-[16/10] max-h-[75vh]' : 'aspect-[16/9] lg:aspect-[4/3] max-h-[240px] lg:max-h-none'}`}>
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={activeImgIndex}
+                            src={selectedProject.images[activeImgIndex]}
+                            alt={`${selectedProject.title} ${activeImgIndex + 1}`}
+                            initial={{ opacity: 0, scale: 1.05 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.35 }}
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        </AnimatePresence>
 
-                  {/* Navigation Arrows */}
-                  {selectedProject.images.length > 1 && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveImgIndex((prev) =>
-                            prev === 0 ? selectedProject.images.length - 1 : prev - 1
-                          );
-                        }}
-                        className="absolute left-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors backdrop-blur-sm cursor-pointer"
-                        aria-label="Previous image"
-                      >
-                        <ChevronLeft className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveImgIndex((prev) =>
-                            prev === selectedProject.images.length - 1 ? 0 : prev + 1
-                          );
-                        }}
-                        className="absolute right-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors backdrop-blur-sm cursor-pointer"
-                        aria-label="Next image"
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
-                    </>
-                  )}
-                </div>
-
-                {/* Thumbnails list */}
-                {selectedProject.images.length > 1 && (
-                  <div className="flex justify-center gap-2 mt-3 overflow-x-auto pb-1 max-h-[48px] lg:max-h-none">
-                    {selectedProject.images.map((img, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setActiveImgIndex(idx)}
-                        className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
-                          activeImgIndex === idx
-                            ? "border-[#7CB342] scale-105 shadow-md"
-                            : "border-transparent opacity-60 hover:opacity-100"
-                        }`}
-                      >
-                        <img
-                          src={img}
-                          alt={`Thumbnail ${idx + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Right Side: Details Content */}
-              <div className="w-full lg:w-1/2 p-5 sm:p-8 lg:p-10 overflow-y-auto flex flex-col justify-between bg-white max-h-[50vh] lg:max-h-[90vh]">
-                <div>
-                  {/* Category tag */}
-                  <span className="inline-block px-3 py-1 bg-[#DCE8CC] text-[#7CB342] text-[10px] font-semibold uppercase tracking-widest rounded-full mb-3 font-sans">
-                    {selectedProject.category}
-                  </span>
-
-                  <h3 className="text-2xl lg:text-3xl font-megalky font-bold text-[#2B2C2E] mb-1.5 leading-tight">
-                    {selectedProject.title}
-                  </h3>
-
-                  <p className="text-xs text-[#7CB342] font-semibold mb-5 flex items-center font-sans">
-                    <span className="w-1.5 h-1.5 bg-[#7CB342] rounded-full mr-2" />
-                    {selectedProject.location}
-                  </p>
-
-                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
-                    <h4 className="text-[10px] font-semibold text-[#58595B]/70 uppercase tracking-wider mb-1.5 font-sans">Project Overview</h4>
-                    <p className="text-[#58595B] text-xs leading-relaxed font-sans">
-                      {selectedProject.description}
-                    </p>
-                  </div>
-
-                  {/* Spec list */}
-                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
-                    <h4 className="text-[10px] font-semibold text-[#58595B]/70 uppercase tracking-wider mb-3.5 font-sans">Project Specifications</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="flex items-start gap-2.5">
-                        <User className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Client</p>
-                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.client}</p>
-                        </div>
+                        {/* Navigation Arrows */}
+                        {selectedProject.images.length > 1 && (
+                          <>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveImgIndex((prev) =>
+                                  prev === 0 ? selectedProject.images.length - 1 : prev - 1
+                                );
+                              }}
+                              className="absolute left-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors backdrop-blur-sm cursor-pointer"
+                              aria-label="Previous image"
+                            >
+                              <ChevronLeft className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveImgIndex((prev) =>
+                                  prev === selectedProject.images.length - 1 ? 0 : prev + 1
+                                );
+                              }}
+                              className="absolute right-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors backdrop-blur-sm cursor-pointer"
+                              aria-label="Next image"
+                            >
+                              <ChevronRight className="w-5 h-5" />
+                            </button>
+                          </>
+                        )}
                       </div>
-                      <div className="flex items-start gap-2.5">
-                        <Maximize2 className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Area</p>
-                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.area}</p>
+
+                      {/* Thumbnails list */}
+                      {selectedProject.images.length > 1 && (
+                        <div className="flex justify-center gap-2 mt-3 overflow-x-auto pb-1 max-h-[48px] lg:max-h-none">
+                          {selectedProject.images.map((img, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => setActiveImgIndex(idx)}
+                              className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
+                                activeImgIndex === idx
+                                  ? "border-[#7CB342] scale-105 shadow-md"
+                                  : "border-transparent opacity-60 hover:opacity-100"
+                              }`}
+                            >
+                              <img
+                                src={img}
+                                alt={`Thumbnail ${idx + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            </button>
+                          ))}
                         </div>
-                      </div>
-                      <div className="flex items-start gap-2.5">
-                        <Calendar className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Duration</p>
-                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.duration}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2.5">
-                        <Briefcase className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Scope</p>
-                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.scope}</p>
-                        </div>
-                      </div>
+                      )}
                     </div>
-                  </div>
 
-                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
-                    <div className="flex items-start gap-2.5">
-                      <Hammer className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Key Materials</p>
-                        <p className="text-xs text-[#58595B] font-medium leading-relaxed mt-0.5 font-sans">{selectedProject.details.materials}</p>
+                    {/* Right Side: Details Content (Rendered only if text content is enabled) */}
+                    {!isContentDisabled && (
+                      <div className="w-full lg:w-1/2 p-5 sm:p-8 lg:p-10 overflow-y-auto flex flex-col justify-between bg-white max-h-[50vh] lg:max-h-[90vh]">
+                        <div>
+                          {/* Category tag */}
+                          <span className="inline-block px-3 py-1 bg-[#DCE8CC] text-[#7CB342] text-[10px] font-semibold uppercase tracking-widest rounded-full mb-3 font-sans">
+                            {selectedProject.category}
+                          </span>
+
+                          <h3 className="text-2xl lg:text-3xl font-megalky font-bold text-[#2B2C2E] mb-1.5 leading-tight">
+                            {selectedProject.title}
+                          </h3>
+
+                          <p className="text-xs text-[#7CB342] font-semibold mb-5 flex items-center font-sans">
+                            <span className="w-1.5 h-1.5 bg-[#7CB342] rounded-full mr-2" />
+                            {selectedProject.location}
+                          </p>
+
+                          <div className="border-t border-[#DCE8CC] pt-5 mb-5">
+                            <h4 className="text-[10px] font-semibold text-[#58595B]/70 uppercase tracking-wider mb-1.5 font-sans">Project Overview</h4>
+                            <p className="text-[#58595B] text-xs leading-relaxed font-sans">
+                              {selectedProject.description}
+                            </p>
+                          </div>
+
+                          {/* Spec list */}
+                          <div className="border-t border-[#DCE8CC] pt-5 mb-5">
+                            <h4 className="text-[10px] font-semibold text-[#58595B]/70 uppercase tracking-wider mb-3.5 font-sans">Project Specifications</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <div className="flex items-start gap-2.5">
+                                <User className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
+                                <div>
+                                  <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Client</p>
+                                  <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.client}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-2.5">
+                                <Maximize2 className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
+                                <div>
+                                  <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Area</p>
+                                  <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.area}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-2.5">
+                                <Calendar className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
+                                <div>
+                                  <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Duration</p>
+                                  <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.duration}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-2.5">
+                                <Briefcase className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
+                                <div>
+                                  <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Scope</p>
+                                  <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.scope}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="border-t border-[#DCE8CC] pt-5 mb-5">
+                            <div className="flex items-start gap-2.5">
+                              <Hammer className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
+                              <div>
+                                <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Key Materials</p>
+                                <p className="text-xs text-[#58595B] font-medium leading-relaxed mt-0.5 font-sans">{selectedProject.details.materials}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="pt-4 border-t border-[#DCE8CC] flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto w-full">
+                          <Link
+                            href="/get-quote"
+                            className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-xs tracking-wider transition-colors duration-300 shadow-md text-center"
+                          >
+                            Consult on this
+                          </Link>
+                          <button
+                            onClick={() => setSelectedProject(null)}
+                            className="w-full sm:w-auto py-2 text-center text-xs font-semibold text-[#58595B] hover:text-[#2B2C2E] tracking-wider transition-colors cursor-pointer font-sans"
+                          >
+                            Close
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-[#DCE8CC] flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto w-full">
-                  <Link
-                    href="/get-quote"
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-xs tracking-wider transition-colors duration-300 shadow-md text-center"
-                  >
-                    Consult on this
-                  </Link>
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="w-full sm:w-auto py-2 text-center text-xs font-semibold text-[#58595B] hover:text-[#2B2C2E] tracking-wider transition-colors cursor-pointer font-sans"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
+                    )}
+                  </>
+                );
+              })()}
             </motion.div>
           </motion.div>
         )}

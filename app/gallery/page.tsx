@@ -2,15 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ZoomIn, Loader2, Sparkles, Leaf } from "lucide-react";
+import { X, ZoomIn, Loader2, Leaf, ChevronLeft, ChevronRight } from "lucide-react";
 import { apiService } from "@/lib/api";
-
-const categories = ["All", "Interior", "Landscaping", "Kitchen", "Outdoor", "Commercial"];
 
 export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   
   // Firebase Data State
   const [galleryItems, setGalleryItems] = useState<any[]>([]);
@@ -30,22 +27,30 @@ export default function GalleryPage() {
     loadGallery();
   }, []);
 
+  const categories = [
+    "All",
+    ...Array.from(new Set(galleryItems.map((g) => g.category).filter(Boolean))),
+  ];
+
   const filtered = activeCategory === "All" ? galleryItems : galleryItems.filter(g => g.category === activeCategory);
 
-  const openLightbox = (index: number) => {
-    setLightboxIndex(index);
-    setLightbox({ src: filtered[index].image, alt: filtered[index].title });
-  };
   const prev = () => {
-    const newIdx = (lightboxIndex - 1 + filtered.length) % filtered.length;
-    setLightboxIndex(newIdx);
-    setLightbox({ src: filtered[newIdx].image, alt: filtered[newIdx].title });
+    setLightboxIndex((prevIdx) => (prevIdx !== null ? (prevIdx === 0 ? filtered.length - 1 : prevIdx - 1) : 0));
   };
   const next = () => {
-    const newIdx = (lightboxIndex + 1) % filtered.length;
-    setLightboxIndex(newIdx);
-    setLightbox({ src: filtered[newIdx].image, alt: filtered[newIdx].title });
+    setLightboxIndex((prevIdx) => (prevIdx !== null ? (prevIdx + 1) % filtered.length : 0));
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "Escape") setLightboxIndex(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxIndex, filtered.length]);
 
   return (
     <div className="bg-[#F5F5F3] font-sans">
@@ -79,8 +84,18 @@ export default function GalleryPage() {
           {/* Filter */}
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {categories.map(c => (
-              <button key={c} onClick={() => setActiveCategory(c)}
-                className={`px-6 py-2.5 rounded-full text-xs font-medium tracking-wider transition-all duration-300 cursor-pointer ${activeCategory === c ? "bg-[#7CB342] text-white shadow-md" : "bg-white text-[#2B2C2E] border border-[#DCE8CC] hover:border-[#7CB342] hover:text-[#7CB342]"}`}>
+              <button
+                key={c}
+                onClick={() => {
+                  setActiveCategory(c);
+                  setLightboxIndex(null);
+                }}
+                className={`px-6 py-2.5 rounded-full text-xs font-medium tracking-wider transition-all duration-300 cursor-pointer ${
+                  activeCategory === c
+                    ? "bg-[#7CB342] text-white shadow-md"
+                    : "bg-white text-[#2B2C2E] border border-[#DCE8CC] hover:border-[#7CB342] hover:text-[#7CB342]"
+                }`}
+              >
                 {c}
               </button>
             ))}
@@ -97,23 +112,23 @@ export default function GalleryPage() {
               <p>No gallery images found in this category.</p>
             </div>
           ) : (
-            /* Masonry Arch-topped Cards */
+            /* Masonry Cards */
             <motion.div layout className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
               <AnimatePresence>
                 {filtered.map((item, index) => (
                   <motion.div
-                    key={item._id}
+                    key={item.id || item._id || index}
                     layout
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.35 }}
-                    className="break-inside-avoid group relative rounded-t-[80px] rounded-b-[16px] overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 border-2 border-white bg-white"
-                    onClick={() => openLightbox(index)}
+                    className="break-inside-avoid group relative rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 border-2 border-white bg-white"
+                    onClick={() => setLightboxIndex(index)}
                   >
                     <img
-                      src={item.image}
-                      alt={item.title}
+                      src={item.image || item.img}
+                      alt="Gallery Photo"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&q=80&w=800";
                       }}
@@ -134,30 +149,84 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* Lightbox */}
+      {/* Lightbox Overlay with Arrow & Scroll Navigation */}
       <AnimatePresence>
-        {lightbox && (
-          <motion.div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={() => setLightbox(null)}>
-            <motion.div className="relative max-w-4xl w-full flex flex-col items-center" initial={{ scale: 0.85 }} animate={{ scale: 1 }} exit={{ scale: 0.85 }} onClick={e => e.stopPropagation()}>
-              <button onClick={() => setLightbox(null)} className="absolute -top-12 right-0 z-10 w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white cursor-pointer">
-                <X className="w-5 h-5" />
+        {lightboxIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6"
+          >
+            {/* Top Bar */}
+            <div className="flex items-center justify-between z-20">
+              <span className="text-xs font-semibold text-white/80 bg-white/10 px-4 py-1.5 rounded-full border border-white/20">
+                Photo {lightboxIndex + 1} of {filtered.length}
+              </span>
+              <button
+                onClick={() => setLightboxIndex(null)}
+                className="p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors backdrop-blur-sm shadow-md cursor-pointer"
+                aria-label="Close modal"
+              >
+                <X className="w-6 h-6" />
               </button>
-              <img
-                src={lightbox.src}
-                alt={lightbox.alt}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&q=80&w=800";
-                }}
-                className="w-full rounded-3xl shadow-2xl max-h-[80vh] object-contain border-2 border-white/20"
-              />
-              <div className="flex items-center justify-between w-full mt-4 px-2">
-                <button onClick={prev} className="text-white/80 hover:text-white text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer font-sans">← Prev</button>
-                <p className="text-white/80 text-sm font-sans">{lightbox.alt}</p>
-                <button onClick={next} className="text-white/80 hover:text-white text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer font-sans">Next →</button>
-              </div>
-            </motion.div>
+            </div>
+
+            {/* Center Area: Image & Nav Arrows */}
+            <div className="relative flex-1 flex items-center justify-center my-4 overflow-hidden">
+              {/* Prev Arrow */}
+              <button
+                onClick={prev}
+                className="absolute left-2 sm:left-6 z-30 p-3 bg-white/15 hover:bg-[#7CB342] text-white rounded-full transition-all duration-300 backdrop-blur-md border border-white/20 cursor-pointer shadow-lg hover:scale-110"
+                aria-label="Previous photo"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              {/* Main Image */}
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={lightboxIndex}
+                  src={filtered[lightboxIndex].image || filtered[lightboxIndex].img}
+                  alt={`Photo ${lightboxIndex + 1}`}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.3 }}
+                  className="max-h-[70vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl border border-white/10"
+                />
+              </AnimatePresence>
+
+              {/* Next Arrow */}
+              <button
+                onClick={next}
+                className="absolute right-2 sm:right-6 z-30 p-3 bg-white/15 hover:bg-[#7CB342] text-white rounded-full transition-all duration-300 backdrop-blur-md border border-white/20 cursor-pointer shadow-lg hover:scale-110"
+                aria-label="Next photo"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Bottom Scrollable Thumbnails Bar */}
+            <div className="w-full max-w-5xl mx-auto overflow-x-auto pb-2 flex justify-start sm:justify-center gap-2.5 scrollbar-thin scrollbar-thumb-white/20">
+              {filtered.map((item, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setLightboxIndex(idx)}
+                  className={`relative w-14 h-11 sm:w-18 sm:h-14 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
+                    lightboxIndex === idx
+                      ? "border-[#7CB342] scale-105 shadow-lg"
+                      : "border-transparent opacity-50 hover:opacity-100"
+                  }`}
+                >
+                  <img
+                    src={item.image || item.img}
+                    alt={`Thumbnail ${idx + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

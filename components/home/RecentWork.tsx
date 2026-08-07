@@ -199,16 +199,34 @@ export default function RecentWork() {
     ...Array.from(new Set(projectList.map((p) => p.category).filter(Boolean))),
   ];
 
-  const filtered = (
-    activeCategory === "All"
-      ? projectList
-      : projectList.filter((p) => p.category === activeCategory)
-  ).slice(0, 6);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const handleProjectClick = (project: Project) => {
-    setSelectedProject(project);
-    setActiveImgIndex(0);
+  const filtered = activeCategory === "All"
+    ? projectList
+    : projectList.filter((p) => p.category === activeCategory);
+
+  const handleProjectClick = (index: number) => {
+    setLightboxIndex(index);
   };
+
+  const handleNext = () => {
+    setLightboxIndex((prev) => (prev !== null ? (prev + 1) % filtered.length : 0));
+  };
+
+  const handlePrev = () => {
+    setLightboxIndex((prev) => (prev !== null ? (prev === 0 ? filtered.length - 1 : prev - 1) : 0));
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "Escape") setLightboxIndex(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxIndex, filtered.length]);
 
   return (
     <section className="py-14 sm:py-16 bg-[#F5F5F3] font-sans border-t border-[#DCE8CC]" id="projects">
@@ -237,7 +255,10 @@ export default function RecentWork() {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => {
+                setActiveCategory(cat);
+                setLightboxIndex(null);
+              }}
               className={`px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 cursor-pointer ${
                 activeCategory === cat
                   ? "bg-[#7CB342] text-white shadow-md"
@@ -252,15 +273,15 @@ export default function RecentWork() {
         {/* Gallery-style Image Grid Cards */}
         <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
-            {filtered.map((project) => (
+            {filtered.slice(0, 9).map((project, idx) => (
               <motion.div
-                key={project.id}
+                key={project.id || idx}
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
-                onClick={() => handleProjectClick(project)}
+                onClick={() => handleProjectClick(idx)}
                 className="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer bg-white border-2 border-white aspect-[4/3]"
               >
                 <img
@@ -290,210 +311,89 @@ export default function RecentWork() {
             href="/projects"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-sm tracking-wider transition-all duration-300 shadow-md hover:shadow-lg"
           >
-            View All Projects →
+            View All {filtered.length} Photos →
           </Link>
         </motion.div>
       </div>
 
-      {/* Immersive Project Detail Modal */}
+      {/* Lightbox Overlay with Arrow & Scroll Navigation */}
       <AnimatePresence>
-        {selectedProject && (
+        {lightboxIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6"
           >
-            {/* Background click to close */}
-            <div
-              className="absolute inset-0 cursor-zoom-out"
-              onClick={() => setSelectedProject(null)}
-            />
-
-            {/* Modal Container */}
-            <motion.div
-              initial={{ scale: 0.95, y: 30, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.95, y: 30, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 220 }}
-              className="relative bg-white w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col lg:flex-row max-h-[92vh] lg:max-h-[90vh] border border-[#DCE8CC]"
-            >
-              {/* Close Button */}
+            {/* Top Bar */}
+            <div className="flex items-center justify-between z-20">
+              <span className="text-xs font-semibold text-white/80 bg-white/10 px-4 py-1.5 rounded-full border border-white/20">
+                Photo {lightboxIndex + 1} of {filtered.length}
+              </span>
               <button
-                onClick={() => setSelectedProject(null)}
-                className="absolute top-5 right-5 z-20 p-2.5 bg-[#2B2C2E]/70 hover:bg-[#2B2C2E] text-white rounded-full transition-colors backdrop-blur-sm shadow-md cursor-pointer"
+                onClick={() => setLightboxIndex(null)}
+                className="p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors backdrop-blur-sm shadow-md cursor-pointer"
                 aria-label="Close modal"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Center Area: Image & Nav Arrows */}
+            <div className="relative flex-1 flex items-center justify-center my-4 overflow-hidden">
+              {/* Prev Arrow */}
+              <button
+                onClick={handlePrev}
+                className="absolute left-2 sm:left-6 z-30 p-3 bg-white/15 hover:bg-[#7CB342] text-white rounded-full transition-all duration-300 backdrop-blur-md border border-white/20 cursor-pointer shadow-lg hover:scale-110"
+                aria-label="Previous photo"
+              >
+                <ChevronLeft className="w-6 h-6" />
               </button>
 
-              {/* Full Width Image Gallery Lightbox */}
-              {(() => {
-                const isContentDisabled = true;
-                return (
-                  <>
-                    <div className="w-full lg:w-full min-h-[400px] lg:min-h-[550px] bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6">
-                      {/* Main Image View */}
-                      <div className="relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl aspect-[16/10] max-h-[78vh]">
-                        <AnimatePresence mode="wait">
-                          <motion.img
-                            key={activeImgIndex}
-                            src={selectedProject.images[activeImgIndex]}
-                            alt={`${selectedProject.title} ${activeImgIndex + 1}`}
-                            initial={{ opacity: 0, scale: 1.05 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            transition={{ duration: 0.35 }}
-                            className="absolute inset-0 w-full h-full object-cover"
-                          />
-                        </AnimatePresence>
+              {/* Main Image */}
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={lightboxIndex}
+                  src={filtered[lightboxIndex].img}
+                  alt={`Photo ${lightboxIndex + 1}`}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.3 }}
+                  className="max-h-[70vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl border border-white/10"
+                />
+              </AnimatePresence>
 
-                        {/* Navigation Arrows */}
-                        {selectedProject.images.length > 1 && (
-                          <>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveImgIndex((prev) =>
-                                  prev === 0 ? selectedProject.images.length - 1 : prev - 1
-                                );
-                              }}
-                              className="absolute left-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors backdrop-blur-sm cursor-pointer"
-                              aria-label="Previous image"
-                            >
-                              <ChevronLeft className="w-5 h-5" />
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveImgIndex((prev) =>
-                                  prev === selectedProject.images.length - 1 ? 0 : prev + 1
-                                );
-                              }}
-                              className="absolute right-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors backdrop-blur-sm cursor-pointer"
-                              aria-label="Next image"
-                            >
-                              <ChevronRight className="w-5 h-5" />
-                            </button>
-                          </>
-                        )}
-                      </div>
+              {/* Next Arrow */}
+              <button
+                onClick={handleNext}
+                className="absolute right-2 sm:right-6 z-30 p-3 bg-white/15 hover:bg-[#7CB342] text-white rounded-full transition-all duration-300 backdrop-blur-md border border-white/20 cursor-pointer shadow-lg hover:scale-110"
+                aria-label="Next photo"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
 
-                      {/* Thumbnails list */}
-                      {selectedProject.images.length > 1 && (
-                        <div className="flex justify-center gap-2 mt-3 overflow-x-auto pb-1 max-h-[48px] lg:max-h-none">
-                          {selectedProject.images.map((img, idx) => (
-                            <button
-                              key={idx}
-                              onClick={() => setActiveImgIndex(idx)}
-                              className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
-                                activeImgIndex === idx
-                                  ? "border-[#7CB342] scale-105 shadow-md"
-                                  : "border-transparent opacity-60 hover:opacity-100"
-                              }`}
-                            >
-                              <img
-                                src={img}
-                                alt={`Thumbnail ${idx + 1}`}
-                                className="w-full h-full object-cover"
-                              />
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Right Side: Details Content (Rendered only if text content is enabled) */}
-                    {!isContentDisabled && (
-                      <div className="w-full lg:w-1/2 p-5 sm:p-8 lg:p-10 overflow-y-auto flex flex-col justify-between bg-white max-h-[50vh] lg:max-h-[90vh]">
-                <div>
-                  {/* Category tag */}
-                  <span className="inline-block px-3 py-1 bg-[#DCE8CC] text-[#7CB342] text-[10px] font-semibold uppercase tracking-widest rounded-full mb-3 font-sans">
-                    {selectedProject.category}
-                  </span>
-
-                  <h3 className="text-2xl lg:text-3xl font-megalky font-bold text-[#2B2C2E] mb-1.5 leading-tight">
-                    {selectedProject.title}
-                  </h3>
-
-                  <p className="text-xs text-[#7CB342] font-semibold mb-5 flex items-center font-sans">
-                    <span className="w-1.5 h-1.5 bg-[#7CB342] rounded-full mr-2" />
-                    {selectedProject.location}
-                  </p>
-
-                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
-                    <h4 className="text-[10px] font-semibold text-[#58595B]/70 uppercase tracking-wider mb-1.5 font-sans">Project Overview</h4>
-                    <p className="text-[#58595B] text-xs leading-relaxed font-sans">
-                      {selectedProject.description}
-                    </p>
-                  </div>
-
-                  {/* Spec list */}
-                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
-                    <h4 className="text-[10px] font-semibold text-[#58595B]/70 uppercase tracking-wider mb-3.5 font-sans">Project Specifications</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="flex items-start gap-2.5">
-                        <User className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Client</p>
-                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.client}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2.5">
-                        <Maximize2 className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Area</p>
-                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.area}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2.5">
-                        <Calendar className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Duration</p>
-                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.duration}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2.5">
-                        <Briefcase className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
-                        <div>
-                          <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Scope</p>
-                          <p className="text-xs text-[#2B2C2E] font-semibold font-sans">{selectedProject.details.scope}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-[#DCE8CC] pt-5 mb-5">
-                    <div className="flex items-start gap-2.5">
-                      <Hammer className="w-4 h-4 text-[#7CB342] mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-[9px] font-semibold text-[#58595B]/70 uppercase tracking-wider font-sans">Key Materials</p>
-                        <p className="text-xs text-[#58595B] font-medium leading-relaxed mt-0.5 font-sans">{selectedProject.details.materials}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-[#DCE8CC] flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto w-full">
-                  <Link
-                    href="/get-quote"
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-xs tracking-wider transition-colors duration-300 shadow-md text-center"
-                  >
-                    Consult on this
-                  </Link>
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="w-full sm:w-auto py-2 text-center text-xs font-semibold text-[#58595B] hover:text-[#2B2C2E] tracking-wider transition-colors cursor-pointer font-sans"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            )}
-          </>
-        );
-      })()}
-    </motion.div>
+            {/* Bottom Scrollable Thumbnails Bar */}
+            <div className="w-full max-w-5xl mx-auto overflow-x-auto pb-2 flex justify-start sm:justify-center gap-2.5 scrollbar-thin scrollbar-thumb-white/20">
+              {filtered.map((proj, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setLightboxIndex(idx)}
+                  className={`relative w-14 h-11 sm:w-18 sm:h-14 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
+                    lightboxIndex === idx
+                      ? "border-[#7CB342] scale-105 shadow-lg"
+                      : "border-transparent opacity-50 hover:opacity-100"
+                  }`}
+                >
+                  <img
+                    src={proj.img}
+                    alt={`Thumbnail ${idx + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

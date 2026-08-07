@@ -22,7 +22,7 @@ export async function GET() {
 
     const batch = writeBatch(db);
 
-    // 1. Services
+    // 1. Update Services Collection
     const servicesRef = collection(db, "services");
     const servicesSnap = await getDocs(servicesRef);
     const existingServices = servicesSnap.docs.map(d => ({ id: d.id, ...d.data() as any }));
@@ -94,7 +94,7 @@ export async function GET() {
       });
     }
 
-    // 2. Clear old gallery & projects using batch delete
+    // 2. Clear old projects & gallery docs
     const projectsSnap = await getDocs(collection(db, "projects"));
     for (const d of projectsSnap.docs) {
       batch.delete(doc(db, "projects", d.id));
@@ -105,72 +105,50 @@ export async function GET() {
       batch.delete(doc(db, "gallery", d.id));
     }
 
-    // Add Projects via batch
-    const interiorChunkSize = 5;
-    for (let i = 0; i < interiorUrls.length; i += interiorChunkSize) {
-      const chunk = interiorUrls.slice(i, i + interiorChunkSize);
-      const ref = doc(collection(db, "projects"));
-      batch.set(ref, {
-        title: `Luxury Interior Project #${Math.floor(i / interiorChunkSize) + 1}`,
-        category: "Interior",
-        location: "Kochi, Kerala",
-        description: "Bespoke interior design and turnkey craftsmanship tailored for luxury modern living.",
-        image: chunk[0],
-        img: chunk[0],
-        images: chunk,
-        showContent: true,
-        featured: i === 0,
-        details: {
-          client: "Rexon Client",
-          area: "3,500 Sq. Ft.",
-          duration: "4 Months",
-          scope: "Full Interior Design & Execution",
-          materials: "Teakwood, Veneer, Italian Marble, Dimmable LEDs"
-        },
-        createdAt: serverTimestamp(),
-      });
-    }
-
-    const landscapeChunkSize = 5;
-    for (let i = 0; i < landscapeUrls.length; i += landscapeChunkSize) {
-      const chunk = landscapeUrls.slice(i, i + landscapeChunkSize);
-      const ref = doc(collection(db, "projects"));
-      batch.set(ref, {
-        title: `Tropical Landscape Project #${Math.floor(i / landscapeChunkSize) + 1}`,
-        category: "Landscape",
-        location: "Thrissur, Kerala",
-        description: "Custom landscape architecture featuring tropical gardens, stone cascades, and outdoor seating.",
-        image: chunk[0],
-        img: chunk[0],
-        images: chunk,
-        showContent: true,
-        featured: i === 0,
-        details: {
-          client: "Rexon Client",
-          area: "4,200 Sq. Ft. Garden",
-          duration: "3 Months",
-          scope: "Landscape Architecture & Water Cascades",
-          materials: "Natural Laterite Stone, Engineered Decking, Native Flora"
-        },
-        createdAt: serverTimestamp(),
-      });
-    }
-
-    // Add Gallery items via batch
+    // Add each Interior image separately as a Project & Gallery entry
     for (let i = 0; i < interiorUrls.length; i++) {
-      const ref = doc(collection(db, "gallery"));
-      batch.set(ref, {
-        title: `Interior Design Showcase #${i + 1}`,
+      const pRef = doc(collection(db, "projects"));
+      batch.set(pRef, {
+        title: `Interior Photo #${i + 1}`,
+        category: "Interior",
+        location: "Kerala, India",
+        description: "Interior design craftsmanship",
+        image: interiorUrls[i],
+        img: interiorUrls[i],
+        images: [interiorUrls[i]],
+        showContent: false,
+        featured: i < 6,
+        createdAt: serverTimestamp(),
+      });
+
+      const gRef = doc(collection(db, "gallery"));
+      batch.set(gRef, {
+        title: `Interior Photo #${i + 1}`,
         category: "Interior",
         image: interiorUrls[i],
         createdAt: serverTimestamp(),
       });
     }
 
+    // Add each Landscape image separately as a Project & Gallery entry
     for (let i = 0; i < landscapeUrls.length; i++) {
-      const ref = doc(collection(db, "gallery"));
-      batch.set(ref, {
-        title: `Landscape Architecture Showcase #${i + 1}`,
+      const pRef = doc(collection(db, "projects"));
+      batch.set(pRef, {
+        title: `Landscape Photo #${i + 1}`,
+        category: "Landscape",
+        location: "Kerala, India",
+        description: "Landscape architecture craftsmanship",
+        image: landscapeUrls[i],
+        img: landscapeUrls[i],
+        images: [landscapeUrls[i]],
+        showContent: false,
+        featured: i < 6,
+        createdAt: serverTimestamp(),
+      });
+
+      const gRef = doc(collection(db, "gallery"));
+      batch.set(gRef, {
+        title: `Landscape Photo #${i + 1}`,
         category: "Landscape",
         image: landscapeUrls[i],
         createdAt: serverTimestamp(),
@@ -184,7 +162,7 @@ export async function GET() {
       success: true,
       interiorCount: interiorUrls.length,
       landscapeCount: landscapeUrls.length,
-      message: `Successfully seeded ${interiorUrls.length} Interior images and ${landscapeUrls.length} Landscape images into Firestore database in batch!`
+      message: `Successfully seeded each of the ${interiorUrls.length} Interior images and ${landscapeUrls.length} Landscape images separately into Firestore!`
     });
   } catch (error: any) {
     console.error("Failed to seed rexon images:", error);

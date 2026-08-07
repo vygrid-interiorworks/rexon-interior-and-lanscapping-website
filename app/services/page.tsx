@@ -384,6 +384,44 @@ function ServicesPageContent() {
                     </ul>
                   </div>
 
+                  {/* Dynamic Photo Gallery Grid for this Service Filter */}
+                  {Array.isArray(current.images) && current.images.length > 0 && (
+                    <div className="bg-white rounded-3xl border border-[#DCE8CC] p-8 mb-10 shadow-sm">
+                      <div className="flex items-center justify-between mb-6">
+                        <div>
+                          <span className="text-[10px] font-semibold uppercase tracking-widest text-[#7CB342]">
+                            Project Gallery ({current.images.length} Photos)
+                          </span>
+                          <h3 className="text-xl font-megalky font-bold text-[#2B2C2E] mt-0.5">
+                            {current.title} Work Showcase
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[500px] overflow-y-auto pr-2 scrollbar-thin">
+                        {current.images.map((imgUrl: string, idx: number) => (
+                          <div
+                            key={idx}
+                            className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer border border-[#DCE8CC] bg-[#F5F5F3]"
+                            onClick={() => {
+                              // Open lightbox
+                              window.open(imgUrl, "_blank");
+                            }}
+                          >
+                            <img
+                              src={imgUrl}
+                              alt={`${current.title} ${idx + 1}`}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-xs font-medium">
+                              View Full
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link
                       href="/get-quote"

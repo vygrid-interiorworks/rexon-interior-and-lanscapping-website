@@ -249,8 +249,8 @@ export default function RecentWork() {
           ))}
         </div>
 
-        {/* Masonry-style Grid with Arch Cards */}
-        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Gallery-style Image Grid Cards */}
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
             {filtered.map((project) => (
               <motion.div
@@ -261,27 +261,18 @@ export default function RecentWork() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
                 onClick={() => handleProjectClick(project)}
-                className="group relative rounded-t-[100px] rounded-b-[20px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer bg-white border-2 border-white"
+                className="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer bg-white border-2 border-white aspect-[4/3]"
               >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={project.img}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2B2C2E]/90 via-[#2B2C2E]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                  <span className="text-xs font-semibold text-[#7CB342] uppercase tracking-wider mb-1">
-                    {project.category}
-                  </span>
-                  <h3 className="text-lg font-megalky font-bold text-white leading-tight">{project.title}</h3>
-                  <p className="text-xs text-white/80 mt-1 font-sans">{project.location}</p>
-                </div>
-                {/* Default bottom tag */}
-                <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm px-6 py-4 translate-y-0 group-hover:translate-y-full transition-transform duration-300 border-t border-[#DCE8CC]">
-                  <span className="text-[10px] font-semibold text-[#7CB342] uppercase tracking-widest">{project.category}</span>
-                  <h3 className="text-base font-megalky font-bold text-[#2B2C2E] leading-tight mt-0.5">{project.title}</h3>
+                <img
+                  src={project.img}
+                  alt="Portfolio Image"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                {/* Hover overlay zoom effect */}
+                <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-white/30 backdrop-blur-md border border-white/60 flex items-center justify-center text-white">
+                    <Maximize2 className="w-5 h-5" />
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -336,14 +327,14 @@ export default function RecentWork() {
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Left Side: Image Gallery */}
+              {/* Full Width Image Gallery Lightbox */}
               {(() => {
-                const isContentDisabled = hideAllContent || selectedProject.showContent === false;
+                const isContentDisabled = true;
                 return (
                   <>
-                    <div className={`w-full ${isContentDisabled ? 'lg:w-full min-h-[400px] lg:min-h-[550px]' : 'lg:w-1/2 min-h-[220px] lg:min-h-0'} bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6`}>
+                    <div className="w-full lg:w-full min-h-[400px] lg:min-h-[550px] bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6">
                       {/* Main Image View */}
-                      <div className={`relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl ${isContentDisabled ? 'aspect-[16/10] max-h-[75vh]' : 'aspect-[16/9] lg:aspect-[4/3] max-h-[240px] lg:max-h-none'}`}>
+                      <div className="relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl aspect-[16/10] max-h-[78vh]">
                         <AnimatePresence mode="wait">
                           <motion.img
                             key={activeImgIndex}

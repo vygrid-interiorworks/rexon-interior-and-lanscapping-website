@@ -254,8 +254,8 @@ export default function ProjectsPage() {
             ))}
           </div>
 
-          {/* Grid */}
-          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Gallery-style Image Grid Cards */}
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence>
               {filtered.map((project) => (
                 <motion.div
@@ -265,29 +265,19 @@ export default function ProjectsPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4 }}
-                  className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-[#DCE8CC] cursor-pointer"
+                  className="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer bg-white border-2 border-white aspect-[4/3]"
                   onClick={() => handleProjectClick(project)}
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <img
-                      src={project.img}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600"
-                    />
-                    <span className="absolute top-4 left-4 bg-[#7CB342] text-white text-[10px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
-                      {project.category}
-                    </span>
-                  </div>
-                  <div className="p-6">
-                    <span className="text-[10px] font-semibold text-[#7CB342] uppercase tracking-widest block mb-1 font-sans">
-                      {project.location}
-                    </span>
-                    <h3 className="text-xl font-megalky font-bold text-[#2B2C2E] mb-2 group-hover:text-[#7CB342] transition-colors duration-300">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs text-[#58595B] line-clamp-2 leading-relaxed font-sans">
-                      {project.description}
-                    </p>
+                  <img
+                    src={project.img}
+                    alt="Project Image"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600"
+                  />
+                  {/* Hover overlay zoom effect */}
+                  <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-white/30 backdrop-blur-md border border-white/60 flex items-center justify-center text-white">
+                      <Maximize2 className="w-5 h-5" />
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -328,14 +318,14 @@ export default function ProjectsPage() {
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Left Side: Image Gallery */}
+              {/* Full Width Image Gallery Lightbox */}
               {(() => {
-                const isContentDisabled = hideAllContent || selectedProject.showContent === false;
+                const isContentDisabled = true;
                 return (
                   <>
-                    <div className={`w-full ${isContentDisabled ? 'lg:w-full min-h-[400px] lg:min-h-[550px]' : 'lg:w-1/2 min-h-[220px] lg:min-h-0'} bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6`}>
+                    <div className="w-full lg:w-full min-h-[400px] lg:min-h-[550px] bg-[#2B2C2E] relative flex flex-col justify-center p-4 sm:p-6">
                       {/* Main Image View */}
-                      <div className={`relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl ${isContentDisabled ? 'aspect-[16/10] max-h-[75vh]' : 'aspect-[16/9] lg:aspect-[4/3] max-h-[240px] lg:max-h-none'}`}>
+                      <div className="relative flex-grow flex items-center justify-center overflow-hidden rounded-2xl aspect-[16/10] max-h-[78vh]">
                         <AnimatePresence mode="wait">
                           <motion.img
                             key={activeImgIndex}

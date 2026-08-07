@@ -119,17 +119,13 @@ export default function GalleryPage() {
                       }}
                       className={`w-full object-cover group-hover:scale-105 transition-transform duration-600 ${index % 3 === 0 ? "h-72 lg:h-96" : "h-48 lg:h-60"}`}
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/45 transition-all duration-300 flex flex-col items-center justify-center gap-2">
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-all duration-300 flex flex-col items-center justify-center">
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="w-10 h-10 rounded-full bg-white/25 border border-white flex items-center justify-center mb-2 mx-auto">
-                          <ZoomIn className="w-5 h-5 text-white" />
+                        <div className="w-11 h-11 rounded-full bg-white/30 backdrop-blur-md border border-white/60 flex items-center justify-center text-white">
+                          <ZoomIn className="w-5 h-5" />
                         </div>
-                        <p className="text-white text-sm font-megalky font-bold text-center px-3 leading-tight">{item.title}</p>
                       </div>
                     </div>
-                    <span className="absolute bottom-3 left-3 bg-[#7CB342] text-white text-[9px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
-                      {item.category}
-                    </span>
                   </motion.div>
                 ))}
               </AnimatePresence>

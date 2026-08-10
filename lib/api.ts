@@ -510,11 +510,11 @@ export const apiService = {
   getSettings: async () => {
     const snap = await getDoc(doc(db, "settings", "global"));
     const defaultSettings = {
-      phone: "+91 98765 43210",
-      email: "info@rexoninteriors.com",
-      address: "Rexon Tower, Near NH Bypass, Kochi, Kerala - 682024",
+      phone: "8848816939",
+      email: "interiors.rexon@gmail.com",
+      address: "JRVV+JF8 Veiloor, Kerala",
       timings: "9:30 AM - 7:00 PM",
-      whatsapp: "919876543210",
+      whatsapp: "8848816939",
       instagram: "https://www.instagram.com/rexon_interiors",
       facebook: "https://facebook.com",
       youtube: "https://www.youtube.com/@rexon_interiors",

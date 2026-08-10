@@ -20,10 +20,10 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const [settings, setSettings] = useState({
-    phone: "+91 98765 43210",
-    email: "info@rexoninteriors.com",
-    address: "Rexon Tower, Near NH Bypass,\nKochi, Kerala - 682024",
-    whatsapp: "919876543210",
+    phone: "8848816939",
+    email: "interiors.rexon@gmail.com",
+    address: "JRVV+JF8 Veiloor, Kerala",
+    whatsapp: "8848816939",
     instagram: "https://instagram.com",
     facebook: "https://facebook.com",
     youtube: "https://youtube.com",
@@ -37,10 +37,10 @@ export default function Footer() {
         const data = await apiService.getSettings();
         if (data) {
           setSettings({
-            phone: data.phone || "+91 98765 43210",
-            email: data.email || "info@rexoninteriors.com",
-            address: data.address || "Rexon Tower, Near NH Bypass,\nKochi, Kerala - 682024",
-            whatsapp: data.whatsapp || "919876543210",
+            phone: data.phone || "8848816939",
+            email: data.email || "interiors.rexon@gmail.com",
+            address: data.address || "JRVV+JF8 Veiloor, Kerala",
+            whatsapp: data.whatsapp || "8848816939",
             instagram: data.instagram || "https://instagram.com",
             facebook: data.facebook || "https://facebook.com",
             youtube: data.youtube || "https://youtube.com",
@@ -198,22 +198,38 @@ export default function Footer() {
                 Contact Info
               </h3>
               <ul className="space-y-4 text-sm text-[#DCE8CC]/90">
-                <li className="flex items-start">
-                  <MapPin className="w-5 h-5 text-[#7CB342] mr-3 shrink-0 mt-0.5" />
-                  <span className="whitespace-pre-line">
-                    {settings.address}
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <Phone className="w-5 h-5 text-[#7CB342] mr-3 shrink-0" />
-                  <a href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`} className="hover:text-[#7CB342] transition-colors">
-                    {settings.phone}
+                <li>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start group hover:text-[#7CB342] transition-colors cursor-pointer"
+                    title="Open location in Google Maps"
+                  >
+                    <MapPin className="w-5 h-5 text-[#7CB342] mr-3 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                    <span className="whitespace-pre-line group-hover:underline">
+                      {settings.address}
+                    </span>
                   </a>
                 </li>
-                <li className="flex items-center">
-                  <Mail className="w-5 h-5 text-[#7CB342] mr-3 shrink-0" />
-                  <a href={`mailto:${settings.email}`} className="hover:text-[#7CB342] transition-colors">
-                    {settings.email}
+                <li>
+                  <a
+                    href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`}
+                    className="flex items-center group hover:text-[#7CB342] transition-colors cursor-pointer"
+                    title="Call phone number"
+                  >
+                    <Phone className="w-5 h-5 text-[#7CB342] mr-3 shrink-0 group-hover:scale-110 transition-transform" />
+                    <span className="group-hover:underline">{settings.phone}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={`mailto:${settings.email}`}
+                    className="flex items-center group hover:text-[#7CB342] transition-colors cursor-pointer"
+                    title="Send an email"
+                  >
+                    <Mail className="w-5 h-5 text-[#7CB342] mr-3 shrink-0 group-hover:scale-110 transition-transform" />
+                    <span className="group-hover:underline">{settings.email}</span>
                   </a>
                 </li>
               </ul>

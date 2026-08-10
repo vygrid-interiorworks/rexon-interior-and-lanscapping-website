@@ -16,9 +16,9 @@ export default function ContactPage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [settings, setSettings] = useState({
-    phone: "+91 98765 43210",
-    email: "info@rexon.com",
-    address: "Rexon Studio, 100 Feet Road, Indiranagar, Bangalore - 560038",
+    phone: "8848816939",
+    email: "interiors.rexon@gmail.com",
+    address: "JRVV+JF8 Veiloor, Kerala",
   });
 
   const [dbServices, setDbServices] = useState<any[]>([]);

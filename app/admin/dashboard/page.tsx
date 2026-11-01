@@ -199,6 +199,7 @@ export default function AdminDashboardPage() {
     imageFile: null as File | null,
   });
 
+  const [serviceSaving, setServiceSaving] = useState(false);
   const [newService, setNewService] = useState({
     title: "",
     icon: "Sofa",
@@ -206,6 +207,7 @@ export default function AdminDashboardPage() {
     tagline: "",
     featuresText: "",
     img: "",
+    imageFile: null as File | null,
     color: "#7CB342",
     tag: "Interiors",
     showOnHome: true,
@@ -386,13 +388,27 @@ export default function AdminDashboardPage() {
     e.preventDefault();
     if (!newService.title) return;
 
+    setServiceSaving(true);
     try {
+      let imgUrl = newService.img;
+      if (newService.imageFile) {
+        imgUrl = await uploadSingleFile(newService.imageFile);
+      }
+
       const featArr = newService.featuresText
         ? newService.featuresText.split("\n").map((f) => f.trim()).filter(Boolean)
         : undefined;
 
       const payload = {
-        ...newService,
+        title: newService.title,
+        icon: newService.icon,
+        desc: newService.desc,
+        tagline: newService.tagline,
+        color: newService.color,
+        tag: newService.tag,
+        showOnHome: newService.showOnHome,
+        img: imgUrl,
+        image: imgUrl,
         slug: newService.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
         features: featArr && featArr.length > 0 ? featArr : undefined,
       };
@@ -416,12 +432,15 @@ export default function AdminDashboardPage() {
         tagline: "",
         featuresText: "",
         img: "",
+        imageFile: null,
         color: "#7CB342",
         tag: "Interiors",
         showOnHome: true,
       });
     } catch (err) {
       alert("Error saving service!");
+    } finally {
+      setServiceSaving(false);
     }
   };
 
@@ -452,6 +471,7 @@ export default function AdminDashboardPage() {
       tagline: service.tagline || "",
       featuresText: featStr,
       img: service.img || service.image || "",
+      imageFile: null,
       color: service.color || "#7CB342",
       tag: service.tag || "Interiors",
       showOnHome: service.showOnHome !== false,
@@ -1435,6 +1455,42 @@ export default function AdminDashboardPage() {
                         />
                       </div>
 
+                      <div className="pt-1">
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                          OR Upload Service Image File
+                        </label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => setNewService({ ...newService, imageFile: e.target.files?.[0] || null })}
+                          className="w-full text-[10px] text-gray-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[9px] file:font-bold file:uppercase file:tracking-wider file:bg-[#89B036]/10 file:text-[#89B036] file:cursor-pointer"
+                        />
+                        {newService.imageFile && (
+                          <div className="mt-2 flex items-center justify-between bg-[#89B036]/10 border border-[#89B036]/20 rounded-xl px-3 py-1.5 text-[10px] text-[#546622]">
+                            <span className="truncate font-medium">✓ {newService.imageFile.name}</span>
+                            <button
+                              type="button"
+                              onClick={() => setNewService({ ...newService, imageFile: null })}
+                              className="text-red-500 hover:text-red-700 font-bold ml-2 cursor-pointer"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        )}
+                        {(newService.imageFile || newService.img) && (
+                          <div className="mt-2.5 relative rounded-xl overflow-hidden border border-[#EBEAE5] group h-28 w-full bg-gray-100">
+                            <img
+                              src={newService.imageFile ? URL.createObjectURL(newService.imageFile) : newService.img}
+                              alt="Service Preview"
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-bold tracking-wider uppercase">
+                              Active Preview
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
                       <div>
                         <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
                           Service Description
@@ -1488,6 +1544,7 @@ export default function AdminDashboardPage() {
                                 tagline: "",
                                 featuresText: "",
                                 img: "",
+                                imageFile: null,
                                 color: "#7CB342",
                                 tag: "Interiors",
                                 showOnHome: true,
@@ -1500,9 +1557,14 @@ export default function AdminDashboardPage() {
                         )}
                         <button
                           type="submit"
-                          className="flex-2 inline-flex items-center justify-center px-6 py-2.5 bg-[#89B036] hover:bg-[#546622] text-white text-[10px] font-bold uppercase tracking-wider rounded-xl shadow-sm transition-all cursor-pointer"
+                          disabled={serviceSaving}
+                          className="flex-2 inline-flex items-center justify-center px-6 py-2.5 bg-[#89B036] hover:bg-[#546622] disabled:opacity-50 text-white text-[10px] font-bold uppercase tracking-wider rounded-xl shadow-sm transition-all cursor-pointer"
                         >
-                          {editingServiceId ? "Save Changes" : "Create Service"}
+                          {serviceSaving
+                            ? "Saving..."
+                            : editingServiceId
+                            ? "Save Changes"
+                            : "Create Service"}
                         </button>
                       </div>
                     </form>
@@ -1533,6 +1595,15 @@ export default function AdminDashboardPage() {
                             <p className="text-[10px] text-gray-400 mt-1 line-clamp-2 leading-relaxed">
                               {service.desc || service.description}
                             </p>
+                            {(service.img || service.image) && (
+                              <div className="mt-2.5 h-24 w-full rounded-xl overflow-hidden border border-[#EBEAE5] bg-gray-100">
+                                <img
+                                  src={service.img || service.image}
+                                  alt={service.title || "Service"}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            )}
                           </div>
 
                           <div className="mt-4 pt-3 border-t border-[#EBEAE5] flex justify-between items-center">

@@ -72,66 +72,28 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="bg-[#2B2C2E] text-[#DCE8CC] pt-16 pb-8 border-t border-[#7CB342]/20 relative z-10 font-sans">
+      <footer className="bg-white text-[#58595B] pt-16 pb-8 border-t border-gray-200 relative z-10 font-sans">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             {/* Column 1: About */}
             <div className="space-y-6">
-              {/* Logo in light container with 12px minimum padding */}
-              <div className="inline-block bg-[#FFFFFF] rounded-xl p-[14px] shadow-md">
+              <Link href="/" className="inline-block focus:outline-none">
                 <Image
                   src="/rexon-logob.png"
                   alt="Rexon Interiors & Landscaping"
-                  width={150}
-                  height={50}
-                  className="h-10 w-auto object-contain"
+                  width={160}
+                  height={53}
+                  className="h-11 w-auto object-contain"
                 />
-              </div>
-              <p className="text-sm leading-relaxed text-[#DCE8CC]/80">
+              </Link>
+              <p className="text-sm leading-relaxed text-[#58595B]">
                 Rexon Interiors and Landscaping is a premium service provider delivering state-of-the-art interior spaces and beautiful landscape designs across Kerala. Transforming spaces inside and out.
               </p>
-              {/* Social Icons */}
-              <div className="flex items-center space-x-4">
-                <a
-                  href={settings.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#7CB342] flex items-center justify-center text-white hover:text-white transition-all duration-300"
-                  aria-label="Instagram"
-                >
-                  <Camera className="w-5 h-5" />
-                </a>
-                <a
-                  href={settings.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#7CB342] flex items-center justify-center text-white hover:text-white transition-all duration-300"
-                  aria-label="Facebook"
-                >
-                  <Globe className="w-5 h-5" />
-                </a>
-                <a
-                  href={settings.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#7CB342] flex items-center justify-center text-white hover:text-white transition-all duration-300"
-                  aria-label="YouTube"
-                >
-                  <Video className="w-5 h-5" />
-                </a>
-                <button
-                  onClick={handleWhatsAppClick}
-                  className="w-10 h-10 rounded-full bg-[#FFFFFF]/10 hover:bg-[#25D366] flex items-center justify-center text-white hover:text-white transition-all duration-300 focus:outline-none cursor-pointer"
-                  aria-label="WhatsApp"
-                >
-                  <WhatsAppIcon className="w-5 h-5" />
-                </button>
-              </div>
             </div>
 
             {/* Column 2: Quick Links */}
             <div>
-              <h3 className="text-xl font-megalky font-bold text-white mb-6 border-b-2 border-[#7CB342] pb-2 inline-block">
+              <h3 className="text-xl font-megalky font-bold text-[#2B2C2E] mb-6 border-b-2 border-[#7CB342] pb-2 inline-block">
                 Quick Links
               </h3>
               <ul className="space-y-3">
@@ -146,7 +108,7 @@ export default function Footer() {
                   <li key={link.name}>
                     <Link
                       href={link.path}
-                      className="text-sm text-[#DCE8CC]/90 hover:text-[#7CB342] transition-colors flex items-center"
+                      className="text-sm text-[#58595B] hover:text-[#7CB342] transition-colors flex items-center"
                     >
                       <span className="mr-2 text-[#7CB342]">›</span>
                       {link.name}
@@ -158,7 +120,7 @@ export default function Footer() {
 
             {/* Column 3: Dynamic Services from DB */}
             <div>
-              <h3 className="text-xl font-megalky font-bold text-white mb-6 border-b-2 border-[#7CB342] pb-2 inline-block">
+              <h3 className="text-xl font-megalky font-bold text-[#2B2C2E] mb-6 border-b-2 border-[#7CB342] pb-2 inline-block">
                 Our Services
               </h3>
               <ul className="space-y-3">
@@ -170,7 +132,7 @@ export default function Footer() {
                       <li key={service._id || slug}>
                         <Link
                           href={`/services?id=${encodeURIComponent(slug)}`}
-                          className="text-sm text-[#DCE8CC]/90 hover:text-[#7CB342] transition-colors flex items-center"
+                          className="text-sm text-[#58595B] hover:text-[#7CB342] transition-colors flex items-center"
                         >
                           <span className="mr-2 text-[#7CB342]">›</span>
                           {title}
@@ -182,7 +144,7 @@ export default function Footer() {
                   <li>
                     <Link
                       href="/services"
-                      className="text-sm text-[#DCE8CC]/90 hover:text-[#7CB342] transition-colors flex items-center"
+                      className="text-sm text-[#58595B] hover:text-[#7CB342] transition-colors flex items-center"
                     >
                       <span className="mr-2 text-[#7CB342]">›</span>
                       Browse All Services
@@ -194,10 +156,10 @@ export default function Footer() {
 
             {/* Column 4: Contact Info */}
             <div className="space-y-4">
-              <h3 className="text-xl font-megalky font-bold text-white mb-6 border-b-2 border-[#7CB342] pb-2 inline-block">
+              <h3 className="text-xl font-megalky font-bold text-[#2B2C2E] mb-6 border-b-2 border-[#7CB342] pb-2 inline-block">
                 Contact Info
               </h3>
-              <ul className="space-y-4 text-sm text-[#DCE8CC]/90">
+              <ul className="space-y-4 text-sm text-[#58595B]">
                 <li>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`}
@@ -237,7 +199,7 @@ export default function Footer() {
           </div>
 
           {/* Divider */}
-          <div className="border-t border-[#7CB342]/20 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between text-xs text-[#DCE8CC]/60">
+          <div className="border-t border-gray-200 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between text-xs text-[#58595B]/80">
             <p>
               &copy; {currentYear} Rexon Interiors and Landscaping. All Rights
               Reserved.
@@ -245,7 +207,7 @@ export default function Footer() {
             <p className="mt-4 md:mt-0">
               Designed by{" "}
               <a
-                href="https://vygrid.com"
+                href="https://vygrid.in"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#7CB342] hover:underline font-semibold"
@@ -258,7 +220,7 @@ export default function Footer() {
       </footer>
 
       {/* Mobile Sticky CTA bar (visible only on mobile viewports under lg) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#2B2C2E] shadow-[0_-4px_10px_rgba(0,0,0,0.2)] border-t border-[#7CB342]/20 px-4 py-3 flex items-center justify-between">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white shadow-[0_-4px_16px_rgba(0,0,0,0.08)] border-t border-gray-200 px-4 py-3 flex items-center justify-between">
         <a
           href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`}
           className="flex-1 mr-3 flex items-center justify-center py-2.5 px-4 text-sm font-bold border border-[#7CB342] rounded-full text-[#7CB342] hover:bg-[#7CB342]/10 transition-colors focus:outline-none"

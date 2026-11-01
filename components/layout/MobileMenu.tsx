@@ -107,7 +107,7 @@ export default function MobileMenu({
                   Call Us
                 </a>
                 <a
-                  href="https://wa.me/919876543210"
+                  href="https://wa.me/919876543210?text=Hi%20Rexon%20Interior%20and%20Landscape%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20and%20landscaping%20services."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center py-2.5 px-4 text-sm font-semibold rounded-full text-white bg-[#25D366] hover:bg-[#20ba59] transition-all"

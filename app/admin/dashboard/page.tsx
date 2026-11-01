@@ -62,8 +62,6 @@ type PackageRoom = { room: string; items: string };
 const EMPTY_PKG_FORM = {
   name: "",
   tagline: "",
-  originalPrice: "",
-  offerPrice: "",
   image: "",
   imageFile: null as File | null,
   rooms: [
@@ -81,8 +79,6 @@ const DEFAULT_PACKAGES = [
   {
     name: "HARMONY",
     tagline: "Smart interiors for a comfortable 2BHK home",
-    originalPrice: "₹9.50 Lac",
-    offerPrice: "₹6.85 Lac*",
     image: "/images/package-interior-hero.jpg",
     rooms: [
       { room: "Foyer", items: ["Shoe rack unit with cabinets and shutters"] },
@@ -96,8 +92,6 @@ const DEFAULT_PACKAGES = [
   {
     name: "SIGNATURE",
     tagline: "Refined design & full woodwork for a 3BHK",
-    originalPrice: "₹17.20 Lac",
-    offerPrice: "₹12.35 Lac*",
     image: "/images/package-interior-hero.jpg",
     rooms: [
       { room: "Foyer", items: ["Shoe rack unit with cabinets and shutters"] },
@@ -112,8 +106,6 @@ const DEFAULT_PACKAGES = [
   {
     name: "GRANDEUR",
     tagline: "Luxury turnkey interiors for a premium 3BHK",
-    originalPrice: "₹26.50 Lac",
-    offerPrice: "₹18.55 Lac*",
     image: "/images/package-interior-hero.jpg",
     rooms: [
       { room: "Foyer", items: ["Shoe rack & ledges", "Round mirror", "Cement wall texture"] },
@@ -737,8 +729,6 @@ export default function AdminDashboardPage() {
       const payload = {
         name: pkgForm.name.trim().toUpperCase(),
         tagline: pkgForm.tagline.trim(),
-        originalPrice: pkgForm.originalPrice.trim(),
-        offerPrice: pkgForm.offerPrice.trim(),
         image: imgUrl,
         rooms: roomsSerialized,
       };
@@ -772,8 +762,6 @@ export default function AdminDashboardPage() {
     setPkgForm({
       name: pkg.name || "",
       tagline: pkg.tagline || "",
-      originalPrice: pkg.originalPrice || "",
-      offerPrice: pkg.offerPrice || "",
       image: pkg.image || "",
       imageFile: null,
       rooms,
@@ -1885,34 +1873,6 @@ export default function AdminDashboardPage() {
                         />
                       </div>
 
-                      {/* Prices */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                            Original Price
-                          </label>
-                          <input
-                            type="text"
-                            value={pkgForm.originalPrice}
-                            onChange={(e) => setPkgForm({ ...pkgForm, originalPrice: e.target.value })}
-                            placeholder="₹17.20 Lac"
-                            className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none transition-all"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                            Offer Price (with *)
-                          </label>
-                          <input
-                            type="text"
-                            value={pkgForm.offerPrice}
-                            onChange={(e) => setPkgForm({ ...pkgForm, offerPrice: e.target.value })}
-                            placeholder="₹12.35 Lac*"
-                            className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none transition-all"
-                          />
-                        </div>
-                      </div>
-
                       {/* Image URL */}
                       <div>
                         <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
@@ -2116,12 +2076,6 @@ export default function AdminDashboardPage() {
                                   <Trash2 className="w-3.5 h-3.5" />
                                 </button>
                               </div>
-                            </div>
-
-                            {/* Pricing */}
-                            <div className="flex items-center gap-3 mb-3">
-                              <span className="text-xs text-gray-400 line-through">{pkg.originalPrice}</span>
-                              <span className="text-sm font-extrabold text-[#89B036]">{pkg.offerPrice}</span>
                             </div>
 
                             {/* Room pills */}

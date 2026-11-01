@@ -87,12 +87,19 @@ export default function WhyChooseUs() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-8 sm:mb-10"
         >
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-[#7CB342] mb-2">
             Why Rexon
           </span>
-          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-5">
+          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mb-3">
             Why Clients Choose Us
           </h2>
+          <div className="flex items-center justify-center gap-4 my-4">
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+            <div className="w-6 h-6 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/40 flex items-center justify-center text-[#7CB342]">
+              <Leaf className="w-3 h-3" />
+            </div>
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+          </div>
           <p className="text-[#58595B] text-base leading-relaxed font-sans">
             More than a design firm — we&apos;re your trusted partner in building spaces that
             stand the test of time.

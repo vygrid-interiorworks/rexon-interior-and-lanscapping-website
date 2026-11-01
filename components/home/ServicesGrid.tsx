@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sofa, ChefHat, TreePine, Paintbrush, Layers, Flower2,
-  Lightbulb, Hammer, BrickWall, Droplets, ArrowRight
+  Lightbulb, Hammer, BrickWall, Droplets, ArrowRight, Leaf
 } from "lucide-react";
 import { apiService } from "@/lib/api";
 
@@ -143,9 +143,19 @@ export default function ServicesGrid() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-8 sm:mb-10"
         >
-          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mb-5">
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-[#7CB342] mb-2">
+            Our Services
+          </span>
+          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mb-3">
             Our Premium Services
           </h2>
+          <div className="flex items-center justify-center gap-4 my-4">
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+            <div className="w-6 h-6 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/40 flex items-center justify-center text-[#7CB342]">
+              <Leaf className="w-3 h-3" />
+            </div>
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+          </div>
           <p className="text-[#58595B] text-base leading-relaxed font-sans">
             A complete spectrum of interior and exterior solutions — all under one roof,
             delivered with craftsmanship that exceeds expectations.

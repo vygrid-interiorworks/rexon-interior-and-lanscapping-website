@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MessageSquare, Compass, Ruler, Truck, Sparkles } from "lucide-react";
+import { MessageSquare, Compass, Ruler, Truck, Sparkles, Leaf } from "lucide-react";
 
 const steps = [
   {
@@ -48,12 +48,19 @@ export default function ProcessTimeline() {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-8 sm:mb-10"
         >
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#7CB342]">
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-[#7CB342] mb-2">
             How We Work
           </span>
-          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mt-3 mb-5">
+          <h2 className="text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mb-3">
             Our Design Process
           </h2>
+          <div className="flex items-center justify-center gap-4 my-4">
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+            <div className="w-6 h-6 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/40 flex items-center justify-center text-[#7CB342]">
+              <Leaf className="w-3 h-3" />
+            </div>
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+          </div>
           <p className="text-[#58595B] text-base leading-relaxed font-sans">
             A streamlined, transparent journey from first call to final handover —
             built around your comfort and confidence.

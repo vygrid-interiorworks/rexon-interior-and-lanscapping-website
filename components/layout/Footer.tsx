@@ -64,7 +64,7 @@ export default function Footer() {
 
   const handleWhatsAppClick = () => {
     window.open(
-      `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=Hi%20Rexon%20Interiors,%20I%20would%20like%20to%20get%20a%20free%20design%20consultation.`,
+      `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=Hi%20Rexon%20Interior%20and%20Landscape%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20and%20landscaping%20services.`,
       "_blank",
       "noopener,noreferrer"
     );

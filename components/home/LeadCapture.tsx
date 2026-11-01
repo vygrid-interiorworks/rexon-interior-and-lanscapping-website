@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Phone, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Phone, ArrowRight, CheckCircle2, Leaf } from "lucide-react";
 import { apiService } from "@/lib/api";
 
 export default function LeadCapture() {
@@ -102,12 +102,22 @@ export default function LeadCapture() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7 }}
-              className="flex-1 text-center lg:text-left"
+              className="flex-1 text-center"
             >
-              <h2 className="text-3xl lg:text-4xl font-megalky font-normal text-[#2B2C2E] mb-4 leading-tight whitespace-pre-line">
+              <span className="inline-block text-xs font-semibold uppercase tracking-widest text-[#7CB342] mb-2">
+                Get In Touch
+              </span>
+              <h2 className="text-3xl lg:text-4xl font-megalky font-normal text-[#2B2C2E] mb-3 leading-tight whitespace-pre-line">
                 {settings.ctaHeading}
               </h2>
-              <p className="text-[#58595B] text-sm leading-relaxed max-w-md mx-auto lg:mx-0 font-sans">
+              <div className="flex items-center justify-center gap-4 my-4">
+                <div className="w-16 sm:w-20 h-px bg-gradient-to-r from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+                <div className="w-6 h-6 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/40 flex items-center justify-center text-[#7CB342]">
+                  <Leaf className="w-3 h-3" />
+                </div>
+                <div className="w-16 sm:w-20 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+              </div>
+              <p className="text-[#58595B] text-sm leading-relaxed max-w-md mx-auto font-sans">
                 {settings.ctaSubtext}
               </p>
             </motion.div>

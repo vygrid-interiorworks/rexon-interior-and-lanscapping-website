@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sofa, ChefHat, TreePine, Paintbrush, Layers,
-  Flower2, Lightbulb, Hammer, BrickWall, Droplets,
+  Leaf, Flower2, Lightbulb, Hammer, BrickWall, Droplets,
   ArrowRight, CheckCircle2, Sparkles,
 } from "lucide-react";
 import { apiService } from "@/lib/api";
@@ -305,7 +305,7 @@ function ServicesPageContent() {
           <div className="flex items-center justify-center gap-4 my-8">
             <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#7CB342]/60 to-[#7CB342]" />
             <div className="w-6 h-6 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/40 flex items-center justify-center text-[#7CB342]">
-              <Flower2 className="w-3 h-3" />
+              <Leaf className="w-3 h-3" />
             </div>
             <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
           </div>

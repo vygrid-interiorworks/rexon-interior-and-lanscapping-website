@@ -34,16 +34,6 @@ const defaultServices = [
     showOnHome: true,
   },
   {
-    icon: "ChefHat",
-    title: "Modular Kitchen",
-    desc: "Smart, stylish kitchens with premium hardware, quartz countertops, and custom cabinet finishes tailored for modern living.",
-    color: "#2B2C2E",
-    slug: "modular-kitchen",
-    tag: "Interiors",
-    img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80",
-    showOnHome: true,
-  },
-  {
     icon: "TreePine",
     title: "Landscaping & Gardens",
     desc: "Transforming land into living art — outdoor architecture, stone pathways, water features, and lush green retreats.",
@@ -51,16 +41,6 @@ const defaultServices = [
     slug: "landscaping",
     tag: "Outdoors",
     img: "https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=800&q=80",
-    showOnHome: true,
-  },
-  {
-    icon: "Layers",
-    title: "False Ceiling",
-    desc: "Designer gypsum and POP ceiling systems with concealed LED cove lighting and acoustic insulation integration.",
-    color: "#2B2C2E",
-    slug: "false-ceiling",
-    tag: "Interiors",
-    img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
     showOnHome: true,
   },
 ];

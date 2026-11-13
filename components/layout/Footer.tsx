@@ -143,15 +143,26 @@ export default function Footer() {
                     );
                   })
                 ) : (
-                  <li>
-                    <Link
-                      href="/services"
-                      className="text-sm text-[#58595B] hover:text-[#7CB342] transition-colors flex items-center"
-                    >
-                      <span className="mr-2 text-[#7CB342]">›</span>
-                      Browse All Services
-                    </Link>
-                  </li>
+                  <>
+                    <li>
+                      <Link
+                        href="/services?id=interior-design"
+                        className="text-sm text-[#58595B] hover:text-[#7CB342] transition-colors flex items-center"
+                      >
+                        <span className="mr-2 text-[#7CB342]">›</span>
+                        Interior Design
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/services?id=landscaping"
+                        className="text-sm text-[#58595B] hover:text-[#7CB342] transition-colors flex items-center"
+                      >
+                        <span className="mr-2 text-[#7CB342]">›</span>
+                        Landscaping &amp; Gardens
+                      </Link>
+                    </li>
+                  </>
                 )}
               </ul>
             </div>

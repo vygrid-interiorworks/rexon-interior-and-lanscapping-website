@@ -983,7 +983,7 @@ export default function AdminDashboardPage() {
       <div className="flex-1 min-w-0 flex flex-col bg-[#F9F8F5] overflow-y-auto max-h-screen relative">
         
         {/* Styled Admin Top Bar */}
-        <header className="bg-white/80 backdrop-blur-md border-b border-[#EBEAE5] py-4 px-6 sm:px-8 flex justify-between items-center sticky top-0 z-20 shadow-xs">
+        <header className="bg-white/80 backdrop-blur-md border-b border-[#EBEAE5] py-3.5 sm:py-4 px-4 sm:px-8 flex justify-between items-center sticky top-0 z-20 shadow-xs">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -998,7 +998,7 @@ export default function AdminDashboardPage() {
               <Menu className="w-4 h-4" />
             </button>
             
-            <div className="hidden sm:block">
+            <div>
               <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest leading-none">Admin</p>
               <h2 className="text-sm font-extrabold text-[#3A3A3A] mt-1 capitalize leading-none tracking-wide">
                 {activeTab === "overview" ? "Dashboard" : `${activeTab.replace("_", " ")}`}
@@ -1006,7 +1006,7 @@ export default function AdminDashboardPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-3 sm:gap-5">
             {/* Live active connection */}
             <span className="hidden sm:inline-flex items-center gap-1.5 text-[9px] font-bold uppercase bg-green-500/10 text-green-600 px-3 py-1 rounded-full border border-green-500/20">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping" />
@@ -1036,7 +1036,7 @@ export default function AdminDashboardPage() {
         </header>
 
         {/* Dynamic Dashboard Tab Content */}
-        <div className="p-6 sm:p-8 flex-1">
+        <div className="p-3.5 sm:p-6 lg:p-8 flex-1">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-48">
               <div className="w-8 h-8 border-3 border-[#89B036] border-t-transparent rounded-full animate-spin mb-4"></div>
@@ -1053,22 +1053,27 @@ export default function AdminDashboardPage() {
               {activeTab === "overview" && (
                 <>
                   {/* Metric Cards */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     {[
-                      { title: "New Leads", count: stats.enquiries, icon: <Mail className="w-4 h-4 text-[#89B036]" />, color: "#89B036", percentage: 88 },
-                      { title: "Quote Requests", count: stats.quotes, icon: <DollarSign className="w-4 h-4 text-emerald-500" />, color: "#10B981", percentage: 95 },
-                      { title: "Projects", count: stats.projects, icon: <FolderOpen className="w-4 h-4 text-amber-500" />, color: "#F59E0B", percentage: 90 },
-                      { title: "Gallery Photos", count: stats.galleryItems, icon: <Grid className="w-4 h-4 text-teal-500" />, color: "#14B8A6", percentage: 72 },
-                      { title: "Reviews", count: stats.testimonials, icon: <MessageSquare className="w-4 h-4 text-violet-500" />, color: "#8B5CF6", percentage: 100 },
+                      { title: "New Leads", count: stats.enquiries, tab: "enquiries" as Tab, icon: <Mail className="w-4 h-4 text-[#89B036]" />, color: "#89B036", percentage: 88 },
+                      { title: "Quote Requests", count: stats.quotes, tab: "quotes" as Tab, icon: <DollarSign className="w-4 h-4 text-emerald-500" />, color: "#10B981", percentage: 95 },
+                      { title: "Projects", count: stats.projects, tab: "projects" as Tab, icon: <FolderOpen className="w-4 h-4 text-amber-500" />, color: "#F59E0B", percentage: 90 },
+                      { title: "Reviews", count: stats.testimonials, tab: "testimonials" as Tab, icon: <MessageSquare className="w-4 h-4 text-violet-500" />, color: "#8B5CF6", percentage: 100 },
                     ].map((card, idx) => (
-                      <div key={idx} className="bg-white border border-[#EBEAE5] rounded-3xl p-5 relative overflow-hidden flex flex-col justify-between shadow-xs">
+                      <div
+                        key={idx}
+                        onClick={() => setActiveTab(card.tab)}
+                        role="button"
+                        tabIndex={0}
+                        className="bg-white border border-[#EBEAE5] hover:border-[#89B036]/60 rounded-3xl p-5 relative overflow-hidden flex flex-col justify-between shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group active:scale-[0.98]"
+                      >
                         <div className="flex justify-between items-start">
                           <div>
-                            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{card.title}</p>
+                            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-[#89B036] transition-colors">{card.title}</p>
                             <p className="text-2xl font-bold mt-2 text-[#3A3A3A] font-serif">{card.count}</p>
                           </div>
                           <div
-                            className="w-8 h-8 rounded-lg flex items-center justify-center border"
+                            className="w-8 h-8 rounded-lg flex items-center justify-center border group-hover:scale-110 transition-transform duration-300"
                             style={{ backgroundColor: `${card.color}10`, borderColor: `${card.color}25` }}
                           >
                             {card.icon}
@@ -1078,7 +1083,9 @@ export default function AdminDashboardPage() {
                         {/* Interactive mini progress metric */}
                         <div className="mt-4 space-y-1">
                           <div className="flex justify-between text-[8px] font-bold text-gray-400 uppercase tracking-wider">
-                            <span>Progress</span>
+                            <span className="flex items-center gap-1 group-hover:text-[#89B036] transition-colors">
+                              Open {card.title} &rarr;
+                            </span>
                             <span style={{ color: card.color }}>{card.percentage}%</span>
                           </div>
                           <div className="w-full bg-gray-100 h-1 rounded-full overflow-hidden">
@@ -1096,66 +1103,94 @@ export default function AdminDashboardPage() {
                   </div>
 
                   {/* System audit log split */}
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
                     
                     {/* Dynamic Status Activity Logs */}
-                    <div className="bg-white border border-[#EBEAE5] rounded-3xl p-6 lg:col-span-2 shadow-xs">
+                    <div className="bg-white border border-[#EBEAE5] rounded-3xl p-5 sm:p-6 lg:col-span-2 shadow-xs">
                       <h4 className="text-xs font-bold text-[#3A3A3A] mb-5 flex items-center gap-2 uppercase tracking-wider text-gray-400">
                         <Sparkles className="w-4 h-4 text-[#89B036]" />
                         Website Status
                       </h4>
                       <div className="space-y-4 text-xs">
-                        <div className="p-4 bg-gray-50/50 border border-[#EBEAE5] rounded-2xl flex items-center justify-between">
+                        <div
+                          onClick={() => setActiveTab("hero")}
+                          role="button"
+                          tabIndex={0}
+                          className="p-4 bg-gray-50/50 hover:bg-[#89B036]/5 border border-[#EBEAE5] hover:border-[#89B036]/40 rounded-2xl flex items-center justify-between cursor-pointer transition-all duration-200 group active:scale-[0.99]"
+                        >
                           <div>
-                            <p className="font-bold text-[#3A3A3A]">Home Banner</p>
+                            <p className="font-bold text-[#3A3A3A] group-hover:text-[#89B036] transition-colors">Home Banner</p>
                             <p className="text-gray-400 text-[10px] mt-0.5">Slides shown at the top of the homepage</p>
                           </div>
-                          <span className="text-[10px] font-bold text-[#89B036] bg-[#89B036]/10 px-3 py-1 rounded-lg border border-[#89B036]/15">
-                            {settings.heroSlides?.length || 0} Slides Configured
+                          <span className="text-[10px] font-bold text-[#89B036] bg-[#89B036]/10 px-3 py-1 rounded-lg border border-[#89B036]/15 group-hover:bg-[#89B036] group-hover:text-white transition-all flex items-center gap-1">
+                            {settings.heroSlides?.length || 0} Slides &rarr;
                           </span>
                         </div>
-                        <div className="p-4 bg-gray-50/50 border border-[#EBEAE5] rounded-2xl flex items-center justify-between">
+                        <div
+                          onClick={() => setActiveTab("services")}
+                          role="button"
+                          tabIndex={0}
+                          className="p-4 bg-gray-50/50 hover:bg-amber-50/60 border border-[#EBEAE5] hover:border-amber-300 rounded-2xl flex items-center justify-between cursor-pointer transition-all duration-200 group active:scale-[0.99]"
+                        >
                           <div>
-                            <p className="font-bold text-[#3A3A3A]">Featured Services</p>
+                            <p className="font-bold text-[#3A3A3A] group-hover:text-amber-600 transition-colors">Featured Services</p>
                             <p className="text-gray-400 text-[10px] mt-0.5">Services shown on the homepage</p>
                           </div>
-                          <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-lg border border-amber-100">
-                            {services.filter(s => s.showOnHome).length} Featured on Home
+                          <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-lg border border-amber-100 group-hover:bg-amber-500 group-hover:text-white transition-all flex items-center gap-1">
+                            {services.filter(s => s.showOnHome).length} Featured &rarr;
                           </span>
                         </div>
-                        <div className="p-4 bg-gray-50/50 border border-[#EBEAE5] rounded-2xl flex items-center justify-between">
+                        <div
+                          onClick={() => setActiveTab("contact_details")}
+                          role="button"
+                          tabIndex={0}
+                          className="p-4 bg-gray-50/50 hover:bg-emerald-50/60 border border-[#EBEAE5] hover:border-emerald-300 rounded-2xl flex items-center justify-between cursor-pointer transition-all duration-200 group active:scale-[0.99]"
+                        >
                           <div>
-                            <p className="font-bold text-[#3A3A3A]">Contact & Location</p>
+                            <p className="font-bold text-[#3A3A3A] group-hover:text-emerald-600 transition-colors">Contact & Location</p>
                             <p className="text-gray-400 text-[10px] mt-0.5">Address and map link shown on the contact page</p>
                           </div>
-                          <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100">
-                            Maps Live Integrated
+                          <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 group-hover:bg-emerald-600 group-hover:text-white transition-all flex items-center gap-1">
+                            Maps Live &rarr;
                           </span>
                         </div>
                       </div>
                     </div>
 
                     {/* Quick site counter configuration stats review */}
-                    <div className="bg-white border border-[#EBEAE5] rounded-3xl p-6 lg:col-span-1 shadow-xs">
-                      <h4 className="text-xs font-bold text-[#3A3A3A] mb-5 uppercase tracking-wider text-gray-400">
-                        Site Stats
-                      </h4>
-                      <div className="space-y-4">
-                        {[
-                          { label: "Interiors designed", value: settings.interiorsDesigned, suffix: "+" },
-                          { label: "Satisfaction rate", value: settings.clientSatisfaction, suffix: "%" },
-                          { label: "Properties & garden", value: settings.propertiesLandscapes, suffix: "+" },
-                          { label: "Years of experience", value: settings.yearsExperience, suffix: " Yrs" },
-                        ].map((stat, i) => (
-                          <div key={i} className="flex justify-between items-center text-xs pb-3 border-b border-[#EBEAE5]/70 last:border-b-0 last:pb-0">
-                            <span className="font-semibold text-gray-500">{stat.label}</span>
-                            <span className="font-bold text-[#89B036] font-serif text-sm">
-                              {stat.value}
-                              {stat.suffix}
-                            </span>
-                          </div>
-                        ))}
+                    <div
+                      onClick={() => setActiveTab("stats")}
+                      role="button"
+                      tabIndex={0}
+                      className="bg-white border border-[#EBEAE5] hover:border-[#89B036]/50 rounded-3xl p-5 sm:p-6 lg:col-span-1 shadow-xs hover:shadow-md cursor-pointer transition-all duration-200 group flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex justify-between items-center mb-5">
+                          <h4 className="text-xs font-bold text-[#3A3A3A] group-hover:text-[#89B036] uppercase tracking-wider text-gray-400 transition-colors">
+                            Site Stats
+                          </h4>
+                          <span className="text-[9px] font-bold text-[#89B036] group-hover:underline">Edit &rarr;</span>
+                        </div>
+                        <div className="space-y-4">
+                          {[
+                            { label: "Interiors designed", value: settings.interiorsDesigned, suffix: "+" },
+                            { label: "Satisfaction rate", value: settings.clientSatisfaction, suffix: "%" },
+                            { label: "Properties & garden", value: settings.propertiesLandscapes, suffix: "+" },
+                            { label: "Years of experience", value: settings.yearsExperience, suffix: " Yrs" },
+                          ].map((stat, i) => (
+                            <div key={i} className="flex justify-between items-center text-xs pb-3 border-b border-[#EBEAE5]/70 last:border-b-0 last:pb-0">
+                              <span className="font-semibold text-gray-500">{stat.label}</span>
+                              <span className="font-bold text-[#89B036] font-serif text-sm">
+                                {stat.value}
+                                {stat.suffix}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
+                      <p className="text-[9px] text-[#89B036] font-bold mt-4 pt-3 border-t border-[#EBEAE5]/60 text-right">
+                        Click to customize numbers &rarr;
+                      </p>
                     </div>
                   </div>
 

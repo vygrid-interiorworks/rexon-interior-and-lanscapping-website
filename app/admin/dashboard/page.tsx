@@ -64,13 +64,11 @@ const EMPTY_PKG_FORM = {
   tagline: "",
   image: "",
   imageFile: null as File | null,
+  serviceType: "Interior" as "Interior" | "Landscaping",
   rooms: [
-    { room: "Foyer", items: "" },
-    { room: "Living Room", items: "" },
-    { room: "Dining Room", items: "" },
-    { room: "Master Bedroom", items: "" },
-    { room: "Guest Bedroom", items: "" },
-    { room: "Modular Kitchen", items: "" },
+    { room: "", items: "" },
+    { room: "", items: "" },
+    { room: "", items: "" },
   ] as PackageRoom[],
 };
 
@@ -730,6 +728,7 @@ export default function AdminDashboardPage() {
         name: pkgForm.name.trim().toUpperCase(),
         tagline: pkgForm.tagline.trim(),
         image: imgUrl,
+        serviceType: pkgForm.serviceType,
         rooms: roomsSerialized,
       };
       if (editingPkgId) {
@@ -764,6 +763,7 @@ export default function AdminDashboardPage() {
       tagline: pkg.tagline || "",
       image: pkg.image || "",
       imageFile: null,
+      serviceType: pkg.serviceType || "Interior",
       rooms,
     });
   };
@@ -999,9 +999,9 @@ export default function AdminDashboardPage() {
             </button>
             
             <div className="hidden sm:block">
-              <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest leading-none">Console</p>
+              <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest leading-none">Admin</p>
               <h2 className="text-sm font-extrabold text-[#3A3A3A] mt-1 capitalize leading-none tracking-wide">
-                {activeTab === "overview" ? "Analytics Dashboard" : `${activeTab.replace("_", " ")} management`}
+                {activeTab === "overview" ? "Dashboard" : `${activeTab.replace("_", " ")}`}
               </h2>
             </div>
           </div>
@@ -1055,11 +1055,11 @@ export default function AdminDashboardPage() {
                   {/* Metric Cards */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                     {[
-                      { title: "Direct Enquiries", count: stats.enquiries, icon: <Mail className="w-4 h-4 text-[#89B036]" />, color: "#89B036", percentage: 88 },
-                      { title: "Quote Wizard Leads", count: stats.quotes, icon: <DollarSign className="w-4 h-4 text-emerald-500" />, color: "#10B981", percentage: 95 },
-                      { title: "Portfolio Projects", count: stats.projects, icon: <FolderOpen className="w-4 h-4 text-amber-500" />, color: "#F59E0B", percentage: 90 },
-                      { title: "Gallery Masonry", count: stats.galleryItems, icon: <Grid className="w-4 h-4 text-teal-500" />, color: "#14B8A6", percentage: 72 },
-                      { title: "Reviews & Ratings", count: stats.testimonials, icon: <MessageSquare className="w-4 h-4 text-violet-500" />, color: "#8B5CF6", percentage: 100 },
+                      { title: "New Leads", count: stats.enquiries, icon: <Mail className="w-4 h-4 text-[#89B036]" />, color: "#89B036", percentage: 88 },
+                      { title: "Quote Requests", count: stats.quotes, icon: <DollarSign className="w-4 h-4 text-emerald-500" />, color: "#10B981", percentage: 95 },
+                      { title: "Projects", count: stats.projects, icon: <FolderOpen className="w-4 h-4 text-amber-500" />, color: "#F59E0B", percentage: 90 },
+                      { title: "Gallery Photos", count: stats.galleryItems, icon: <Grid className="w-4 h-4 text-teal-500" />, color: "#14B8A6", percentage: 72 },
+                      { title: "Reviews", count: stats.testimonials, icon: <MessageSquare className="w-4 h-4 text-violet-500" />, color: "#8B5CF6", percentage: 100 },
                     ].map((card, idx) => (
                       <div key={idx} className="bg-white border border-[#EBEAE5] rounded-3xl p-5 relative overflow-hidden flex flex-col justify-between shadow-xs">
                         <div className="flex justify-between items-start">
@@ -1078,7 +1078,7 @@ export default function AdminDashboardPage() {
                         {/* Interactive mini progress metric */}
                         <div className="mt-4 space-y-1">
                           <div className="flex justify-between text-[8px] font-bold text-gray-400 uppercase tracking-wider">
-                            <span>Vibe Target</span>
+                            <span>Progress</span>
                             <span style={{ color: card.color }}>{card.percentage}%</span>
                           </div>
                           <div className="w-full bg-gray-100 h-1 rounded-full overflow-hidden">
@@ -1102,13 +1102,13 @@ export default function AdminDashboardPage() {
                     <div className="bg-white border border-[#EBEAE5] rounded-3xl p-6 lg:col-span-2 shadow-xs">
                       <h4 className="text-xs font-bold text-[#3A3A3A] mb-5 flex items-center gap-2 uppercase tracking-wider text-gray-400">
                         <Sparkles className="w-4 h-4 text-[#89B036]" />
-                        Dynamic Website Quick Status
+                        Website Status
                       </h4>
                       <div className="space-y-4 text-xs">
                         <div className="p-4 bg-gray-50/50 border border-[#EBEAE5] rounded-2xl flex items-center justify-between">
                           <div>
-                            <p className="font-bold text-[#3A3A3A]">Hero Banner Slideshow</p>
-                            <p className="text-gray-400 text-[10px] mt-0.5">Custom banner slider currently active on landing pages</p>
+                            <p className="font-bold text-[#3A3A3A]">Home Banner</p>
+                            <p className="text-gray-400 text-[10px] mt-0.5">Slides shown at the top of the homepage</p>
                           </div>
                           <span className="text-[10px] font-bold text-[#89B036] bg-[#89B036]/10 px-3 py-1 rounded-lg border border-[#89B036]/15">
                             {settings.heroSlides?.length || 0} Slides Configured
@@ -1116,8 +1116,8 @@ export default function AdminDashboardPage() {
                         </div>
                         <div className="p-4 bg-gray-50/50 border border-[#EBEAE5] rounded-2xl flex items-center justify-between">
                           <div>
-                            <p className="font-bold text-[#3A3A3A]">Services Premium Matrix</p>
-                            <p className="text-gray-400 text-[10px] mt-0.5">Toggle services to showcase directly on Our Services grid</p>
+                            <p className="font-bold text-[#3A3A3A]">Featured Services</p>
+                            <p className="text-gray-400 text-[10px] mt-0.5">Services shown on the homepage</p>
                           </div>
                           <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-lg border border-amber-100">
                             {services.filter(s => s.showOnHome).length} Featured on Home
@@ -1125,8 +1125,8 @@ export default function AdminDashboardPage() {
                         </div>
                         <div className="p-4 bg-gray-50/50 border border-[#EBEAE5] rounded-2xl flex items-center justify-between">
                           <div>
-                            <p className="font-bold text-[#3A3A3A]">Contact details alignment</p>
-                            <p className="text-gray-400 text-[10px] mt-0.5">Showroom address and maps link updates live</p>
+                            <p className="font-bold text-[#3A3A3A]">Contact & Location</p>
+                            <p className="text-gray-400 text-[10px] mt-0.5">Address and map link shown on the contact page</p>
                           </div>
                           <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100">
                             Maps Live Integrated
@@ -1138,7 +1138,7 @@ export default function AdminDashboardPage() {
                     {/* Quick site counter configuration stats review */}
                     <div className="bg-white border border-[#EBEAE5] rounded-3xl p-6 lg:col-span-1 shadow-xs">
                       <h4 className="text-xs font-bold text-[#3A3A3A] mb-5 uppercase tracking-wider text-gray-400">
-                        Counter Numbers Review
+                        Site Stats
                       </h4>
                       <div className="space-y-4">
                         {[
@@ -1163,8 +1163,8 @@ export default function AdminDashboardPage() {
                   <div className="bg-white border border-[#EBEAE5] rounded-3xl p-6 shadow-xs">
                     <div className="flex justify-between items-center mb-6">
                       <div>
-                        <h3 className="text-xs font-bold text-[#3A3A3A] uppercase tracking-wider text-gray-400">Latest Free Quote submissions</h3>
-                        <p className="text-[10px] text-gray-400 mt-0.5">Interactive quote entries awaiting follow-up call</p>
+                        <h3 className="text-xs font-bold text-[#3A3A3A] uppercase tracking-wider text-gray-400">Recent Quote Requests</h3>
+                        <p className="text-[10px] text-gray-400 mt-0.5">Quotes waiting for a follow-up call</p>
                       </div>
                       <button
                         onClick={() => setActiveTab("quotes")}
@@ -1844,6 +1844,33 @@ export default function AdminDashboardPage() {
                     </h3>
 
                     <form onSubmit={handleSavePackage} className="space-y-4">
+                      {/* Service Type Toggle */}
+                      <div>
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">
+                          Service Type <span className="text-red-400">*</span>
+                        </label>
+                        <div className="flex gap-2">
+                          {(["Interior", "Landscaping"] as const).map((type) => (
+                            <button
+                              key={type}
+                              type="button"
+                              onClick={() => setPkgForm({
+                                ...pkgForm,
+                                serviceType: type,
+                                rooms: [{ room: "", items: "" }, { room: "", items: "" }, { room: "", items: "" }],
+                              })}
+                              className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider rounded-xl border-2 transition-all cursor-pointer ${
+                                pkgForm.serviceType === type
+                                  ? "bg-[#89B036] border-[#89B036] text-white"
+                                  : "bg-white border-gray-200 text-gray-400 hover:border-[#89B036]/50"
+                              }`}
+                            >
+                              {type === "Interior" ? "🛋️ Interior" : "🌿 Landscaping"}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
                       {/* Package Name */}
                       <div>
                         <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
@@ -1868,7 +1895,7 @@ export default function AdminDashboardPage() {
                           type="text"
                           value={pkgForm.tagline}
                           onChange={(e) => setPkgForm({ ...pkgForm, tagline: e.target.value })}
-                          placeholder="e.g. Smart interiors for a 2BHK home"
+                          placeholder={pkgForm.serviceType === "Interior" ? "e.g. Smart interiors for a 2BHK home" : "e.g. Full garden makeover for a 2000 sqft plot"}
                           className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none transition-all"
                         />
                       </div>
@@ -1909,7 +1936,7 @@ export default function AdminDashboardPage() {
                       {/* Divider */}
                       <div className="pt-2 pb-1">
                         <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">
-                          Room-by-Room Inclusions
+                          {pkgForm.serviceType === "Interior" ? "Room-by-Room Inclusions" : "Area / Zone Inclusions"}
                         </p>
                         <p className="text-[9px] text-gray-400 mt-0.5">Enter one item per line in the Items field</p>
                       </div>
@@ -1928,13 +1955,13 @@ export default function AdminDashboardPage() {
                             </button>
                             <div className="mb-2">
                               <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                                Room Name
+                                {pkgForm.serviceType === "Interior" ? "Room Name" : "Area / Zone Name"}
                               </label>
                               <input
                                 type="text"
                                 value={room.room}
                                 onChange={(e) => updatePkgRoom(idx, "room", e.target.value)}
-                                placeholder="e.g. Master Bedroom"
+                                placeholder={pkgForm.serviceType === "Interior" ? "e.g. Master Bedroom" : "e.g. Front Lawn"}
                                 className="w-full border-0 border-b border-gray-200 focus:border-[#89B036] bg-white px-2 py-1.5 text-xs text-[#3A3A3A] outline-none rounded"
                               />
                             </div>
@@ -1946,7 +1973,9 @@ export default function AdminDashboardPage() {
                                 rows={3}
                                 value={room.items}
                                 onChange={(e) => updatePkgRoom(idx, "items", e.target.value)}
-                                placeholder={"3-door soft-close wardrobe\nQueen size bed with headboard\n2 bedside tables"}
+                                placeholder={pkgForm.serviceType === "Interior"
+                                  ? "3-door soft-close wardrobe\nQueen size bed with headboard\n2 bedside tables"
+                                  : "Grass lawn turfing\nPathway lighting\nSeasonal flower beds"}
                                 className="w-full border border-gray-200 focus:border-[#89B036] bg-white px-2 py-1.5 text-xs text-[#3A3A3A] outline-none rounded-xl resize-none"
                               />
                             </div>
@@ -1961,7 +1990,7 @@ export default function AdminDashboardPage() {
                         className="w-full flex items-center justify-center gap-2 py-2 border-2 border-dashed border-[#89B036]/40 hover:border-[#89B036] text-[#89B036] text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer hover:bg-[#89B036]/5"
                       >
                         <Plus className="w-3.5 h-3.5" />
-                        Add Room Section
+                        {pkgForm.serviceType === "Interior" ? "Add Room Section" : "Add Area / Zone"}
                       </button>
 
                       {/* Action Buttons */}
@@ -1999,20 +2028,7 @@ export default function AdminDashboardPage() {
                         </h3>
                         <p className="text-[9px] text-gray-400 mt-0.5 italic">Changes reflect live on the website</p>
                       </div>
-                      {/* Seed defaults button — always visible */}
-                      <button
-                        onClick={handleSeedDefaultPackages}
-                        disabled={pkgSaving}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-[#2E3A1E] hover:bg-[#546622] text-white text-[9px] font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer disabled:opacity-60 shadow-sm"
-                        title="Load the 3 website packages (HARMONY, SIGNATURE, GRANDEUR) into the database"
-                      >
-                        {pkgSaving ? (
-                          <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        ) : (
-                          <Upload className="w-3 h-3" />
-                        )}
-                        Load Default Packages
-                      </button>
+
                     </div>
 
                     {packages.length === 0 && (
@@ -2020,20 +2036,8 @@ export default function AdminDashboardPage() {
                         <DollarSign className="w-8 h-8 text-gray-300 mx-auto mb-3" />
                         <p className="text-xs font-bold text-gray-400 mb-1">No packages yet</p>
                         <p className="text-[10px] text-gray-400 mb-5 leading-relaxed max-w-xs mx-auto">
-                          Add packages manually using the form, or click below to instantly load the 3 default packages shown on the website.
+                          Add packages manually using the form above.
                         </p>
-                        <button
-                          onClick={handleSeedDefaultPackages}
-                          disabled={pkgSaving}
-                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#89B036] hover:bg-[#546622] text-white text-[10px] font-bold uppercase tracking-wider rounded-xl shadow-sm transition-all cursor-pointer disabled:opacity-60"
-                        >
-                          {pkgSaving ? (
-                            <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          ) : (
-                            <Upload className="w-3.5 h-3.5" />
-                          )}
-                          Load HARMONY · SIGNATURE · GRANDEUR
-                        </button>
                       </div>
                     )}
 
@@ -2059,6 +2063,15 @@ export default function AdminDashboardPage() {
                               <div>
                                 <h4 className="text-sm font-bold text-[#2E3A1E]">{pkg.name}</h4>
                                 <p className="text-[10px] text-gray-500 mt-0.5 leading-snug">{pkg.tagline}</p>
+                                {pkg.serviceType && (
+                                  <span className={`inline-block mt-1 text-[8px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                                    pkg.serviceType === "Landscaping"
+                                      ? "bg-emerald-50 text-emerald-600 border-emerald-200"
+                                      : "bg-blue-50 text-blue-600 border-blue-200"
+                                  }`}>
+                                    {pkg.serviceType === "Landscaping" ? "🌿 Landscaping" : "🛋️ Interior"}
+                                  </span>
+                                )}
                               </div>
                               <div className="flex items-center gap-2 flex-shrink-0">
                                 <button

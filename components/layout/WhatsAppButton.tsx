@@ -9,7 +9,7 @@ import { apiService } from "@/lib/api";
 export default function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [settings, setSettings] = useState({
-    whatsapp: "919876543210",
+    whatsapp: "918848816939",
     instagram: "https://www.instagram.com/rexon_interiors",
     youtube: "https://www.youtube.com/@rexon_interiors",
   });
@@ -20,7 +20,7 @@ export default function WhatsAppButton() {
         const data = await apiService.getSettings();
         if (data) {
           setSettings({
-            whatsapp: data.whatsapp || "919876543210",
+            whatsapp: data.whatsapp || data.phone || "918848816939",
             instagram: data.instagram || "https://www.instagram.com/rexon_interiors",
             youtube: data.youtube || "https://www.youtube.com/@rexon_interiors",
           });
@@ -32,7 +32,9 @@ export default function WhatsAppButton() {
     fetchSocialSettings();
   }, []);
 
-  const whatsappUrl = `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=Hi%20Rexon%20Interior%20and%20Landscape%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20and%20landscaping%20services.`;
+  const rawWa = (settings.whatsapp || "918848816939").replace(/[^0-9]/g, '');
+  const cleanWa = rawWa.length === 10 ? `91${rawWa}` : rawWa;
+  const whatsappUrl = `https://wa.me/${cleanWa}?text=Hi%20Rexon%20Interior%20and%20Landscape%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20and%20landscaping%20services.`;
   const instagramUrl = settings.instagram;
   const youtubeUrl = settings.youtube;
 

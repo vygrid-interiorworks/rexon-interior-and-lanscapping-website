@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
@@ -46,6 +46,21 @@ export default function GetQuotePage() {
 
   // Loading & Submission
   const [submitting, setSubmitting] = useState(false);
+  const [whatsappNumber, setWhatsappNumber] = useState("918848816939");
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const data = await apiService.getSettings();
+        const target = data?.whatsapp || data?.phone || "8848816939";
+        const digits = target.replace(/[^0-9]/g, "");
+        setWhatsappNumber(digits.length === 10 ? `91${digits}` : digits);
+      } catch (err) {
+        console.error("Failed to load WhatsApp settings in Quote Wizard:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   const getProgressPercentage = () => {
     switch (currentStep) {
@@ -122,7 +137,9 @@ Preferred Style: ${projectType === "Landscaping" ? landscapeStyle : interiorStyl
 Looking forward to consulting soon.`;
 
     const encoded = encodeURIComponent(waMessage);
-    window.open(`https://wa.me/919876543210?text=${encoded}`, "_blank");
+    const cleanNumber = whatsappNumber.replace(/[^0-9]/g, "");
+    const finalNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;
+    window.open(`https://wa.me/${finalNumber}?text=${encoded}`, "_blank");
   };
 
   return (

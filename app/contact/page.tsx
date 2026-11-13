@@ -19,6 +19,7 @@ export default function ContactPage() {
     phone: "8848816939",
     email: "interiors.rexon@gmail.com",
     address: "JRVV+JF8 Veiloor, Kerala",
+    whatsapp: "918848816939",
   });
 
   const [dbServices, setDbServices] = useState<any[]>([]);
@@ -32,6 +33,7 @@ export default function ContactPage() {
             phone: data.phone || prev.phone,
             email: data.email || prev.email,
             address: data.address || prev.address,
+            whatsapp: data.whatsapp || data.phone || prev.whatsapp,
           }));
         }
       } catch (err) {
@@ -338,7 +340,10 @@ export default function ContactPage() {
                 <p className="text-sm text-[#DCE8CC]/90 font-sans">Connect directly with our design manager on WhatsApp for fast answers.</p>
               </div>
               <a
-                href={`https://wa.me/${settings.phone.replace(/[^0-9]/g, '')}?text=Hi%20Rexon%20Interior%20and%20Landscape%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20and%20landscaping%20services.`}
+                href={`https://wa.me/${(() => {
+                  const raw = (settings.whatsapp || settings.phone || "8848816939").replace(/[^0-9]/g, '');
+                  return raw.length === 10 ? `91${raw}` : raw;
+                })()}?text=Hi%20Rexon%20Interior%20and%20Landscape%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20and%20landscaping%20services.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-6 py-3 font-medium text-sm text-white bg-[#7CB342] hover:bg-[#689F38] rounded-full transition-all duration-300 shadow-md flex-shrink-0"

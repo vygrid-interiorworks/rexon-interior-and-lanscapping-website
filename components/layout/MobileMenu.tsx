@@ -1,10 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { X, ArrowRight, Phone, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
+import { apiService } from "@/lib/api";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -19,6 +21,28 @@ export default function MobileMenu({
   navLinks,
   pathname,
 }: MobileMenuProps) {
+  const [settings, setSettings] = useState({
+    phone: "8848816939",
+    whatsapp: "918848816939",
+  });
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const data = await apiService.getSettings();
+        if (data) {
+          const rawWa = (data.whatsapp || data.phone || "8848816939").replace(/[^0-9]/g, "");
+          setSettings({
+            phone: data.phone || "8848816939",
+            whatsapp: rawWa.length === 10 ? `91${rawWa}` : rawWa,
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load settings in MobileMenu:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
   return (
     <AnimatePresence>
       {isOpen && (
@@ -100,14 +124,14 @@ export default function MobileMenu({
 
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <a
-                  href="tel:+919876543210"
+                  href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`}
                   className="flex items-center justify-center py-2.5 px-4 text-sm font-semibold border border-[#2B2C2E]/20 rounded-full text-[#2B2C2E] hover:bg-[#DCE8CC]/40 transition-all"
                 >
                   <Phone className="mr-2 w-4 h-4 text-[#7CB342]" />
                   Call Us
                 </a>
                 <a
-                  href="https://wa.me/919876543210?text=Hi%20Rexon%20Interior%20and%20Landscape%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20and%20landscaping%20services."
+                  href={`https://wa.me/${settings.whatsapp}?text=Hi%20Rexon%20Interior%20and%20Landscape%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20and%20landscaping%20services.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center py-2.5 px-4 text-sm font-semibold rounded-full text-white bg-[#25D366] hover:bg-[#20ba59] transition-all"

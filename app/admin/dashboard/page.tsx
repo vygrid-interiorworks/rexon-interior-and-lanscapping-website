@@ -42,6 +42,7 @@ import {
   DollarSign
 } from "lucide-react";
 import { apiService } from "@/lib/api";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 
 type Tab =
   | "overview"
@@ -166,6 +167,7 @@ export default function AdminDashboardPage() {
     clientSatisfaction: 98,
     projectCompletion: 120,
     propertiesLandscapes: 320,
+    landscapesCreated: 320,
     yearsExperience: 12,
     happyClients: 1200,
     interiorsDesigned: 850,
@@ -635,7 +637,20 @@ export default function AdminDashboardPage() {
   const handleUpdateStatsSettings = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await apiService.updateSettings(settings);
+      const landscapesVal = Number(settings.landscapesCreated ?? settings.propertiesLandscapes) || 0;
+      const sanitizedSettings = {
+        ...settings,
+        clientSatisfaction: Number(settings.clientSatisfaction) || 0,
+        averageRating: String(settings.averageRating ?? "4.8"),
+        projectCompletion: Number(settings.projectCompletion) || 0,
+        propertiesLandscapes: landscapesVal,
+        landscapesCreated: landscapesVal,
+        yearsExperience: Number(settings.yearsExperience) || 0,
+        happyClients: Number(settings.happyClients) || 0,
+        interiorsDesigned: Number(settings.interiorsDesigned) || 0,
+      };
+      await apiService.updateSettings(sanitizedSettings);
+      setSettings(sanitizedSettings);
       alert("Dynamic statistics counters updated successfully!");
     } catch (err) {
       alert("Error updating counters.");
@@ -1058,10 +1073,10 @@ export default function AdminDashboardPage() {
                   {/* Metric Cards */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     {[
-                      { title: "New Leads", count: stats.enquiries, tab: "enquiries" as Tab, icon: <Mail className="w-4 h-4 text-[#89B036]" />, color: "#89B036", percentage: 88 },
-                      { title: "Quote Requests", count: stats.quotes, tab: "quotes" as Tab, icon: <DollarSign className="w-4 h-4 text-emerald-500" />, color: "#10B981", percentage: 95 },
-                      { title: "Projects", count: stats.projects, tab: "projects" as Tab, icon: <FolderOpen className="w-4 h-4 text-amber-500" />, color: "#F59E0B", percentage: 90 },
-                      { title: "Reviews", count: stats.testimonials, tab: "testimonials" as Tab, icon: <MessageSquare className="w-4 h-4 text-violet-500" />, color: "#8B5CF6", percentage: 100 },
+                      { title: "New Leads", count: stats.enquiries, tab: "enquiries" as Tab, icon: <Mail className="w-4 h-4 text-[#89B036]" />, color: "#89B036" },
+                      { title: "Quote Requests", count: stats.quotes, tab: "quotes" as Tab, icon: <DollarSign className="w-4 h-4 text-emerald-500" />, color: "#10B981" },
+                      { title: "Projects", count: stats.projects, tab: "projects" as Tab, icon: <FolderOpen className="w-4 h-4 text-amber-500" />, color: "#F59E0B" },
+                      { title: "Reviews", count: stats.testimonials, tab: "testimonials" as Tab, icon: <MessageSquare className="w-4 h-4 text-violet-500" />, color: "#8B5CF6" },
                     ].map((card, idx) => (
                       <div
                         key={idx}
@@ -1083,23 +1098,10 @@ export default function AdminDashboardPage() {
                           </div>
                         </div>
 
-                        {/* Interactive mini progress metric */}
-                        <div className="mt-4 space-y-1">
-                          <div className="flex justify-between text-[8px] font-bold text-gray-400 uppercase tracking-wider">
-                            <span className="flex items-center gap-1 group-hover:text-[#89B036] transition-colors">
-                              Open {card.title} &rarr;
-                            </span>
-                            <span style={{ color: card.color }}>{card.percentage}%</span>
-                          </div>
-                          <div className="w-full bg-gray-100 h-1 rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: `${card.percentage}%` }}
-                              transition={{ duration: 0.8, delay: idx * 0.1 }}
-                              className="h-full rounded-full"
-                              style={{ backgroundColor: card.color }}
-                            />
-                          </div>
+                        {/* Card Footer Link */}
+                        <div className="mt-4 pt-3 border-t border-[#EBEAE5]/70 flex items-center justify-between text-[10px] font-bold text-gray-400 group-hover:text-[#89B036] transition-colors">
+                          <span className="uppercase tracking-wider">Open {card.title}</span>
+                          <span className="group-hover:translate-x-1 transition-transform text-xs">&rarr;</span>
                         </div>
                       </div>
                     ))}
@@ -1178,7 +1180,7 @@ export default function AdminDashboardPage() {
                           {[
                             { label: "Interiors designed", value: settings.interiorsDesigned, suffix: "+" },
                             { label: "Satisfaction rate", value: settings.clientSatisfaction, suffix: "%" },
-                            { label: "Properties & garden", value: settings.propertiesLandscapes, suffix: "+" },
+                            { label: "Landscapes created", value: settings.landscapesCreated ?? settings.propertiesLandscapes ?? 0, suffix: "+" },
                             { label: "Years of experience", value: settings.yearsExperience, suffix: " Yrs" },
                           ].map((stat, i) => (
                             <div key={i} className="flex justify-between items-center text-xs pb-3 border-b border-[#EBEAE5]/70 last:border-b-0 last:pb-0">
@@ -2187,9 +2189,10 @@ export default function AdminDashboardPage() {
                         </label>
                         <input
                           type="number"
-                          required
-                          value={settings.clientSatisfaction}
-                          onChange={(e) => setSettings({ ...settings, clientSatisfaction: Number(e.target.value) })}
+                          placeholder="0"
+                          value={settings.clientSatisfaction ?? ""}
+                          onFocus={(e) => e.target.select()}
+                          onChange={(e) => setSettings({ ...settings, clientSatisfaction: e.target.value === "" ? "" : Number(e.target.value) })}
                           className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                         />
                       </div>
@@ -2200,8 +2203,9 @@ export default function AdminDashboardPage() {
                         </label>
                         <input
                           type="text"
-                          required
-                          value={settings.averageRating}
+                          placeholder="4.8"
+                          value={settings.averageRating ?? ""}
+                          onFocus={(e) => e.target.select()}
                           onChange={(e) => setSettings({ ...settings, averageRating: e.target.value })}
                           className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                         />
@@ -2215,22 +2219,27 @@ export default function AdminDashboardPage() {
                         </label>
                         <input
                           type="number"
-                          required
-                          value={settings.projectCompletion}
-                          onChange={(e) => setSettings({ ...settings, projectCompletion: Number(e.target.value) })}
+                          placeholder="0"
+                          value={settings.projectCompletion ?? ""}
+                          onFocus={(e) => e.target.select()}
+                          onChange={(e) => setSettings({ ...settings, projectCompletion: e.target.value === "" ? "" : Number(e.target.value) })}
                           className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                         />
                       </div>
 
                       <div>
                         <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                          Properties & Landscapes Created
+                          Landscapes Created
                         </label>
                         <input
                           type="number"
-                          required
-                          value={settings.propertiesLandscapes}
-                          onChange={(e) => setSettings({ ...settings, propertiesLandscapes: Number(e.target.value) })}
+                          placeholder="0"
+                          value={settings.landscapesCreated ?? settings.propertiesLandscapes ?? ""}
+                          onFocus={(e) => e.target.select()}
+                          onChange={(e) => {
+                            const val = e.target.value === "" ? "" : Number(e.target.value);
+                            setSettings({ ...settings, propertiesLandscapes: val, landscapesCreated: val });
+                          }}
                           className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                         />
                       </div>
@@ -2243,9 +2252,10 @@ export default function AdminDashboardPage() {
                         </label>
                         <input
                           type="number"
-                          required
-                          value={settings.yearsExperience}
-                          onChange={(e) => setSettings({ ...settings, yearsExperience: Number(e.target.value) })}
+                          placeholder="0"
+                          value={settings.yearsExperience ?? ""}
+                          onFocus={(e) => e.target.select()}
+                          onChange={(e) => setSettings({ ...settings, yearsExperience: e.target.value === "" ? "" : Number(e.target.value) })}
                           className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                         />
                       </div>
@@ -2256,9 +2266,10 @@ export default function AdminDashboardPage() {
                         </label>
                         <input
                           type="number"
-                          required
-                          value={settings.happyClients}
-                          onChange={(e) => setSettings({ ...settings, happyClients: Number(e.target.value) })}
+                          placeholder="0"
+                          value={settings.happyClients ?? ""}
+                          onFocus={(e) => e.target.select()}
+                          onChange={(e) => setSettings({ ...settings, happyClients: e.target.value === "" ? "" : Number(e.target.value) })}
                           className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                         />
                       </div>
@@ -2270,9 +2281,10 @@ export default function AdminDashboardPage() {
                       </label>
                       <input
                         type="number"
-                        required
-                        value={settings.interiorsDesigned}
-                        onChange={(e) => setSettings({ ...settings, interiorsDesigned: Number(e.target.value) })}
+                        placeholder="0"
+                        value={settings.interiorsDesigned ?? ""}
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setSettings({ ...settings, interiorsDesigned: e.target.value === "" ? "" : Number(e.target.value) })}
                         className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                       />
                     </div>
@@ -2628,26 +2640,57 @@ export default function AdminDashboardPage() {
                           />
                         </div>
 
-                        {/* Live Link Preview Card */}
-                        <div className="mt-4 p-4 bg-[#F9F8F5] border border-[#EBEAE5] rounded-2xl">
-                          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            Live Link &amp; Tab Preview
-                          </p>
-                          <div className="bg-white border border-[#EBEAE5] rounded-xl p-3 shadow-xs">
-                            <div className="flex items-center gap-2 mb-1.5">
-                              <img src="/rexon-favicon.png" alt="Favicon" className="w-4 h-4 rounded-full border border-gray-200 object-contain" />
-                              <span className="text-[10px] text-gray-500 font-medium truncate">
-                                {(settings.siteUrl || "https://rexoninteriors.com").replace(/^https?:\/\//, "")}
-                              </span>
-                            </div>
-                            <h5 className="text-xs font-bold text-[#1a0dab] line-clamp-1 hover:underline cursor-pointer">
-                              {settings.metaTitle || "Rexon Interiors & Landscaping | Premium Design Services in Kerala"}
-                            </h5>
-                            <p className="text-[10px] text-gray-600 line-clamp-2 mt-1 leading-relaxed">
-                              {settings.metaDescription || "Transform your spaces inside & out with Rexon Interiors and Landscaping. Discover premium interior designs, customized modular kitchens, residential & commercial works, and stunning landscape gardening in Kerala."}
+                        {/* Live WhatsApp & Social Share Link Preview */}
+                        <div className="mt-5 p-4 sm:p-5 bg-[#EFEAE2] border border-[#D1D7DB] rounded-3xl">
+                          <div className="flex items-center justify-between mb-3">
+                            <p className="text-[10px] font-bold text-[#128C7E] uppercase tracking-wider flex items-center gap-1.5">
+                              <WhatsAppIcon className="w-4 h-4 fill-[#25D366]" />
+                              WhatsApp Link Preview (Real-Time Mockup)
                             </p>
+                            <span className="text-[9px] font-semibold text-gray-500 bg-white/80 px-2 py-0.5 rounded-full border border-gray-200">
+                              Outgoing Message
+                            </span>
                           </div>
+
+                          {/* WhatsApp Chat Bubble */}
+                          <div className="max-w-sm ml-auto bg-[#D9FDD3] rounded-2xl rounded-tr-none p-2 shadow-sm border border-[#C1E9BA]">
+                            {/* Rich OG Card inside WhatsApp */}
+                            <div className="bg-[#E9EDEF]/60 rounded-xl overflow-hidden border border-[#D1D7DB]/50">
+                              <div className="relative aspect-[1200/630] w-full bg-[#1A1B1D] overflow-hidden">
+                                <img
+                                  src="/og-image.jpg"
+                                  alt="Rexon Social Share Preview"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <div className="p-3">
+                                <p className="text-[9px] font-medium text-gray-400 uppercase tracking-wider mb-0.5">
+                                  {(settings.siteUrl || "https://rexoninteriors.com").replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                                </p>
+                                <h5 className="text-xs font-bold text-[#111B21] line-clamp-2 leading-tight">
+                                  {settings.metaTitle || "Rexon Interiors & Landscaping | Premium Design Services in Kerala"}
+                                </h5>
+                                <p className="text-[10px] text-[#667781] line-clamp-2 mt-1 leading-snug">
+                                  {settings.metaDescription || "Transform your spaces inside & out with Rexon Interiors and Landscaping. Discover premium interior designs, customized modular kitchens, residential & commercial works, and stunning landscape gardening in Kerala."}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Link text and timestamp inside message bubble */}
+                            <div className="pt-2 px-1 flex items-end justify-between gap-3">
+                              <span className="text-xs font-medium text-[#027EB5] break-all underline">
+                                {settings.siteUrl || "https://rexoninteriors.com"}
+                              </span>
+                              <div className="flex items-center gap-1 text-[9px] text-gray-500 flex-shrink-0">
+                                <span>12:00 PM</span>
+                                <span className="text-[#53BDEB] font-bold">✓✓</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <p className="text-[9px] text-gray-500 mt-3 text-center italic">
+                            This preview reflects the live Open Graph metadata WhatsApp uses when anyone shares your website link.
+                          </p>
                         </div>
                       </div>
                     </div>

@@ -19,15 +19,49 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const title = settings?.metaTitle || "Rexon Interiors & Landscaping | Premium Design Services in Kerala";
   const description = settings?.metaDescription || "Transform your spaces inside & out with Rexon Interiors and Landscaping. Discover premium interior designs, customized modular kitchens, residential & commercial works, and stunning landscape gardening in Kerala.";
+  const siteUrl = (settings?.siteUrl || "https://rexoninteriors.com").replace(/\/+$/, "");
+  const ogImageUrl = `${siteUrl}/og-image.png`;
 
   return {
     title,
     description,
+    metadataBase: new URL(siteUrl),
     alternates: { canonical: "/" },
     openGraph: {
       title,
       description,
-      url: settings?.siteUrl || "https://rexoninteriors.com",
+      url: siteUrl,
+      siteName: "Rexon Interiors and Landscaping",
+      locale: "en_IN",
+      type: "website",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+          type: "image/png",
+        },
+        {
+          url: `${siteUrl}/og-image.jpg`,
+          width: 1200,
+          height: 630,
+          alt: title,
+          type: "image/jpeg",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
+    },
+    other: {
+      "og:image:secure_url": ogImageUrl,
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:image:type": "image/png",
     },
   };
 }

@@ -4,6 +4,7 @@ import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import PublicLayoutWrapper from "@/components/layout/PublicLayoutWrapper";
 import { Toaster } from "react-hot-toast";
+import { apiService } from "@/lib/api";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -17,22 +18,46 @@ const inter = Inter({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Rexon Interiors & Landscaping | Premium Design Services in Kerala",
-  description: "Transform your spaces inside & out with Rexon Interiors and Landscaping. Discover premium interior designs, customized modular kitchens, residential & commercial works, and stunning landscape gardening in Kerala.",
-  metadataBase: new URL("https://rexoninteriors.com"),
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "Rexon Interiors & Landscaping | Premium Design Services in Kerala",
-    description: "Premium interior design & landscaping services. Transform your home, modular kitchen, and garden spaces with Rexon.",
-    url: "https://rexoninteriors.com",
-    siteName: "Rexon Interiors and Landscaping",
-    locale: "en_IN",
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  let settings: any = null;
+  try {
+    settings = await apiService.getSettings();
+  } catch (err) {
+    console.error("Failed fetching settings for metadata:", err);
+  }
+
+  const title = settings?.metaTitle || "Rexon Interiors & Landscaping | Premium Design Services in Kerala";
+  const description = settings?.metaDescription || "Transform your spaces inside & out with Rexon Interiors and Landscaping. Discover premium interior designs, customized modular kitchens, residential & commercial works, and stunning landscape gardening in Kerala.";
+  const siteUrl = settings?.siteUrl || "https://rexoninteriors.com";
+
+  return {
+    title,
+    description,
+    metadataBase: new URL(siteUrl),
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      title,
+      description,
+      url: siteUrl,
+      siteName: "Rexon Interiors and Landscaping",
+      locale: "en_IN",
+      type: "website",
+    },
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+        { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: [
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
+  };
+}
 
 export default function RootLayout({
   children,

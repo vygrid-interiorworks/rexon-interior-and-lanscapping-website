@@ -28,209 +28,9 @@ type Package = {
   name: string;
   tagline: string;
   image: string;
+  serviceType?: "Interior" | "Landscaping" | string;
   rooms: Room[];
 };
-
-const staticPackages: Package[] = [
-  {
-    id: "harmony",
-    name: "HARMONY",
-    tagline: "Smart interiors for a comfortable 2BHK home",
-    image: "/images/package-interior-hero.jpg",
-    rooms: [
-      {
-        room: "Foyer",
-        items: ["Shoe rack unit with cabinets and shutters"],
-      },
-      {
-        room: "Living Room",
-        items: ["Premium TV display unit with aluminium profile & glass shutter"],
-      },
-      {
-        room: "Dining Room",
-        items: [
-          "6 Seater dining table",
-          "3 dining chairs",
-          "1 dining bench (3-seater)",
-        ],
-      },
-      {
-        room: "Master Bedroom",
-        items: [
-          "3-door soft-close hinged wardrobe",
-          "Queen size bed with headboard",
-          "2 open bedside tables",
-        ],
-      },
-      {
-        room: "Guest Bedroom",
-        items: [
-          "3-door soft-close hinged wardrobe",
-          "Queen size bed with headboard",
-          "2 open bedside tables",
-        ],
-      },
-      {
-        room: "Modular Kitchen",
-        items: [
-          "Bottom & overhead cabinets",
-          "6 Hettich accessories (German-made, 15-yr warranty)",
-          "Hood & Hob by Faber",
-        ],
-      },
-    ],
-  },
-  {
-    id: "signature",
-    name: "SIGNATURE",
-    tagline: "Refined design & full woodwork for a 3BHK",
-    image: "/images/package-interior-hero.jpg",
-    rooms: [
-      {
-        room: "Foyer",
-        items: ["Shoe rack unit with cabinets and shutters"],
-      },
-      {
-        room: "Living Room",
-        items: [
-          "Premium TV display unit with aluminium profile & glass shutter",
-          "Prayer unit with open storage",
-        ],
-      },
-      {
-        room: "Dining Room",
-        items: [
-          "6-seater dining table",
-          "3 dining chairs",
-          "1 dining bench",
-          "Custom living-dining partition",
-        ],
-      },
-      {
-        room: "Master Bedroom",
-        items: [
-          "3-door soft-close hinged wardrobe",
-          "Dressing unit with cabinet & drawer",
-          "Custom study table",
-          "Queen size bed with headboard",
-          "2 bedside tables",
-        ],
-      },
-      {
-        room: "Kids Room",
-        items: [
-          "Wardrobe up to ceiling",
-          "Custom study table",
-          "Queen size bed with headboard",
-          "1 bedside table",
-        ],
-      },
-      {
-        room: "Guest Bedroom",
-        items: [
-          "Wardrobe up to ceiling",
-          "Queen size bed with headboard",
-          "1 bedside table",
-        ],
-      },
-      {
-        room: "Modular Kitchen",
-        items: [
-          "Top & bottom cabinets",
-          "6 Hettich accessories",
-          "Hood & Hob by Faber",
-          "Accessories: Cutlery tray, plain basket, plate rack, bottle pull-out, waste bin pull-out, detergent holder",
-        ],
-      },
-    ],
-  },
-  {
-    id: "grandeur",
-    name: "GRANDEUR",
-    tagline: "Luxury turnkey interiors for a premium 3BHK",
-    image: "/images/package-interior-hero.jpg",
-    rooms: [
-      {
-        room: "Foyer",
-        items: ["Shoe rack & ledges", "Round mirror", "Cement wall texture"],
-      },
-      {
-        room: "Living Room",
-        items: [
-          "Premium TV display unit",
-          "Prayer unit",
-          "Curtains with lining",
-          "Super premium wall panelling",
-          "Decorative clock",
-          "3-seater sofa set with lounge",
-          "4 cushions",
-          "Designer carpet",
-          "Centre table",
-        ],
-      },
-      {
-        room: "Dining Room",
-        items: [
-          "6-seater dining table",
-          "3 dining chairs",
-          "1 dining bench",
-          "Living-dining partition",
-          "Wash area with frameless projected mirror",
-          "Cement wall texture",
-        ],
-      },
-      {
-        room: "Master Bedroom",
-        items: [
-          "Soft-close hinged wardrobe",
-          "Dressing unit",
-          "Custom study unit",
-          "King size bed with headboard & bottom drawer",
-          "2 double-drawer bedside tables",
-          "Premium Roman blinds",
-          "Single accent chair",
-          "3 rolls wallpaper",
-          "6\" Peps mattress",
-          "Bed setting",
-        ],
-      },
-      {
-        room: "Kids Bedroom",
-        items: [
-          "Queen size bed",
-          "2 bedside tables",
-          "Bed setting",
-          "Mattress",
-          "Wardrobe",
-          "Custom study unit",
-          "3 rolls wallpaper",
-        ],
-      },
-      {
-        room: "Guest Bedroom",
-        items: [
-          "Queen size bed",
-          "2 bedside tables",
-          "Premium Roman blinds",
-          "3 rolls wallpaper",
-          "Mattress",
-          "Bed setting",
-          "Wardrobe",
-          "1 coat primer + 2 coat premium emulsion",
-        ],
-      },
-      {
-        room: "Kitchen",
-        items: [
-          "Top & bottom cabinets",
-          "6 Hettich accessories",
-          "Hood & Hob by Faber",
-          "Accessories: Cutlery tray, plain basket, plate rack, bottle pull-out, waste bin pull-out, detergent holder",
-        ],
-      },
-    ],
-  },
-];
 
 const trustBadges = [
   { icon: BadgeCheck, label: "100% Customised" },
@@ -277,18 +77,20 @@ function RoomsList({ rooms }: { rooms: Room[] }) {
 // ─── Main Component ─────────────────────────────────────────────────────────
 
 export default function PackageOffers() {
-  const [activeId, setActiveId] = useState<string>("signature");
-  const [packages, setPackages] = useState<Package[]>(staticPackages);
+  const [activeId, setActiveId] = useState<string>("");
+  const [packages, setPackages] = useState<Package[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
       try {
         const remote = await apiService.getPackages();
-        if (remote && remote.length > 0) {
+        if (remote && Array.isArray(remote)) {
           const normalized: Package[] = remote.map((p: any) => ({
             id: p._id,
             name: p.name || "",
             tagline: p.tagline || "",
+            serviceType: p.serviceType || "Interior",
             image: p.image || "/images/package-interior-hero.jpg",
             rooms: (p.rooms || []).map((r: any) => ({
               room: r.room || "",
@@ -296,16 +98,75 @@ export default function PackageOffers() {
             })),
           }));
           setPackages(normalized);
-          setActiveId((prev) =>
-            normalized.some((p) => p.id === prev) ? prev : normalized[0]?.id || prev
-          );
+          if (normalized.length > 0) {
+            setActiveId(normalized[0].id);
+          }
+        } else {
+          setPackages([]);
         }
       } catch (e) {
-        // Silently fall back to static
+        console.error("Failed loading packages:", e);
+        setPackages([]);
+      } finally {
+        setLoading(false);
       }
     };
     load();
   }, []);
+
+  if (loading) {
+    return (
+      <section id="packages" className="py-16 bg-[#F5F5F3] relative overflow-hidden font-sans border-t border-[#DCE8CC]">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col items-center justify-center py-20">
+          <div className="w-8 h-8 border-3 border-[#7CB342] border-t-transparent rounded-full animate-spin mb-3" />
+          <p className="text-xs text-[#58595B] font-medium tracking-wide">Loading packages...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (packages.length === 0) {
+    return (
+      <section
+        id="packages"
+        className="py-16 sm:py-24 bg-[#F5F5F3] relative overflow-hidden font-sans border-t border-[#DCE8CC]"
+        aria-label="Package Offers"
+      >
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-[#7CB342] mb-2">
+            Package Solutions
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-megalky font-normal text-[#2B2C2E] mb-3">
+            Custom Package Solutions
+          </h2>
+          <div className="flex items-center justify-center gap-4 my-4">
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+            <div className="w-6 h-6 rounded-full bg-[#7CB342]/20 border border-[#7CB342]/40 flex items-center justify-center text-[#7CB342]">
+              <Leaf className="w-3 h-3" />
+            </div>
+            <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
+          </div>
+          <p className="text-[#58595B] text-sm sm:text-base leading-relaxed font-sans max-w-xl mx-auto mb-8">
+            Every home and landscape space is unique. Contact our design experts to curate a bespoke turnkey package tailored to your exact floor plan, outdoor layout, and budget.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link
+              href="/get-quote"
+              className="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium tracking-wide text-white bg-[#7CB342] hover:bg-[#689F38] rounded-full shadow-md hover:shadow-lg transition-all"
+            >
+              Get Free Estimate <ArrowRight className="ml-2 w-4 h-4" />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium tracking-wide text-[#2B2C2E] bg-white hover:bg-[#DCE8CC]/50 border border-[#DCE8CC] rounded-full shadow-xs transition-all"
+            >
+              <Phone className="mr-2 w-4 h-4 text-[#7CB342]" /> Contact Our Team
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const activePackage = packages.find((p) => p.id === activeId) ?? packages[0];
 
@@ -400,12 +261,14 @@ export default function PackageOffers() {
                 )}
 
                 <div>
-                  <p
-                    className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${isActive ? "text-[#7CB342]" : "text-[#58595B]/70"
-                      }`}
-                  >
-                    {i === 0 ? "Starter" : i === 1 ? "Best Value" : "Premium"}
-                  </p>
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <p
+                      className={`text-[10px] font-bold uppercase tracking-widest ${isActive ? "text-[#7CB342]" : "text-[#58595B]/70"
+                        }`}
+                    >
+                      {pkg.serviceType === "Landscaping" ? "🌿 Landscaping" : "🛋️ Interior"}
+                    </p>
+                  </div>
                   <h3
                     className={`text-lg font-megalky font-bold mb-1 ${isActive ? "text-white" : "text-[#2B2C2E]"
                       }`}
@@ -445,7 +308,7 @@ export default function PackageOffers() {
               <div className="lg:col-span-2 relative min-h-[280px] lg:min-h-[560px]">
                 <Image
                   src={activePackage.image}
-                  alt={`${activePackage.name} package interior preview`}
+                  alt={`${activePackage.name} package preview`}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 40vw"
@@ -509,7 +372,7 @@ export default function PackageOffers() {
                 {/* Room-by-room inclusions */}
                 <div className="flex-1 overflow-auto">
                   <h4 className="text-sm font-bold text-[#3A3A3A] uppercase tracking-wider mb-5">
-                    What&apos;s Included
+                    {activePackage.serviceType === "Landscaping" ? "Area & Inclusions" : "What's Included"}
                   </h4>
                   <RoomsList rooms={activePackage.rooms} />
                 </div>

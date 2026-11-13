@@ -7,13 +7,30 @@ import WhyChooseUs from "@/components/home/WhyChooseUs";
 import PackageOffers from "@/components/home/PackageOffers";
 import TestimonialsSlider from "@/components/home/TestimonialsSlider";
 import LeadCapture from "@/components/home/LeadCapture";
+import { apiService } from "@/lib/api";
 
-export const metadata: Metadata = {
-  title: "Rexon Interiors & Landscaping | Premium Design Services in Kerala",
-  description:
-    "Transform your spaces inside & out with Rexon Interiors and Landscaping. Discover premium interior designs, customized modular kitchens, residential & commercial works, and stunning landscape gardening in Kerala.",
-  alternates: { canonical: "/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  let settings: any = null;
+  try {
+    settings = await apiService.getSettings();
+  } catch (e) {
+    // fallback
+  }
+
+  const title = settings?.metaTitle || "Rexon Interiors & Landscaping | Premium Design Services in Kerala";
+  const description = settings?.metaDescription || "Transform your spaces inside & out with Rexon Interiors and Landscaping. Discover premium interior designs, customized modular kitchens, residential & commercial works, and stunning landscape gardening in Kerala.";
+
+  return {
+    title,
+    description,
+    alternates: { canonical: "/" },
+    openGraph: {
+      title,
+      description,
+      url: settings?.siteUrl || "https://rexoninteriors.com",
+    },
+  };
+}
 
 export default function HomePage() {
   return (

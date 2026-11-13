@@ -44,7 +44,7 @@ export default function PackageHero() {
           transition={{ duration: 0.7, delay: 0.3 }}
           className="text-[#DCE8CC]/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-sans font-light"
         >
-          Explore curated turnkey design solutions for 2BHK &amp; 3BHK residences. Every specification is meticulously tailored to your floor plan and lifestyle.
+          Explore curated turnkey design solutions for your home and outdoor spaces. Every specification is meticulously tailored to your floor plan, landscape, and lifestyle.
         </motion.p>
 
       </div>

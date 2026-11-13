@@ -6,7 +6,7 @@ import LeadCapture from "@/components/home/LeadCapture";
 export const metadata: Metadata = {
   title: "Interior & Landscaping Packages | Rexon Interiors Kerala",
   description:
-    "Explore customized turnkey interior packages for 2BHK and 3BHK homes in Kerala — Harmony, Signature, and Grandeur packages tailored to your requirements.",
+    "Explore customized turnkey interior and landscaping packages in Kerala tailored to your requirements.",
   alternates: { canonical: "/packages" },
 };
 

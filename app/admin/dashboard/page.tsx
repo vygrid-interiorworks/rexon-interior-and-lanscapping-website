@@ -154,6 +154,9 @@ export default function AdminDashboardPage() {
     address: "JRVV+JF8 Veiloor, Kerala",
     timings: "9:30 AM - 7:00 PM",
     whatsapp: "918848816939",
+    siteUrl: "https://rexoninteriors.com",
+    metaTitle: "Rexon Interiors & Landscaping | Premium Design Services in Kerala",
+    metaDescription: "Transform your spaces inside & out with Rexon Interiors and Landscaping. Discover premium interior designs, customized modular kitchens, residential & commercial works, and stunning landscape gardening in Kerala.",
     instagram: "https://www.instagram.com/rexon_interiors",
     facebook: "https://facebook.com",
     youtube: "https://www.youtube.com/@rexon_interiors",
@@ -2566,33 +2569,85 @@ export default function AdminDashboardPage() {
                       </div>
                     </div>
 
-                    <div className="pt-4 border-t border-[#EBEAE5]">
-                      <h4 className="text-[10px] font-bold uppercase text-[#89B036] tracking-wider mb-3">SEO Meta Configurations</h4>
+                    <div className="pt-6 border-t border-[#EBEAE5]">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="w-2 h-2 rounded-full bg-[#89B036]" />
+                        <h4 className="text-xs font-bold uppercase text-[#89B036] tracking-wider">
+                          Website Link Content &amp; Social Share Preview
+                        </h4>
+                      </div>
+                      <p className="text-[10px] text-gray-500 mb-4 leading-relaxed">
+                        Change the title, description, and link text that appears in browser tabs, search results, and when sharing the link on WhatsApp, Facebook, or iMessage.
+                      </p>
+
                       <div className="space-y-4">
                         <div>
                           <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                            Home Meta Title
+                            Link Title (Browser Tab &amp; Share Title) <span className="text-red-400">*</span>
                           </label>
                           <input
                             type="text"
                             required
                             value={settings.metaTitle || ""}
                             onChange={(e) => setSettings({ ...settings, metaTitle: e.target.value })}
+                            placeholder="Rexon Interiors & Landscaping | Premium Design Services in Kerala"
                             className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                           />
+                          <p className="text-[9px] text-gray-400 mt-1 italic">
+                            Controls the browser tab text shown in your browser and link titles.
+                          </p>
                         </div>
 
                         <div>
                           <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                            Home Meta Description
+                            Link Description (Summary Preview Text) <span className="text-red-400">*</span>
                           </label>
                           <textarea
-                            rows={2}
+                            rows={3}
                             required
                             value={settings.metaDescription || ""}
                             onChange={(e) => setSettings({ ...settings, metaDescription: e.target.value })}
+                            placeholder="Transform your spaces inside & out with Rexon Interiors and Landscaping. Discover premium interior designs, customized modular kitchens, and stunning landscape gardening in Kerala."
+                            className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none resize-none"
+                          />
+                          <p className="text-[9px] text-gray-400 mt-1 italic">
+                            Summary text displayed under the link when shared in chats and social media.
+                          </p>
+                        </div>
+
+                        <div>
+                          <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                            Website Canonical Link URL
+                          </label>
+                          <input
+                            type="text"
+                            value={settings.siteUrl || "https://rexoninteriors.com"}
+                            onChange={(e) => setSettings({ ...settings, siteUrl: e.target.value })}
+                            placeholder="https://rexoninteriors.com"
                             className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-gray-50/50 rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
                           />
+                        </div>
+
+                        {/* Live Link Preview Card */}
+                        <div className="mt-4 p-4 bg-[#F9F8F5] border border-[#EBEAE5] rounded-2xl">
+                          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            Live Link &amp; Tab Preview
+                          </p>
+                          <div className="bg-white border border-[#EBEAE5] rounded-xl p-3 shadow-xs">
+                            <div className="flex items-center gap-2 mb-1.5">
+                              <img src="/rexon-favicon.png" alt="Favicon" className="w-4 h-4 rounded-full border border-gray-200 object-contain" />
+                              <span className="text-[10px] text-gray-500 font-medium truncate">
+                                {(settings.siteUrl || "https://rexoninteriors.com").replace(/^https?:\/\//, "")}
+                              </span>
+                            </div>
+                            <h5 className="text-xs font-bold text-[#1a0dab] line-clamp-1 hover:underline cursor-pointer">
+                              {settings.metaTitle || "Rexon Interiors & Landscaping | Premium Design Services in Kerala"}
+                            </h5>
+                            <p className="text-[10px] text-gray-600 line-clamp-2 mt-1 leading-relaxed">
+                              {settings.metaDescription || "Transform your spaces inside & out with Rexon Interiors and Landscaping. Discover premium interior designs, customized modular kitchens, residential & commercial works, and stunning landscape gardening in Kerala."}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>

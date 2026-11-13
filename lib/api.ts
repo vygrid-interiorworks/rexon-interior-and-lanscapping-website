@@ -429,30 +429,62 @@ export const apiService = {
 
   // ─── Testimonials ─────────────────────────────────────────────────────────
   getTestimonials: async (params?: { projectType?: string }) => {
-    let q = query(
-      collection(db, "testimonials"),
-      orderBy("createdAt", "desc")
-    );
-
-    if (params?.projectType && params.projectType !== "All") {
-      q = query(
+    try {
+      let q = query(
         collection(db, "testimonials"),
-        where("projectType", "==", params.projectType),
         orderBy("createdAt", "desc")
       );
-    }
 
-    const snap = await getDocs(q);
-    return snap.docs.map((d) => serializeDoc(d.id, d.data()));
+      if (params?.projectType && params.projectType !== "All") {
+        q = query(
+          collection(db, "testimonials"),
+          where("projectType", "==", params.projectType)
+        );
+      }
+
+      const snap = await getDocs(q);
+      const items = snap.docs.map((d) => serializeDoc(d.id, d.data()));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("rexon_cached_testimonials", JSON.stringify(items));
+      }
+      return items;
+    } catch (err) {
+      console.warn("Primary getTestimonials query failed, trying unindexed collection fetch:", err);
+      try {
+        const snap = await getDocs(collection(db, "testimonials"));
+        const items = snap.docs.map((d) => serializeDoc(d.id, d.data()));
+        if (typeof window !== "undefined") {
+          localStorage.setItem("rexon_cached_testimonials", JSON.stringify(items));
+        }
+        return items;
+      } catch (e2) {
+        if (typeof window !== "undefined") {
+          const cached = localStorage.getItem("rexon_cached_testimonials");
+          if (cached) {
+            try { return JSON.parse(cached); } catch {}
+          }
+        }
+        return [];
+      }
+    }
   },
 
   submitTestimonial: async (testimonial: any) => {
-    const ref = await addDoc(collection(db, "testimonials"), {
+    const payload = {
       ...testimonial,
       rating: Number(testimonial.rating) || 5,
       createdAt: serverTimestamp(),
-    });
-    return { _id: ref.id, ...testimonial };
+    };
+    const ref = await addDoc(collection(db, "testimonials"), payload);
+    const saved = { _id: ref.id, ...payload };
+    if (typeof window !== "undefined") {
+      try {
+        const cached = localStorage.getItem("rexon_cached_testimonials");
+        const list = cached ? JSON.parse(cached) : [];
+        localStorage.setItem("rexon_cached_testimonials", JSON.stringify([saved, ...list]));
+      } catch {}
+    }
+    return saved;
   },
 
   updateTestimonial: async (id: string, testimonial: any) => {
@@ -465,6 +497,15 @@ export const apiService = {
 
   deleteTestimonial: async (id: string) => {
     await deleteDoc(doc(db, "testimonials", id));
+    if (typeof window !== "undefined") {
+      try {
+        const cached = localStorage.getItem("rexon_cached_testimonials");
+        if (cached) {
+          const list = JSON.parse(cached).filter((t: any) => t._id !== id);
+          localStorage.setItem("rexon_cached_testimonials", JSON.stringify(list));
+        }
+      } catch {}
+    }
     return { success: true };
   },
 
@@ -527,6 +568,7 @@ export const apiService = {
       clientSatisfaction: 98,
       projectCompletion: 120,
       propertiesLandscapes: 320,
+      landscapesCreated: 320,
       yearsExperience: 12,
       happyClients: 1200,
       interiorsDesigned: 850,

@@ -5,6 +5,12 @@ import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { apiService } from "@/lib/api";
 
+function parseVal(v: any, fallback: number) {
+  if (v === undefined || v === null || v === "") return fallback;
+  const n = Number(v);
+  return isNaN(n) ? fallback : n;
+}
+
 export default function ReviewStats() {
   const [stats, setStats] = useState({
     averageRating: "4.8",
@@ -19,8 +25,8 @@ export default function ReviewStats() {
         if (data) {
           setStats({
             averageRating: data.averageRating || "4.8",
-            projectCompletion: Number(data.projectCompletion) || 120,
-            clientSatisfaction: Number(data.clientSatisfaction) || 98
+            projectCompletion: parseVal(data.projectCompletion, 120),
+            clientSatisfaction: parseVal(data.clientSatisfaction, 98)
           });
         }
       } catch (err) {

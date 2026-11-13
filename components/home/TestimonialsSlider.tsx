@@ -1,54 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Star, Quote, X, Leaf } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, Quote, X, Leaf, MessageSquareHeart } from "lucide-react";
 import { apiService } from "@/lib/api";
 
-const testimonials = [
-  {
-    name: "Priya Menon",
-    role: "Homeowner, Kochi",
-    rating: 5,
-    text: "Rexon completely transformed our 3BHK into a luxury haven. The attention to detail, quality of materials, and the team's professionalism exceeded every expectation. Our home now looks like something out of a magazine!",
-    category: "Interior Design",
-  },
-  {
-    name: "Arun Krishnan",
-    role: "Villa Owner, Thrissur",
-    rating: 5,
-    text: "Our garden went from barren land to an absolute tropical paradise. The landscaping team understood our vision perfectly. The water feature they built is the highlight of our entire property. Highly recommend!",
-    category: "Landscaping",
-  },
-  {
-    name: "Sujatha Nair",
-    role: "Restaurant Owner, Calicut",
-    rating: 5,
-    text: "We commissioned Rexon for our restaurant's complete interior redesign. The result? Footfall doubled in the first month. Guests constantly compliment the ambience. Worth every penny invested.",
-    category: "Commercial Interior",
-  },
-  {
-    name: "Rajesh Kumar",
-    role: "Apartment Owner, Trivandrum",
-    rating: 5,
-    text: "The modular kitchen they designed for us is absolutely stunning. Smart storage solutions, premium finishes, and delivered on time — exactly as promised. The after-sales service is excellent too.",
-    category: "Modular Kitchen",
-  },
-  {
-    name: "Divya Thomas",
-    role: "Bungalow Owner, Kannur",
-    rating: 5,
-    text: "From the very first consultation to the final handover, Rexon was an absolute pleasure to work with. Zero compromises on quality. Our courtyard garden is now our family's favourite spot.",
-    category: "Garden Design",
-  },
-];
+interface ReviewItem {
+  _id?: string;
+  name: string;
+  role: string;
+  rating: number;
+  text: string;
+  category: string;
+}
 
 export default function TestimonialsSlider() {
+  const [reviews, setReviews] = useState<ReviewItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [current, setCurrent] = useState(0);
   const [formOpen, setFormOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [categories, setCategories] = useState<string[]>([
+  const [categories] = useState<string[]>([
     "Interior Design",
     "Landscaping",
     "Modular Kitchen",
@@ -63,24 +36,70 @@ export default function TestimonialsSlider() {
     text: "",
   });
 
-  const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
-  const next = () => setCurrent((c) => (c + 1) % testimonials.length);
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const data = await apiService.getTestimonials();
+        if (data && Array.isArray(data)) {
+          const normalized: ReviewItem[] = data
+            .map((item: any) => ({
+              _id: item._id,
+              name: item.name || "Verified Client",
+              role: item.role || item.designation || "Client",
+              rating: Number(item.rating) || 5,
+              text: item.text || item.comment || "",
+              category: item.category || item.projectType || "Interior Design",
+            }))
+            .filter((item) => Boolean(item.text && item.text.trim().length > 0));
 
-  const getIndex = (offset: number) =>
-    (current + offset + testimonials.length) % testimonials.length;
+          setReviews(normalized);
+        }
+      } catch (err) {
+        console.error("Failed to load reviews:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchReviews();
+  }, []);
+
+  const total = reviews.length;
+  const prev = () => {
+    if (total <= 1) return;
+    setCurrent((c) => (c - 1 + total) % total);
+  };
+  const next = () => {
+    if (total <= 1) return;
+    setCurrent((c) => (c + 1) % total);
+  };
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await apiService.submitTestimonial({
-        name: form.name,
-        role: form.role,
-        rating: Number(form.rating),
+      const payload = {
+        name: form.name.trim(),
+        role: form.role.trim(),
+        designation: form.role.trim(),
+        rating: Number(form.rating) || 5,
         category: form.category,
-        text: form.text,
         projectType: form.category === "Landscaping" || form.category === "Garden Design" ? "Landscaping" : "Interior",
-      });
+        text: form.text.trim(),
+        comment: form.text.trim(),
+      };
+      const created = await apiService.submitTestimonial(payload);
+      
+      const newReview: ReviewItem = {
+        _id: created._id || `temp-${Date.now()}`,
+        name: payload.name,
+        role: payload.role,
+        rating: payload.rating,
+        category: payload.category,
+        text: payload.text,
+      };
+
+      setReviews((prevList) => [newReview, ...prevList]);
+      setCurrent(0);
       setSubmitted(true);
       setTimeout(() => {
         setFormOpen(false);
@@ -92,13 +111,15 @@ export default function TestimonialsSlider() {
           category: "Interior Design",
           text: "",
         });
-      }, 3000);
+      }, 2500);
     } catch (error) {
       console.error("Failed to submit review:", error);
     } finally {
       setSubmitting(false);
     }
   };
+
+  const activeReview = reviews[current];
 
   return (
     <section className="py-14 sm:py-16 bg-[#F5F5F3] overflow-hidden font-sans border-t border-[#DCE8CC]">
@@ -125,108 +146,150 @@ export default function TestimonialsSlider() {
             <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#7CB342]/60 to-[#7CB342]" />
           </div>
           <p className="text-[#58595B] text-base leading-relaxed font-sans">
-            Don&apos;t just take our word for it — hear from the families and businesses we&apos;ve transformed.
+            Hear firsthand experiences from the families and businesses we&apos;ve transformed across Kerala.
           </p>
         </motion.div>
 
-        {/* Slider */}
+        {/* Dynamic Reviews Container */}
         <div className="relative">
-          {/* Main Card */}
-          <div className="flex justify-center items-center min-h-[340px] relative">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                initial={{ opacity: 0, x: 60, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -60, scale: 0.95 }}
-                transition={{ duration: 0.45, ease: "easeInOut" }}
-                className="w-full max-w-2xl bg-white rounded-3xl p-8 lg:p-12 relative border border-[#DCE8CC] shadow-xl"
+          {loading ? (
+            <div className="flex justify-center items-center min-h-[300px]">
+              <div className="w-8 h-8 border-2 border-[#7CB342] border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : total === 0 ? (
+            /* Empty State: Zero default reviews */
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="w-full max-w-xl mx-auto bg-white rounded-3xl p-8 sm:p-12 text-center border border-[#DCE8CC] shadow-lg"
+            >
+              <div className="w-16 h-16 rounded-full bg-[#DCE8CC]/50 text-[#7CB342] flex items-center justify-center mx-auto mb-4">
+                <MessageSquareHeart className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-megalky font-bold text-[#2B2C2E] mb-2">
+                Be the First to Share Your Experience
+              </h3>
+              <p className="text-sm text-[#58595B] font-sans leading-relaxed mb-6">
+                We take immense pride in every space we build. Have you worked with Rexon Interiors &amp; Landscaping? We&apos;d love to feature your thoughts here.
+              </p>
+              <button
+                onClick={() => setFormOpen(true)}
+                className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-xs tracking-wider transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
               >
-                {/* Oversized Quote icon graphic in light tint #DCE8CC */}
-                <Quote className="absolute top-6 right-8 w-20 h-20 text-[#DCE8CC] stroke-[1.5]" />
+                Add Your Experience
+              </button>
+            </motion.div>
+          ) : (
+            <>
+              {/* Main Card */}
+              <div className="flex justify-center items-center min-h-[340px] relative">
+                <AnimatePresence mode="wait">
+                  {activeReview && (
+                    <motion.div
+                      key={activeReview._id || current}
+                      initial={{ opacity: 0, x: 60, scale: 0.95 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: -60, scale: 0.95 }}
+                      transition={{ duration: 0.45, ease: "easeInOut" }}
+                      className="w-full max-w-2xl bg-white rounded-3xl p-8 lg:p-12 relative border border-[#DCE8CC] shadow-xl"
+                    >
+                      {/* Oversized Quote icon graphic */}
+                      <Quote className="absolute top-6 right-8 w-20 h-20 text-[#DCE8CC] stroke-[1.5]" />
 
-                {/* Stars */}
-                <div className="flex gap-1 mb-5 relative z-10">
-                  {Array.from({ length: testimonials[current].rating }).map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-[#F59E0B] fill-[#F59E0B]" />
+                      {/* Stars */}
+                      <div className="flex gap-1 mb-5 relative z-10">
+                        {Array.from({ length: Math.min(5, Math.max(1, activeReview.rating)) }).map((_, i) => (
+                          <Star key={i} className="w-5 h-5 text-[#F59E0B] fill-[#F59E0B]" />
+                        ))}
+                      </div>
+
+                      <p className="text-[#2B2C2E] text-lg leading-[1.7] italic mb-8 relative z-10 font-sans">
+                        &ldquo;{activeReview.text}&rdquo;
+                      </p>
+
+                      <div className="relative z-10">
+                        <div className="font-megalky font-bold text-[#2B2C2E] text-lg">{activeReview.name}</div>
+                        <div className="text-xs text-[#58595B] font-sans mt-0.5">{activeReview.role}</div>
+                        <span className="inline-block mt-1 text-[10px] font-semibold uppercase tracking-widest text-[#7CB342] font-sans">
+                          {activeReview.category}
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Navigation Controls (Visible only if more than 1 review) */}
+              {total > 1 && (
+                <div className="flex items-center justify-center gap-6 mt-10">
+                  <button
+                    onClick={prev}
+                    className="w-11 h-11 rounded-full border border-[#7CB342] text-[#7CB342] hover:bg-[#7CB342] hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer shadow-sm"
+                    aria-label="Previous testimonial"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+
+                  {/* Dots */}
+                  <div className="flex gap-2">
+                    {reviews.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrent(i)}
+                        className={`rounded-full transition-all duration-300 cursor-pointer ${
+                          i === current ? "w-6 h-2.5 bg-[#7CB342]" : "w-2.5 h-2.5 bg-[#7CB342]/30 hover:bg-[#7CB342]/60"
+                        }`}
+                        aria-label={`Go to testimonial ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={next}
+                    className="w-11 h-11 rounded-full border border-[#7CB342] text-[#7CB342] hover:bg-[#7CB342] hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer shadow-sm"
+                    aria-label="Next testimonial"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+              )}
+
+              {/* Mini cards row for quick jumping (up to 4 items) */}
+              {total > 1 && (
+                <div className="hidden lg:flex justify-center gap-4 mt-10 flex-wrap">
+                  {reviews.slice(0, 5).map((rev, idx) => (
+                    <motion.div
+                      key={rev._id || idx}
+                      onClick={() => setCurrent(idx)}
+                      whileHover={{ scale: 1.04 }}
+                      className={`px-5 py-3 bg-white rounded-2xl border cursor-pointer transition-all duration-300 text-center shadow-sm max-w-[200px] ${
+                        idx === current
+                          ? "border-[#7CB342] ring-1 ring-[#7CB342] opacity-100"
+                          : "border-[#DCE8CC] opacity-60 hover:opacity-100"
+                      }`}
+                    >
+                      <div className="text-xs font-megalky font-bold text-[#2B2C2E] leading-tight truncate">
+                        {rev.name}
+                      </div>
+                      <div className="text-[10px] text-[#58595B] font-sans mt-0.5 truncate">
+                        {rev.category}
+                      </div>
+                    </motion.div>
                   ))}
                 </div>
+              )}
 
-                <p className="text-[#2B2C2E] text-lg leading-[1.7] italic mb-8 relative z-10 font-sans">
-                  &ldquo;{testimonials[current].text}&rdquo;
-                </p>
-
-                <div className="relative z-10">
-                  <div className="font-megalky font-bold text-[#2B2C2E] text-lg">{testimonials[current].name}</div>
-                  <div className="text-xs text-[#58595B] font-sans">{testimonials[current].role}</div>
-                  <span className="inline-block mt-1 text-[10px] font-semibold uppercase tracking-widest text-[#7CB342] font-sans">
-                    {testimonials[current].category}
-                  </span>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Navigation Controls */}
-          <div className="flex items-center justify-center gap-6 mt-10">
-            <button
-              onClick={prev}
-              className="w-11 h-11 rounded-full border border-[#7CB342] text-[#7CB342] hover:bg-[#7CB342] hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer shadow-sm"
-              aria-label="Previous testimonial"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            {/* Dots */}
-            <div className="flex gap-2">
-              {testimonials.map((_, i) => (
+              {/* Add Testimonial CTA Button */}
+              <div className="text-center mt-12">
                 <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className={`rounded-full transition-all duration-300 cursor-pointer ${
-                    i === current ? "w-6 h-2.5 bg-[#7CB342]" : "w-2.5 h-2.5 bg-[#7CB342]/30 hover:bg-[#7CB342]/60"
-                  }`}
-                  aria-label={`Go to testimonial ${i + 1}`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={next}
-              className="w-11 h-11 rounded-full border border-[#7CB342] text-[#7CB342] hover:bg-[#7CB342] hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer shadow-sm"
-              aria-label="Next testimonial"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Mini cards row */}
-          <div className="hidden lg:flex justify-center gap-4 mt-10">
-            {[-2, -1, 1, 2].map((offset) => {
-              const idx = getIndex(offset);
-              return (
-                <motion.div
-                  key={idx}
-                  onClick={() => setCurrent(idx)}
-                  whileHover={{ scale: 1.04 }}
-                  className="px-5 py-3 bg-white rounded-2xl border border-[#DCE8CC] cursor-pointer opacity-60 hover:opacity-100 transition-all duration-300 text-center shadow-sm"
+                  onClick={() => setFormOpen(true)}
+                  className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-xs tracking-wider transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
                 >
-                  <div className="text-xs font-megalky font-bold text-[#2B2C2E] leading-tight">{testimonials[idx].name}</div>
-                  <div className="text-[10px] text-[#58595B] font-sans mt-0.5">{testimonials[idx].category}</div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Add Testimonial CTA Button */}
-          <div className="text-center mt-12">
-            <button
-              onClick={() => setFormOpen(true)}
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#2B2C2E] hover:bg-[#1A1A1B] text-white font-medium rounded-full text-xs tracking-wider transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
-            >
-              Add Your Experience
-            </button>
-          </div>
+                  Add Your Experience
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -281,6 +344,7 @@ export default function TestimonialsSlider() {
                       <input
                         required
                         type="text"
+                        placeholder="e.g. Rahul Varma"
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                         className="w-full border border-[#DCE8CC] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors text-[#2B2C2E] font-sans"
@@ -311,17 +375,9 @@ export default function TestimonialsSlider() {
                           onChange={(e) => setForm({ ...form, category: e.target.value })}
                           className="w-full border border-[#DCE8CC] rounded-full px-4 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors text-[#2B2C2E] font-sans"
                         >
-                          {categories.length > 1 ? (
-                            categories.filter(c => c !== "All").map((c) => (
-                              <option key={c} value={c}>{c}</option>
-                            ))
-                          ) : (
-                            <>
-                              <option>Interior Design</option>
-                              <option>Landscaping</option>
-                              <option>Modular Kitchen</option>
-                            </>
-                          )}
+                          {categories.map((c) => (
+                            <option key={c} value={c}>{c}</option>
+                          ))}
                         </select>
                       </div>
 
@@ -357,6 +413,7 @@ export default function TestimonialsSlider() {
                       <textarea
                         required
                         rows={4}
+                        placeholder="Write about the design quality, work finish, timeline..."
                         value={form.text}
                         onChange={(e) => setForm({ ...form, text: e.target.value })}
                         className="w-full border border-[#DCE8CC] rounded-2xl px-5 py-3 text-sm focus:outline-none focus:border-[#7CB342] transition-colors text-[#2B2C2E] font-sans"

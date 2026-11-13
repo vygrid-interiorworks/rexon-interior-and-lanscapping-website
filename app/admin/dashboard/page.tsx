@@ -147,6 +147,17 @@ export default function AdminDashboardPage() {
   const [pkgForm, setPkgForm] = useState<typeof EMPTY_PKG_FORM>(EMPTY_PKG_FORM);
   const [editingPkgId, setEditingPkgId] = useState<string | null>(null);
   const [pkgSaving, setPkgSaving] = useState(false);
+
+  // Reviews Admin State
+  const [showAddReviewForm, setShowAddReviewForm] = useState(false);
+  const [adminReviewSaving, setAdminReviewSaving] = useState(false);
+  const [adminReviewForm, setAdminReviewForm] = useState({
+    name: "",
+    role: "",
+    rating: 5,
+    category: "Interior Design",
+    text: "",
+  });
   
   // Settings & Banner States
   const [settings, setSettings] = useState<any>({
@@ -703,14 +714,47 @@ export default function AdminDashboardPage() {
   };
 
   // --- Testimonials CRUD ---
+  const handleAddAdminReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!adminReviewForm.name.trim() || !adminReviewForm.text.trim()) {
+      alert("Please provide both client name and review text.");
+      return;
+    }
+    setAdminReviewSaving(true);
+    try {
+      const payload = {
+        name: adminReviewForm.name.trim(),
+        role: adminReviewForm.role.trim() || "Homeowner",
+        designation: adminReviewForm.role.trim() || "Homeowner",
+        rating: Number(adminReviewForm.rating) || 5,
+        category: adminReviewForm.category,
+        projectType: adminReviewForm.category === "Landscaping" || adminReviewForm.category === "Garden Design" ? "Landscaping" : "Interior",
+        text: adminReviewForm.text.trim(),
+        comment: adminReviewForm.text.trim(),
+      };
+      const created = await apiService.submitTestimonial(payload);
+      setTestimonials((prev) => [created, ...prev]);
+      setStats((prev) => ({ ...prev, testimonials: prev.testimonials + 1 }));
+      setAdminReviewForm({ name: "", role: "", rating: 5, category: "Interior Design", text: "" });
+      setShowAddReviewForm(false);
+      alert("Customer review published successfully!");
+    } catch (err) {
+      alert("Failed to publish review.");
+    } finally {
+      setAdminReviewSaving(false);
+    }
+  };
+
   const handleDeleteTestimonial = async (id: string) => {
     if (!confirm("Delete this customer testimonial review?")) return;
     try {
       await apiService.deleteTestimonial(id);
       setTestimonials((prev) => prev.filter((t) => t._id !== id));
+      setStats((prev) => ({ ...prev, testimonials: Math.max(0, prev.testimonials - 1) }));
       alert("Testimonial removed.");
     } catch (err) {
       setTestimonials((prev) => prev.filter((t) => t._id !== id));
+      setStats((prev) => ({ ...prev, testimonials: Math.max(0, prev.testimonials - 1) }));
     }
   };
 
@@ -2918,10 +2962,128 @@ export default function AdminDashboardPage() {
               {/* ── TAB 11: TESTIMONIALS MODERATION ── */}
               {activeTab === "testimonials" && (
                 <div className="bg-white border border-[#EBEAE5] rounded-3xl p-6 shadow-xs">
-                  <div className="mb-6">
-                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Customer Testimonials Moderation</h3>
-                    <p className="text-[10px] text-gray-400 mt-1">Review, moderate, and remove customer experiences and ratings displayed inside testimonials slider</p>
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                      <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Customer Reviews &amp; Testimonials ({testimonials.length})</h3>
+                      <p className="text-[10px] text-gray-400 mt-1">Manage real customer experiences and ratings displayed live on the website</p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setShowAddReviewForm((prev) => !prev)}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#89B036] hover:bg-[#546622] text-white text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all shadow-xs cursor-pointer"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      {showAddReviewForm ? "Close Form" : "Add New Review"}
+                    </button>
                   </div>
+
+                  {/* Add Review Card Form */}
+                  {showAddReviewForm && (
+                    <form onSubmit={handleAddAdminReview} className="bg-gray-50/70 border border-[#EBEAE5] rounded-2xl p-5 mb-8 space-y-4">
+                      <div className="border-b border-gray-200/80 pb-2 mb-3">
+                        <h4 className="text-xs font-bold text-[#3A3A3A] uppercase tracking-wider">Publish New Client Review</h4>
+                        <p className="text-[10px] text-gray-400">This review will appear live inside the website homepage slider</p>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                            Client Full Name *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Priya Menon"
+                            value={adminReviewForm.name}
+                            onChange={(e) => setAdminReviewForm({ ...adminReviewForm, name: e.target.value })}
+                            className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-white rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                            Location / Role (e.g. Homeowner, Kochi) *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Villa Owner, Thrissur"
+                            value={adminReviewForm.role}
+                            onChange={(e) => setAdminReviewForm({ ...adminReviewForm, role: e.target.value })}
+                            className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-white rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                            Project Category
+                          </label>
+                          <select
+                            value={adminReviewForm.category}
+                            onChange={(e) => setAdminReviewForm({ ...adminReviewForm, category: e.target.value })}
+                            className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-white rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
+                          >
+                            <option value="Interior Design">Interior Design</option>
+                            <option value="Landscaping">Landscaping</option>
+                            <option value="Modular Kitchen">Modular Kitchen</option>
+                            <option value="Garden Design">Garden Design</option>
+                            <option value="Commercial Interior">Commercial Interior</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                            Rating (1 to 5 Stars)
+                          </label>
+                          <select
+                            value={adminReviewForm.rating}
+                            onChange={(e) => setAdminReviewForm({ ...adminReviewForm, rating: Number(e.target.value) })}
+                            className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-white rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
+                          >
+                            <option value={5}>5 Stars (★★★★★)</option>
+                            <option value={4}>4 Stars (★★★★☆)</option>
+                            <option value={3}>3 Stars (★★★☆☆)</option>
+                            <option value={2}>2 Stars (★★☆☆☆)</option>
+                            <option value={1}>1 Star (★☆☆☆☆)</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                          Review Content / Client Story *
+                        </label>
+                        <textarea
+                          rows={3}
+                          required
+                          placeholder="Describe the experience, work quality, professionalism..."
+                          value={adminReviewForm.text}
+                          onChange={(e) => setAdminReviewForm({ ...adminReviewForm, text: e.target.value })}
+                          className="w-full border-0 border-b-2 border-gray-200 focus:border-[#89B036] focus:ring-0 focus:shadow-sm focus:bg-white transition-all bg-white rounded-t-xl px-3 py-2 text-xs text-[#3A3A3A] outline-none"
+                        />
+                      </div>
+
+                      <div className="flex gap-3 justify-end pt-2">
+                        <button
+                          type="button"
+                          onClick={() => setShowAddReviewForm(false)}
+                          className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-100 transition-all cursor-pointer"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={adminReviewSaving}
+                          className="px-6 py-2 bg-[#89B036] hover:bg-[#546622] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-xs disabled:opacity-50 cursor-pointer"
+                        >
+                          {adminReviewSaving ? "Publishing..." : "Publish Review"}
+                        </button>
+                      </div>
+                    </form>
+                  )}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {testimonials.map((item) => (
@@ -2929,29 +3091,32 @@ export default function AdminDashboardPage() {
                         <div>
                           <div className="flex justify-between items-start mb-4">
                             <div className="flex text-amber-400">
-                              {[...Array(item.rating || 5)].map((_, i) => (
+                              {[...Array(Number(item.rating) || 5)].map((_, i) => (
                                 <Star key={i} className="w-3.5 h-3.5 fill-current text-amber-400" />
                               ))}
                             </div>
                             <span className="text-[8px] bg-white border border-[#EBEAE5] text-gray-400 px-2 py-0.5 rounded uppercase font-bold tracking-wider">
-                              {item.projectType || "General"}
+                              {item.category || item.projectType || "General"}
                             </span>
                           </div>
 
                           <p className="text-xs text-[#545454] italic mb-4 leading-relaxed font-semibold">
-                            "{item.comment}"
+                            &ldquo;{item.text || item.comment}&rdquo;
                           </p>
                         </div>
 
                         <div className="flex justify-between items-center pt-3 border-t border-[#EBEAE5]">
                           <div>
                             <h4 className="font-bold text-xs text-[#3A3A3A]">{item.name}</h4>
-                            <p className="text-[9px] text-gray-400 font-semibold tracking-wide mt-0.5">{item.designation || "Home Owner"}</p>
+                            <p className="text-[9px] text-gray-400 font-semibold tracking-wide mt-0.5">
+                              {item.role || item.designation || "Homeowner"}
+                            </p>
                           </div>
 
                           <button
                             onClick={() => handleDeleteTestimonial(item._id)}
                             className="p-1.5 bg-red-50 hover:bg-red-100 text-red-500 rounded-lg border border-red-100 transition-colors cursor-pointer"
+                            title="Delete review"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -2959,7 +3124,10 @@ export default function AdminDashboardPage() {
                       </div>
                     ))}
                     {testimonials.length === 0 && (
-                      <p className="text-xs text-gray-400 py-6 text-center col-span-2">No testimonials published inside database.</p>
+                      <div className="col-span-2 py-12 text-center bg-gray-50/40 rounded-2xl border border-dashed border-gray-200">
+                        <p className="text-xs text-gray-500 font-semibold">No reviews published inside the database yet.</p>
+                        <p className="text-[10px] text-gray-400 mt-1">Click &ldquo;Add New Review&rdquo; above to publish your first customer testimonial.</p>
+                      </div>
                     )}
                   </div>
                 </div>

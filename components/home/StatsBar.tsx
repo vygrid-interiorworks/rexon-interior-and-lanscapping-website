@@ -35,6 +35,12 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
   );
 }
 
+function parseVal(v: any, fallback: number) {
+  if (v === undefined || v === null || v === "") return fallback;
+  const n = Number(v);
+  return isNaN(n) ? fallback : n;
+}
+
 export default function StatsBar() {
   const [stats, setStats] = useState([
     { icon: Home, value: 850, suffix: "+", label: "Interiors Designed" },
@@ -48,11 +54,13 @@ export default function StatsBar() {
       try {
         const data = await apiService.getSettings();
         if (data) {
+          const landscapesVal = parseVal(data.landscapesCreated ?? data.propertiesLandscapes, 320);
+
           setStats([
-            { icon: Home, value: Number(data.interiorsDesigned) || 850, suffix: "+", label: "Interiors Designed" },
-            { icon: TreePine, value: Number(data.propertiesLandscapes) || 320, suffix: "+", label: "Landscapes Created" },
-            { icon: Users, value: Number(data.happyClients) || 1200, suffix: "+", label: "Happy Clients" },
-            { icon: Award, value: Number(data.yearsExperience) || 12, suffix: " Yrs", label: "Years of Excellence" },
+            { icon: Home, value: parseVal(data.interiorsDesigned, 850), suffix: "+", label: "Interiors Designed" },
+            { icon: TreePine, value: landscapesVal, suffix: "+", label: "Landscapes Created" },
+            { icon: Users, value: parseVal(data.happyClients, 1200), suffix: "+", label: "Happy Clients" },
+            { icon: Award, value: parseVal(data.yearsExperience, 12), suffix: " Yrs", label: "Years of Excellence" },
           ]);
         }
       } catch (err) {
